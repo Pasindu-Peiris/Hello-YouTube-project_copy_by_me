@@ -5,7 +5,7 @@ import DB from "../db/db.mjs";
 const adminRouter = Router();
 
 adminRouter.get('/', (req, res) => {
-    res.send({ message: `admin router running` });
+    res.status(200).json({ message: `admin router running...` });
 });
 
 //admin save
