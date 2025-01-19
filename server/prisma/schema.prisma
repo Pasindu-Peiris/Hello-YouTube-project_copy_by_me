@@ -9,6 +9,72 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
+}
+
+model USER {
+  userID           Int      @id @default(autoincrement())
+  username         String
+  email            String   @unique
+  password         String
+  registrationDate DateTime @default(now())
+  status           String
+
+  completedSub   completedSub[]
+  completedVideo completedVideo[]
+}
+
+model taskSub {
+  taskSubID      Int      @id @default(autoincrement())
+  channelLink    String
+  description    String
+  createdDate    DateTime @default(now())
+  status         String
+  completedCount Int
+
+  completedSub completedSub[]
+}
+
+model taskVideo {
+  taskVideoID    Int      @id @default(autoincrement())
+  videoLink      String
+  description    String
+  createdDate    DateTime @default(now())
+  status         String
+  completedCount Int
+
+  completedVideo completedVideo[]
+}
+
+model completedSub {
+  completedSubID Int      @id @default(autoincrement())
+  userID         Int
+  taskSubID      Int
+  submissionDate DateTime @default(now())
+  proofLink      String
+  status         String
+
+  USER    USER    @relation(fields: [userID], references: [userID], onDelete: Cascade)
+  taskSub taskSub @relation(fields: [taskSubID], references: [taskSubID], onDelete: Cascade)
+}
+
+model completedVideo {
+  completedVideoID Int      @id @default(autoincrement())
+  userID           Int
+  taskVideoID      Int
+  submissionDate   DateTime @default(now())
+  proofLink        String
+  status           String
+
+  USER      USER      @relation(fields: [userID], references: [userID], onDelete: Cascade)
+  taskVideo taskVideo @relation(fields: [taskVideoID], references: [taskVideoID], onDelete: Cascade)
+}
+
+model Admin {
+  id        Int   @id @default(autoincrement())
+  email     String   @unique
+  password  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
