@@ -21,6 +21,8 @@ model USER {
   registrationDate DateTime @default(now())
   status           String
 
+  taskSub taskSub?
+  taskVideo taskVideo[]
   completedSub   completedSub[]
   completedVideo completedVideo[]
 }
@@ -32,7 +34,9 @@ model taskSub {
   createdDate    DateTime @default(now())
   status         String
   completedCount Int
+  userID Int @unique
 
+  USER USER @relation(fields: [userID], references: [userID])
   completedSub completedSub[]
 }
 
@@ -43,7 +47,9 @@ model taskVideo {
   createdDate    DateTime @default(now())
   status         String
   completedCount Int
+  userID Int
 
+  USER USER @relation(fields: [userID], references: [userID])
   completedVideo completedVideo[]
 }
 
