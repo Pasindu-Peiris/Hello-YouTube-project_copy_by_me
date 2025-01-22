@@ -16,6 +16,7 @@ const generateToken = (user) => {
 };
 
 // Registration Route
+// Registration Route
 authRouter.post(
   "/register",
   [
@@ -42,7 +43,7 @@ authRouter.post(
       const { username, email, password } = matchedData(req);
 
       // Check if email already exists
-      const existingUser = await DB.user.findUnique({ where: { email } });
+      const existingUser = await DB.USER.findUnique({ where: { email } });
       if (existingUser) {
         return res.status(409).json({ success: false, message: "Email already in use." });
       }
@@ -51,20 +52,23 @@ authRouter.post(
       const hashedPassword = await bcrypt.hash(password, 10);
 
       // Save the user
-      const newUser = await DB.user.create({
+      const newUser = await DB.USER.create({
         data: {
           username,
           email,
           password: hashedPassword,
           status: "active", // default status
-          role: "user", // default role
         },
       });
+
+      // Generate a JWT token
+      const token = generateToken(newUser);
 
       return res.status(201).json({
         success: true,
         message: "User registered successfully.",
-        user: { id: newUser.id, username: newUser.username, email: newUser.email },
+        user: { id: newUser.userID, username: newUser.username, email: newUser.email },
+        token,
       });
     } catch (error) {
       console.error(error);
@@ -72,6 +76,7 @@ authRouter.post(
     }
   }
 );
+
 
 // Login Route
 authRouter.post(
@@ -90,7 +95,7 @@ authRouter.post(
       const { email, password } = matchedData(req);
 
       // Check if user exists
-      const user = await DB.user.findUnique({ where: { email } });
+      const user = await DB.USER.findUnique({ where: { email } });
       if (!user) {
         return res.status(404).json({ success: false, message: "User not found." });
       }
@@ -107,7 +112,7 @@ authRouter.post(
       return res.status(200).json({
         success: true,
         message: "Login successful.",
-        user: { id: user.id, username: user.username, email: user.email },
+        user: { id: user.userID, username: user.username, email: user.email },
         token,
       });
     } catch (error) {
@@ -116,5 +121,6 @@ authRouter.post(
     }
   }
 );
+
 
 export default authRouter;
