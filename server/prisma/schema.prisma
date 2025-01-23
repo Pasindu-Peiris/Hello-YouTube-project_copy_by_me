@@ -21,6 +21,11 @@ model USER {
   registrationDate DateTime @default(now())
   status           String
   role             String   @default("user")
+
+  taskSub taskSub?
+  taskVideo taskVideo[]
+  completedSub   completedSub[]
+  completedVideo completedVideo[]
 }
 
 model taskSub {
