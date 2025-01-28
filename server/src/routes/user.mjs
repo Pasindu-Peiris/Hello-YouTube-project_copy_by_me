@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import { body, validationResult, matchedData } from "express-validator";
 import DB from "../db/db.mjs";
 
-const authRouter = Router();
+const userRouter = Router();
 
 // Helper function to generate JWT token
 const generateToken = (user) => {
@@ -16,8 +16,7 @@ const generateToken = (user) => {
 };
 
 // Registration Route
-// Registration Route
-authRouter.post(
+userRouter.post(
   "/register",
   [
     body("username").trim().notEmpty().withMessage("Username is required."),
@@ -79,7 +78,7 @@ authRouter.post(
 
 
 // Login Route
-authRouter.post(
+userRouter.post(
   "/login",
   [
     body("email").trim().isEmail().withMessage("Invalid email."),
@@ -123,4 +122,4 @@ authRouter.post(
 );
 
 
-export default authRouter;
+export default userRouter;
