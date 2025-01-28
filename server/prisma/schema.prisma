@@ -43,11 +43,12 @@ model taskSub {
 model taskVideo {
   taskVideoID    Int      @id @default(autoincrement())
   videoLink      String
-  description    String
+  description    String?
   createdDate    DateTime @default(now())
   status         String
   completedCount Int
   userID Int
+  watchedTime Int    @default(0) // Track watched time in seconds
 
   USER USER @relation(fields: [userID], references: [userID])
   completedVideo completedVideo[]

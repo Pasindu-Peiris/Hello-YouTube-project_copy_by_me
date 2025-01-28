@@ -4,7 +4,7 @@ import { body, validationResult, matchedData } from "express-validator";
 import DB from "../db/db.mjs";
 
 const authRouter = Router();
-
+/*
 // Registration Route
 authRouter.post(
   "/register",
@@ -24,6 +24,8 @@ authRouter.post(
   ],
   async (req, res) => {
     try {
+      console.log("Request body:", req.body); // Log the request body
+
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
@@ -32,7 +34,8 @@ authRouter.post(
       const { username, email, password } = matchedData(req);
 
       // Check if email already exists
-      const existingUser = await DB.user.findUnique({ where: { email } });
+      const existingUser = await DB.USER.findUnique({ where: { email } }); // Adjusted to `DB.USER`
+      console.log("Existing user:", existingUser); // Log the existing user
       if (existingUser) {
         return res.status(409).json({ message: "Email already in use." });
       }
@@ -41,7 +44,7 @@ authRouter.post(
       const hashedPassword = await bcrypt.hash(password, 10);
 
       // Save the user
-      const newUser = await DB.user.create({
+      const newUser = await DB.USER.create({
         data: {
           username,
           email,
@@ -52,57 +55,10 @@ authRouter.post(
 
       return res.status(201).json({ message: "User registered successfully.", user: newUser });
     } catch (error) {
-      console.error(error);
+      console.error("Error in /register route:", error); // Log the error
       return res.status(500).json({ message: "Internal server error." });
     }
   }
-);
-
-
-
-
-// Login Route
-authRouter.post(
-    "/login",
-    [
-      body("email").trim().isEmail().withMessage("Invalid email."),
-      body("password").trim().notEmpty().withMessage("Password is required."),
-    ],
-    async (req, res) => {
-      try {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-          return res.status(400).json({ errors: errors.array() });
-        }
-  
-        const { email, password } = matchedData(req);
-  
-        // Check if user exists
-        const user = await DB.user.findUnique({ where: { email } });
-        if (!user) {
-          return res.status(404).json({ message: "User not found." });
-        }
-  
-        // Compare passwords
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) {
-          return res.status(401).json({ message: "Invalid credentials." });
-        }
-  
-        return res.status(200).json({ message: "Login successful.", user });
-      } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: "Internal server error." });
-      }
-    }
-  );
-  
-
-
-
-
-
-
-
+); */
 
 export default authRouter;
