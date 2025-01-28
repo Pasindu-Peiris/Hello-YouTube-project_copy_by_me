@@ -1,6 +1,9 @@
 import { Router } from "express";
 import adminRouter from "./admin.mjs";
 import userRouter from "./user.mjs";
+import videoRouter from "./videoRouter.mjs";
+
+
 
 const rootRouter = Router();
 
@@ -9,10 +12,9 @@ rootRouter.get("/", (req, res) => {
     res.send({ message: "Root router is running" });
 });
 
-// Mount the admin router
-rootRouter.use("/admin", adminRouter);
-
-// Mount the user router
-rootRouter.use("/users", userRouter);
+//router
+rootRouter.use('/admin', adminRouter);
+rootRouter.use("/user", userRouter);
+rootRouter.use("/videos",videoRouter);
 
 export default rootRouter;
