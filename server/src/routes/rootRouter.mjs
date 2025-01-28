@@ -4,13 +4,15 @@ import userRouter from "./user.mjs";
 
 const rootRouter = Router();
 
-rootRouter.get('/', (req, res) => {
-    res.send({message : `root router running`});
+// Root route for checking rootRouter status
+rootRouter.get("/", (req, res) => {
+    res.send({ message: "Root router is running" });
 });
 
-//router
-rootRouter.use('/admin', adminRouter);
-rootRouter.use("/user", userRouter);
+// Mount the admin router
+rootRouter.use("/admin", adminRouter);
 
+// Mount the user router
+rootRouter.use("/users", userRouter);
 
 export default rootRouter;
