@@ -135,7 +135,11 @@ userRouter.get("/:id", async (req, res) => {
     const user = await DB.USER.findUnique({
       where: { userID: parseInt(id) },
       include: {
-        taskSub: true, // Include taskSub details
+        taskSub: true,
+        taskVideo:true,
+        completedSub:true,
+        completedVideo:true
+        
       },
     });
 
@@ -175,7 +179,7 @@ userRouter.put("/:id", async (req, res) => {
 });
 
 // Update User Status
-userRouter.patch("/:id/status", async (req, res) => {
+userRouter.patch("/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const { status } = req.body;
