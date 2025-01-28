@@ -1,17 +1,29 @@
-import { validationResult } from "express-validator";
+import jwt from "jsonwebtoken";
 
-export const validateRequest = (validations) => async (req, res, next) => {
-  console.log("Middleware execution started:", req.method, req.originalUrl);
-  console.log("Request payload:", req.body || req.query);
+// Middleware to verify JWT
+export const authenticateToken = (req, res, next) => {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1]; // Extract token from "Bearer <token>"
 
-  await Promise.all(validations.map((validation) => validation.run(req)));
+    if (!token) {
+        return res.status(401).json({ message: "Access denied. No token provided." });
+    }
 
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    console.log("Validation errors found:", errors.array());
-    return res.status(400).json({ errors: errors.array() });
-  }
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET); // Verify the token
+        req.user = decoded; // Add decoded token data (e.g., userID) to `req.user`
+        next(); // Proceed to the next middleware or route handler
+    } catch (error) {
+        console.error(error);
+        return res.status(403).json({ message: "Invalid or expired token." });
+    }
+};
 
-  console.log("Middleware execution completed successfully");
-  next();
+// Middleware to check for admin role
+export const authorizeAdmin = (req, res, next) => {
+    if (req.user && req.user.role === "admin") {
+        next(); // User is an admin, proceed
+    } else {
+        return res.status(403).json({ message: "Access denied. Admins only." });
+    }
 };

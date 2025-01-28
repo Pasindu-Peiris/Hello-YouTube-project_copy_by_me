@@ -1,6 +1,7 @@
 import { Router } from "express";
 import adminRouter from "./admin.mjs";
-import authRouter from "./auth.mjs";
+import userRouter from "./user.mjs";
+import videoRouter from "./videoRouter.mjs";
 
 
 
@@ -12,8 +13,7 @@ rootRouter.get('/', (req, res) => {
 
 //router
 rootRouter.use('/admin', adminRouter);
-rootRouter.use('/auth', authRouter);
-
-
+rootRouter.use("/user", userRouter);
+rootRouter.use("/videos",videoRouter);
 
 export default rootRouter;
