@@ -2,7 +2,7 @@ import { Router } from "express";
 import adminRouter from "./admin.mjs";
 import userRouter from "./user.mjs";
 import videoRouter from "./videoRouter.mjs";
-import completedSubRouter from "./completedSubRouter.mjs";
+import subtaskRouter from "./subtaskRoutes.mjs";
 
 
 const rootRouter = Router();
@@ -16,5 +16,5 @@ rootRouter.get("/", (req, res) => {
 rootRouter.use('/admin', adminRouter);
 rootRouter.use("/user", userRouter);
 rootRouter.use("/videos",videoRouter);
-rootRouter.use("/completedSub", completedSubRouter);
+rootRouter.use("/subtasks", subtaskRouter);
 export default rootRouter;
