@@ -46,7 +46,7 @@ subRouter.post(
 );
 
 // READ: Fetch all submission tasks by userID
-subRouter.get(
+subRoutercreate.get(
   "/:userID",
   [param("userID").isInt().withMessage("User ID must be an integer.")],
   async (req, res) => {
@@ -74,7 +74,7 @@ subRouter.get(
 );
 
 // READ: Fetch a specific task by taskSubID
-subRouter.get(
+subRouterRead.get(
   "/task/:taskSubID",
   [param("taskSubID").isInt().withMessage("Task Sub ID must be an integer.")],
   async (req, res) => {
@@ -102,7 +102,7 @@ subRouter.get(
 );
 
 // UPDATE: Update task status by taskSubID
-subRouter.put(
+subRouterupdate.put(
   "/:taskSubID",
   [
     param("taskSubID").isInt().withMessage("Task Sub ID must be an integer."),
@@ -131,7 +131,7 @@ subRouter.put(
 );
 
 // DELETE: Delete a task by taskSubID
-subRouter.delete(
+subRouterdelete.delete(
   "/:taskSubID",
   [param("taskSubID").isInt().withMessage("Task Sub ID must be an integer.")],
   async (req, res) => {

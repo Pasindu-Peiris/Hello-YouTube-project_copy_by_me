@@ -5,7 +5,7 @@ import { body, param, validationResult } from "express-validator";
 const completedSubRouter = Router();
 
 // CREATE: Create a new completedSub entry
-completedSubRouter.post(
+completedSubRoutercreate.post(
   "/",
   [
     body("userID").isInt().withMessage("User ID must be an integer."),
@@ -33,7 +33,7 @@ completedSubRouter.post(
 );
 
 // READ: Get all completedSub entries
-completedSubRouter.get("/", async (req, res) => {
+completedSubRouterRead.get("/", async (req, res) => {
   try {
     const completedSubs = await DB.completedSub.findMany({
       include: {
@@ -49,7 +49,7 @@ completedSubRouter.get("/", async (req, res) => {
 });
 
 // READ: Get a specific completedSub by ID
-completedSubRouter.get(
+completedSubRouterRead.get(
   "/:id",
   [param("id").isInt().withMessage("ID must be an integer.")],
   async (req, res) => {
@@ -76,7 +76,7 @@ completedSubRouter.get(
 );
 
 // UPDATE: Update the status of a completedSub
-completedSubRouter.put(
+completedSubRouterupdate.put(
   "/:id",
   [
     param("id").isInt().withMessage("ID must be an integer."),
@@ -104,7 +104,7 @@ completedSubRouter.put(
 );
 
 // DELETE: Delete a completedSub entry
-completedSubRouter.delete(
+completedSubRouterdelete.delete(
   "/:id",
   [param("id").isInt().withMessage("ID must be an integer.")],
   async (req, res) => {

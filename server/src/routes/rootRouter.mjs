@@ -3,7 +3,7 @@ import adminRouter from "./admin.mjs";
 import userRouter from "./user.mjs";
 import videoRouter from "./videoRouter.mjs";
 import subtaskRouter from "./subtaskRoutes.mjs";
-
+import completedSubRouter from "./completedSubRouter.mjs";
 
 const rootRouter = Router();
 
@@ -17,4 +17,5 @@ rootRouter.use('/admin', adminRouter);
 rootRouter.use("/user", userRouter);
 rootRouter.use("/videos",videoRouter);
 rootRouter.use("/subtasks", subtaskRouter);
+rootRouter.use("/completedsubs", completedSubRouter);
 export default rootRouter;
