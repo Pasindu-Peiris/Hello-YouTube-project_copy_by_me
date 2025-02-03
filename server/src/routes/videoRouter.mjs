@@ -13,7 +13,7 @@ videoRouter.post(
       .isArray({ min: 1 })
       .withMessage("Videos should be an array and cannot be empty."),
     body("videos.*.videoLink").isURL().withMessage("Each videoLink must be a valid URL."),
-    body("videos.*.description").isString().withMessage("Each description must be a string.")
+    body("videos.*.description").isString().withMessage("Each description must be a string."),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -40,11 +40,9 @@ videoRouter.post(
   }
 );
 
-// READ: Fetch video tasks by userID
-// READ: Fetch video tasks by userID and taskVideoID
-// READ: Fetch video tasks by userID
+// READ: Fetch all video tasks by userID
 videoRouter.get(
-  "/:userID",
+  "/get/user/:userID",
   [param("userID").isInt().withMessage("User ID must be an integer.")],
   async (req, res) => {
     const errors = validationResult(req);
@@ -60,7 +58,7 @@ videoRouter.get(
       }
       res.status(200).json(tasks);
     } catch (error) {
-      console.error("Error in /:userID route:", error.stack || error);
+      console.error("Error in /get/user/:userID route:", error.stack || error);
       res.status(500).json({ message: "Error fetching video tasks.", error: error.message });
     }
   }
@@ -68,7 +66,7 @@ videoRouter.get(
 
 // READ: Fetch a specific video task by taskVideoID
 videoRouter.get(
-  "/task/:taskVideoID",
+  "/get/task/:taskVideoID",
   [param("taskVideoID").isInt().withMessage("Task Video ID must be an integer.")],
   async (req, res) => {
     const errors = validationResult(req);
@@ -79,27 +77,24 @@ videoRouter.get(
     const { taskVideoID } = req.params;
     try {
       const task = await DB.taskVideo.findFirst({
-        where: {
-          taskVideoID: parseInt(taskVideoID, 10),
-        },
+        where: { taskVideoID: parseInt(taskVideoID, 10) },
       });
-
       if (!task) {
         return res.status(404).json({ message: "No video task found with the given Task Video ID." });
       }
-
       res.status(200).json(task);
     } catch (error) {
-      console.error("Error in /task/:taskVideoID route:", error.stack || error);
+      console.error("Error in /get/task/:taskVideoID route:", error.stack || error);
       res.status(500).json({ message: "Error fetching the video task.", error: error.message });
     }
   }
 );
 
-
+// UPDATE: Update task status by userID and taskVideoID
 videoRouter.put(
-  "/:taskVideoID",  // Change parameter name to taskVideoID
+  "/update/:userID/:taskVideoID",
   [
+    param("userID").isInt().withMessage("User ID must be an integer."),
     param("taskVideoID").isInt().withMessage("Task Video ID must be an integer."),
     body("status").isString().withMessage("Status must be a string."),
   ],
@@ -109,45 +104,45 @@ videoRouter.put(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { taskVideoID } = req.params;  // Use taskVideoID here
+    const { userID, taskVideoID } = req.params;
     const { status } = req.body;
 
     try {
-      const updatedTask = await DB.taskVideo.update({
-        where: { taskVideoID: parseInt(taskVideoID, 10) },  // Use taskVideoID here
+      const updatedTask = await DB.taskVideo.updateMany({
+        where: { userID: parseInt(userID, 10), taskVideoID: parseInt(taskVideoID, 10) },
         data: { status },
       });
       res.status(200).json({ message: "Task updated successfully.", updatedTask });
     } catch (error) {
-      console.error("Error in /:taskVideoID route:", error.stack || error);
+      console.error("Error in /update/:userID/:taskVideoID route:", error.stack || error);
       res.status(500).json({ message: "Error updating task.", error: error.message });
     }
   }
 );
 
-
-
-// DELETE: Delete a video task by taskID
+// DELETE: Delete a video task by userID and taskVideoID
 videoRouter.delete(
-  "/:taskVideoID",  // Change parameter name to taskVideoID
-  [param("taskVideoID").isInt().withMessage("Task Video ID must be an integer.")],
+  "/delete/:userID/:taskVideoID",
+  [
+    param("userID").isInt().withMessage("User ID must be an integer."),
+    param("taskVideoID").isInt().withMessage("Task Video ID must be an integer."),
+  ],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { taskVideoID } = req.params;  // Use taskVideoID here
+    const { userID, taskVideoID } = req.params;
 
     try {
-      await DB.taskVideo.delete({ where: { taskVideoID: parseInt(taskVideoID, 10) } });  // Use taskVideoID here
+      await DB.taskVideo.deleteMany({ where: { userID: parseInt(userID, 10), taskVideoID: parseInt(taskVideoID, 10) } });
       res.status(200).json({ message: "Task deleted successfully." });
     } catch (error) {
-      console.error("Error in DELETE /:taskVideoID route:", error.stack || error);
+      console.error("Error in DELETE /delete/:userID/:taskVideoID route:", error.stack || error);
       res.status(500).json({ message: "Error deleting task.", error: error.message });
     }
   }
 );
-
 
 export default videoRouter;
