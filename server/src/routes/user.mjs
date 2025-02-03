@@ -1,7 +1,7 @@
 import { Router } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { body, validationResult, matchedData } from "express-validator";
+import { body, validationResult, matchedData, param } from "express-validator";
 import DB from "../db/db.mjs";
 
 const userRouter = Router();
@@ -41,26 +41,22 @@ userRouter.post(
 
       const { username, email, password } = matchedData(req);
 
-      // Check if email already exists
       const existingUser = await DB.USER.findUnique({ where: { email } });
       if (existingUser) {
         return res.status(409).json({ success: false, message: "Email already in use." });
       }
 
-      // Hash the password
       const hashedPassword = await bcrypt.hash(password, 10);
 
-      // Save the user
       const newUser = await DB.USER.create({
         data: {
           username,
           email,
           password: hashedPassword,
-          status: "active", // default status
+          status: "active",
         },
       });
 
-      // Generate a JWT token
       const token = generateToken(newUser);
 
       return res.status(201).json({
@@ -75,7 +71,6 @@ userRouter.post(
     }
   }
 );
-
 
 // Login Route
 userRouter.post(
@@ -93,19 +88,16 @@ userRouter.post(
 
       const { email, password } = matchedData(req);
 
-      // Check if user exists
       const user = await DB.USER.findUnique({ where: { email } });
       if (!user) {
         return res.status(404).json({ success: false, message: "User not found." });
       }
 
-      // Compare passwords
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
         return res.status(401).json({ success: false, message: "Invalid credentials." });
       }
 
-      // Generate JWT token
       const token = generateToken(user);
 
       return res.status(200).json({
@@ -121,5 +113,107 @@ userRouter.post(
   }
 );
 
+// Get All Users
+userRouter.get("/", async (req, res) => {
+  try {
+    const users = await DB.USER.findMany({
+      include: {
+        taskSub: true, // Include taskSub details
+      },
+    });
+    res.status(200).json({ success: true, users });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Internal server error." });
+  }
+});
+
+// Get User By ID
+userRouter.get("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await DB.USER.findUnique({
+      where: { userID: parseInt(id) },
+      include: {
+        taskSub: true,
+        taskVideo:true,
+        completedSub:true,
+        completedVideo:true
+        
+      },
+    });
+
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found." });
+    }
+
+    res.status(200).json({ success: true, user });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Internal server error." });
+  }
+});
+
+// Update User Data
+userRouter.put("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { username, email, password } = req.body;
+
+    const hashedPassword = password ? await bcrypt.hash(password, 10) : undefined;
+
+    const updatedUser = await DB.USER.update({
+      where: { userID: parseInt(id) },
+      data: {
+        username,
+        email,
+        ...(hashedPassword && { password: hashedPassword }),
+      },
+    });
+
+    res.status(200).json({ success: true, user: updatedUser });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Internal server error." });
+  }
+});
+
+// Update User Status
+userRouter.patch("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    if (!["active", "inactive"].includes(status)) {
+      return res.status(400).json({ success: false, message: "Invalid status value." });
+    }
+
+    const updatedUser = await DB.USER.update({
+      where: { userID: parseInt(id) },
+      data: { status },
+    });
+
+    res.status(200).json({ success: true, user: updatedUser });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Internal server error." });
+  }
+});
+
+// Delete User By ID
+userRouter.delete("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    await DB.USER.delete({
+      where: { userID: parseInt(id) },
+    });
+
+    res.status(200).json({ success: true, message: "User deleted successfully." });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Internal server error." });
+  }
+});
 
 export default userRouter;
