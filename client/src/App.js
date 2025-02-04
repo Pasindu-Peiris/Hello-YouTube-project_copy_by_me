@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import ProtectedRouters from './utils/ProtectedRouters';
 import Notfound from './pages/Notfound';
 import Home from './pages/Home';
+import Loginuser from './pages/user/Loginuser';
 
 
 
@@ -14,6 +15,7 @@ function App() {
         <Routes>
 
           <Route path='/' element={<Home/>}/>
+          <Route path='/login' element={<Loginuser/>}/>
 
           {/* protected routers */}
           <Route element={<ProtectedRouters/>}>

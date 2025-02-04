@@ -49,7 +49,7 @@ const Home = () => {
       <Header />
 
       <section id="hero">
-        <div className="herofirst" data-aos="fade-left">
+        <div className="herofirst">
           <h1>
             We Build <span>Audiences</span>, <br />
             You Build Dreams!
@@ -61,7 +61,7 @@ const Home = () => {
           </p>
           <button>Join Us</button>
         </div>
-        <div className="herosecond" data-aos="fade-right">
+        <div className="herosecond">
           <img src={bg2} alt="Promotion visual" />
         </div>
       </section>
