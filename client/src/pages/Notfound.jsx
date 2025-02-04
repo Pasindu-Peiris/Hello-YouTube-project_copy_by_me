@@ -1,15 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import NotFound from "../assets/images/notfound.svg";
+import '../assets/pagecss/Notfound.css'
 
 const Notfound = () => {
   return (
-    <div>
-      {" "}
-      <div style={{ textAlign: "center", marginTop: "50px" }}>
-        <h1>404</h1>
-        <p>Page Not Found</p>
-        <Link to="/">Go Back to Login</Link>
-      </div>
+    <div className="notfound-container">
+
+      <img src={NotFound} alt="Page not found" />
+      <p>Oops! The page you're looking for doesn't exist.</p>
+      <Link to="/">Go Back to Login</Link>
+      
     </div>
   );
 };
