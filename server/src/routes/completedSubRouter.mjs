@@ -5,8 +5,8 @@ import { body, param, validationResult } from "express-validator";
 const completedSubRouter = Router();
 
 // CREATE: Create a new completedSub entry
-completedSubRoutercreate.post(
-  "/",
+completedSubRouter.post(
+  "/create",
   [
     body("userID").isInt().withMessage("User ID must be an integer."),
     body("taskSubID").isInt().withMessage("Task Sub ID must be an integer."),
@@ -33,7 +33,7 @@ completedSubRoutercreate.post(
 );
 
 // READ: Get all completedSub entries
-completedSubRouterRead.get("/", async (req, res) => {
+completedSubRouter.get("/read", async (req, res) => {
   try {
     const completedSubs = await DB.completedSub.findMany({
       include: {
@@ -49,8 +49,8 @@ completedSubRouterRead.get("/", async (req, res) => {
 });
 
 // READ: Get a specific completedSub by ID
-completedSubRouterRead.get(
-  "/:id",
+completedSubRouter.get(
+  "/read/:id",
   [param("id").isInt().withMessage("ID must be an integer.")],
   async (req, res) => {
     const errors = validationResult(req);
@@ -76,8 +76,8 @@ completedSubRouterRead.get(
 );
 
 // UPDATE: Update the status of a completedSub
-completedSubRouterupdate.put(
-  "/:id",
+completedSubRouter.put(
+  "/update/:id",
   [
     param("id").isInt().withMessage("ID must be an integer."),
     body("status").isString().withMessage("Status must be a string."),
@@ -104,8 +104,8 @@ completedSubRouterupdate.put(
 );
 
 // DELETE: Delete a completedSub entry
-completedSubRouterdelete.delete(
-  "/:id",
+completedSubRouter.delete(
+  "/delete/:id",
   [param("id").isInt().withMessage("ID must be an integer.")],
   async (req, res) => {
     const errors = validationResult(req);
