@@ -1,0 +1,144 @@
+#hero {
+    width: 100%;
+    height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.herofirst {
+    width: 650px;
+    font-family: "Fredoka", serif;
+}
+
+.herofirst h1 {
+    font-size: 4.5rem;
+    font-weight: 600;
+}
+
+.herofirst h1 span {
+    color: #FF3B3B;
+}
+
+.herofirst p {
+    margin-top: 20px;
+    font-size: 1.4rem;
+    line-height: 2rem;
+}
+
+.herofirst button {
+    background-color: #FF3B3B;
+    color: #0c0b0b;
+    margin-top: 20px;
+    font-family: "Fredoka", serif;
+    font-size: 1.4rem;
+    width: 150px;
+    padding: 12px;
+    border-radius: 28px;
+    border: 3px solid #FF3B3B;
+    outline: none;
+    cursor: pointer;
+}
+
+.herosecond img {
+    width: 100%;
+    max-width: 650px;
+    height: auto;
+}
+
+/* Tablet Landscape / Small Desktop */
+@media (min-width: 769px) and (max-width: 1024px) {
+    #hero {
+        flex-direction: column-reverse;
+        height: auto;
+        padding: 50px 20px;
+        text-align: center;
+    }
+
+    .herofirst {
+        width: 100%;
+        max-width: 600px;
+    }
+
+    .herofirst h1 {
+        font-size: 3.5rem;
+    }
+
+    .herofirst p {
+        font-size: 1.2rem;
+        line-height: 1.8rem;
+    }
+
+    .herofirst button {
+        font-size: 1.2rem;
+        width: 140px;
+        padding: 10px;
+    }
+
+    .herosecond img {
+        max-width: 500px;
+        margin-top: 30px;
+    }
+}
+
+/* Tablet Portrait and Below */
+@media (max-width: 768px) {
+    #hero {
+        flex-direction: column-reverse;
+        height: auto;
+        padding: 40px 20px;
+        text-align: center;
+    }
+
+    .herofirst {
+        width: 100%;
+        max-width: 500px;
+    }
+
+    .herofirst h1 {
+        font-size: 3rem;
+    }
+
+    .herofirst p {
+        font-size: 1.1rem;
+        line-height: 1.6rem;
+    }
+
+    .herofirst button {
+        font-size: 1.1rem;
+        width: 130px;
+        padding: 10px;
+    }
+
+    .herosecond img {
+        max-width: 400px;
+        margin-top: 20px;
+    }
+}
+
+/* Mobile Devices */
+@media (max-width: 480px) {
+    #hero {
+        padding: 30px 15px;
+    }
+
+    .herofirst h1 {
+        font-size: 2.5rem;
+    }
+
+    .herofirst p {
+        font-size: 1rem;
+        line-height: 1.4rem;
+    }
+
+    .herofirst button {
+        font-size: 1rem;
+        width: 120px;
+        padding: 8px;
+    }
+
+    .herosecond img {
+        max-width: 300px;
+        margin-top: 20px;
+    }
+}
