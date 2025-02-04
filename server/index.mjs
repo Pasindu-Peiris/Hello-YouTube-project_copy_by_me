@@ -10,6 +10,19 @@ app.use(cors());
 
 const PORT = process.env.PORT || 4005;
 
+//Check DB connection
+const checkDBConnection = async () => {
+  try {
+    await DB.$connect();
+    console.log("Database connected successfully!");
+  } catch (error) {
+    console.error("Database connection failed:", error);
+  }
+ };
+
+//Call the checkDBConnection function
+checkDBConnection();
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
