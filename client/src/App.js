@@ -3,6 +3,7 @@ import ProtectedRouters from './utils/ProtectedRouters';
 import Notfound from './pages/Notfound';
 import Home from './pages/Home';
 import Loginuser from './pages/user/Loginuser';
+import Registration from './pages/user/Registration';
 
 
 
@@ -16,6 +17,7 @@ function App() {
 
           <Route path='/' element={<Home/>}/>
           <Route path='/login' element={<Loginuser/>}/>
+          <Route path='/registration' element={<Registration/>}/>
 
           {/* protected routers */}
           <Route element={<ProtectedRouters/>}>
