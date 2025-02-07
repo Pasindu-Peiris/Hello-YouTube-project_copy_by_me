@@ -29,7 +29,7 @@ const Userdashboard = () => {
       <Header />
 
       {/* Enhanced Sidebar */}
-      <div className={`sidebar ${isSidebarVisible ? "visible" : "hidden"}`}>
+      <div className={`dashboard-sidebar ${isSidebarVisible ? "visible" : "hidden"}`}>
         <div className="sidebar-header">
           <h2>HelloYT</h2>
           <p>Creator Dashboard</p>
@@ -72,9 +72,9 @@ const Userdashboard = () => {
       </div>
 
       {/* Main Content */}
-      <div className={`main-content ${isSidebarVisible ? "shifted" : ""}`}>
+      <div className={`dashboard-main-content ${isSidebarVisible ? "shifted" : ""}`}>
         <section id="hero">
-          <div className="herofirst">
+          <div className="hero-section">
             <h1>
               Welcome to Your <span>Dashboard</span>
             </h1>
