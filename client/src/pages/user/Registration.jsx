@@ -43,7 +43,7 @@ const Registration = () => {
         <div className="firstregister">
           <div className="textregister">
             <h1>Join Hello YT Today</h1>
-            <p>Sign up and start growing your YouTube channel effortlessly.</p>
+            <p>Sign up and start growing your YouTube channel <br/>quickly and effortlessly.</p>
           </div>
 
           <div className="formregister">

@@ -1,11 +1,11 @@
 import React from "react";
 import "../assets/componentscss/Header.css";
-import { Link } from "react-router-dom";
+
 
 const Header = () => {
     //onclick
     const buttonOnclick = () => {
-        window.location.href = "/register";
+        window.location.href = "/registration";
     };
 
     return (

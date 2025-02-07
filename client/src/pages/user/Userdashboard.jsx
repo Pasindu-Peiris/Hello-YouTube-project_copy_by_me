@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { Helmet } from "react-helmet";
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
 import "../../assets/pagecss/Userdashboard.css";
 
 const Userdashboard = () => {
@@ -26,7 +24,8 @@ const Userdashboard = () => {
       </Helmet>
 
       {/* Header */}
-      <Header />
+     
+      
 
       {/* Enhanced Sidebar */}
       <div className={`dashboard-sidebar ${isSidebarVisible ? "visible" : "hidden"}`}>
@@ -58,8 +57,8 @@ const Userdashboard = () => {
 
         <div className="sidebar-footer">
           <button className="support-btn">
-            <i className="fas fa-headset"></i>
-            Support
+            Log Out
+            <i class="fa-solid fa-right-from-bracket"></i>
           </button>
         </div>
       </div>
@@ -67,19 +66,19 @@ const Userdashboard = () => {
       {/* Toggle Button */}
       <div className="sidebar-toggle-container">
         <button className="toggle-btn" onClick={toggleSidebar}>
-          <span>{isSidebarVisible ? "←" : "→"}</span>
+          <span>{isSidebarVisible ? <i class="fa-solid fa-arrow-left"></i> : <i class="fa-solid fa-arrow-right"></i>}</span>
         </button>
       </div>
 
       {/* Main Content */}
-      <div className={`dashboard-main-content ${isSidebarVisible ? "shifted" : ""}`}>
-        <section id="hero">
-          
+      <div className={`dashboard-main-content ${isSidebarVisible ? "" : "shifted"}`}>
+        <section id="hero-user-dash">
+         
+
         </section>
       </div>
 
-      {/* Footer */}
-      <Footer />
+      
     </div>
   );
 };
