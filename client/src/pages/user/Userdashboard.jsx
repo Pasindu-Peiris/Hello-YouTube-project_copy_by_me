@@ -74,15 +74,7 @@ const Userdashboard = () => {
       {/* Main Content */}
       <div className={`dashboard-main-content ${isSidebarVisible ? "shifted" : ""}`}>
         <section id="hero">
-          <div className="hero-section">
-            <h1>
-              Welcome to Your <span>Dashboard</span>
-            </h1>
-            <p>
-              Track your YouTube channel's progress, monitor your subscribers,
-              views, revenue, and audience engagement. All your stats in one place!
-            </p>
-          </div>
+          
         </section>
       </div>
 
