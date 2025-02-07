@@ -3,7 +3,7 @@ import ProtectedRouters from './utils/ProtectedRouters';
 import Notfound from './pages/Notfound';
 import Home from './pages/Home';
 import Loginuser from './pages/user/Loginuser';
-
+import Userdashboard from'./pages/user/Userdashboard';
 
 
 function App() {
@@ -16,7 +16,8 @@ function App() {
 
           <Route path='/' element={<Home/>}/>
           <Route path='/login' element={<Loginuser/>}/>
-
+          <Route path='/dashboard' element={<Userdashboard/>}/>
+          
           {/* protected routers */}
           <Route element={<ProtectedRouters/>}>
             
