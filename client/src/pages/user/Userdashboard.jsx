@@ -70,13 +70,7 @@ const Userdashboard = () => {
         </button>
       </div>
 
-      {/* Main Content */}
-      <div className={`dashboard-main-content ${isSidebarVisible ? "" : "shifted"}`}>
-        <section id="hero-user-dash">
-         
-
-        </section>
-      </div>
+      
 
       
     </div>
