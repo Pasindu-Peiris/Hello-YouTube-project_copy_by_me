@@ -4,16 +4,40 @@ import "../../assets/pagecss/Registration.css";
 import signup from "../../assets/images/Signup.png";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import axios from "axios"; // Import Axios
 
 const Registration = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showModal, setShowModal] = useState(false); // State to control modal visibility
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert("Username: " + username + " Email: " + email + " Password: " + password);
+
+    try {
+      const response = await axios.post("http://localhost:4005/api/v1/user/register", {
+        username,
+        email,
+        password,
+      });
+
+      console.log("Registration successful", response.data);
+      setShowModal(true); // Show success modal
+      setTimeout(() => {
+        setShowModal(false); // Close the modal after 3 seconds
+      }, 3000);
+      
+      // Redirect to login page
+      setTimeout(() => {
+        window.location.href = "/login";
+      }, 3000);
+
+    } catch (error) {
+      console.error("Registration failed", error.response?.data);
+      alert(error.response?.data?.message || "Registration failed. Please try again.");
+    }
   };
 
   return (
@@ -21,10 +45,7 @@ const Registration = () => {
       {/* Add Helmet for SEO */}
       <Helmet>
         <title>Register - Hello YT</title>
-        <meta
-          name="description"
-          content="Join Hello YT and start growing your YouTube channel. Increase subscribers, views, and watch time effortlessly."
-        />
+        <meta name="description" content="Join Hello YT and start growing your YouTube channel. Increase subscribers, views, and watch time effortlessly." />
         <meta name="keywords" content="YouTube growth, register, increase subscribers, YouTube views, watch time, Hello YT" />
         <meta name="author" content="Hello YT" />
         <meta property="og:title" content="Register - Hello YT" />
@@ -43,7 +64,7 @@ const Registration = () => {
         <div className="firstregister">
           <div className="textregister">
             <h1>Join Hello YT Today</h1>
-            <p>Sign up and start growing your YouTube channel <br/>quickly and effortlessly.</p>
+            <p>Sign up and start growing your YouTube channel <br />quickly and effortlessly.</p>
           </div>
 
           <div className="formregister">
@@ -87,6 +108,15 @@ const Registration = () => {
       </section>
 
       <Footer />
+
+      {/* Modal for successful registration */}
+      {showModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <p>User registered successfully! Redirecting to login...</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

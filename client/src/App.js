@@ -6,9 +6,6 @@ import Loginuser from './pages/user/Loginuser';
 import Registration from './pages/user/Registration';
 import Userdashboard from './pages/user/Userdashboard';
 
-
-
-
 function App() {
 
   return (

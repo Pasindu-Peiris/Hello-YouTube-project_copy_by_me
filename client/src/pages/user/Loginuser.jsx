@@ -4,26 +4,42 @@ import "../../assets/pagecss/Loginuser.css";
 import bg3 from "../../assets/images/bg3.png";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import axios from "axios"; // Import axios
 
 const Loginuser = () => {
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  //handle submit
-  const handleSubmit = (e) => {
-
+  // Handle form submission
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert("Email: " + email + " Password: " + password);
-
-  }
-
-
+  
+    try {
+      const response = await axios.post("http://localhost:4005/api/v1/user/login", {
+        email,
+        password,
+      });
+  
+      if (response.data.success) {
+        // Login successful
+        console.log("Login successful", response.data);
+        sessionStorage.setItem('isAuth', true);  // Set session to indicate login
+        alert(response.data.message);  // Display success message
+        window.location.href = "/dashboard";  // Redirect to dashboard
+      } else {
+        // Display error message if any
+        alert(response.data.message || "Login failed. Please try again.");
+      }
+    } catch (error) {
+      // Log and display the error details
+      console.error("Login failed", error.response?.data);
+      alert(error.response?.data?.message || "Login failed. Please try again.");
+    }
+  };
+  
 
   return (
     <div>
-
-      {/* Add Helmet for SEO */}
       <Helmet>
         <title>Login - Hello YT</title>
         <meta
@@ -51,9 +67,7 @@ const Loginuser = () => {
         <meta name="twitter:image" content={bg3} />
       </Helmet>
 
-
-      <Header/>
-
+      <Header />
 
       <section id="login">
         <div className="firstlogin">
@@ -74,13 +88,7 @@ const Loginuser = () => {
                 name="email"
                 placeholder="Enter your Email"
                 required
-
-                onChange={
-                  (e) => {
-                    setEmail(e.target.value);
-                  }
-                }
-
+                onChange={(e) => setEmail(e.target.value)}
               />
 
               <input
@@ -89,13 +97,7 @@ const Loginuser = () => {
                 name="password"
                 placeholder="Enter your Password"
                 required
-
-                onChange={
-                  (e) => {
-                    setPassword(e.target.value);
-                  }
-                }
-
+                onChange={(e) => setPassword(e.target.value)}
               />
 
               <div className="fogotlogin">
@@ -112,7 +114,7 @@ const Loginuser = () => {
         </div>
       </section>
 
-      <Footer/>
+      <Footer />
     </div>
   );
 };
