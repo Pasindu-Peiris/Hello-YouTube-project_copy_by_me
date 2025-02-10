@@ -23,7 +23,7 @@ function App() {
           <Route path='/registration' element={<Registration/>}/>
           <Route path='/dashboard' element={<Userdashboard/>}/>
 
-          <Route path='/dash1' element={<Subadd/>}/>
+    
          
 
           {/* protected routers */}
