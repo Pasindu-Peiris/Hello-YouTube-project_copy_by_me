@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import Loginuser from './pages/user/Loginuser';
 import Registration from './pages/user/Registration';
 import Userdashboard from './pages/user/Userdashboard';
+import Subadd from './pages/user/Subadd';
 
 
 
@@ -22,6 +23,7 @@ function App() {
           <Route path='/registration' element={<Registration/>}/>
           <Route path='/dashboard' element={<Userdashboard/>}/>
 
+          <Route path='/dash1' element={<Subadd/>}/>
          
 
           {/* protected routers */}
