@@ -4,39 +4,65 @@ import "../../assets/pagecss/Loginuser.css";
 import bg3 from "../../assets/images/bg3.png";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
-import axios from "axios"; // Import axios
+import axios from "axios";
+import { Toaster, toast } from "react-hot-toast"; 
+import { useNavigate } from "react-router-dom";
 
 const Loginuser = () => {
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const navigate = useNavigate();
+
   // Handle form submission
   const handleSubmit = async (e) => {
+
     e.preventDefault();
-  
-    try {
-      const response = await axios.post("http://localhost:4005/api/v1/user/login", {
-        email,
-        password,
+
+    axios.post("http://localhost:4005/api/v1/user/signin/", { email, password }).then((response) => {
+
+        console.log(response.data);
+
+          toast.success(response.data.message, {
+            duration: 3000,
+            style: {
+              borderRadius: "10px",
+              height: "60px",
+              background: "#171617",
+              color: "#fff",
+            },
+          });
+
+          setTimeout(() => {
+            navigate("/user-dashboard");
+        }, 3000); 
+
+        //set local storage
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("user", response.data.user.id);
+
+       
+      })
+      .catch((error) => {
+
+        toast.error(
+          error.response?.data?.message && typeof error.response.data.message === "string"
+            ? error.response.data.message
+            : error.response?.data?.message?.error || "An error occurred. Please try again.",
+          {
+            duration: 3000,
+            style: {
+              borderRadius: "10px",
+              height: "60px",
+              background: "#171617",
+              color: "#fff",
+            },
+          }
+        );
+        console.log(error );
       });
-  
-      if (response.data.success) {
-        // Login successful
-        console.log("Login successful", response.data);
-        sessionStorage.setItem('isAuth', true);  // Set session to indicate login
-        alert(response.data.message);  // Display success message
-        window.location.href = "/dashboard";  // Redirect to dashboard
-      } else {
-        // Display error message if any
-        alert(response.data.message || "Login failed. Please try again.");
-      }
-    } catch (error) {
-      // Log and display the error details
-      console.error("Login failed", error.response?.data);
-      alert(error.response?.data?.message || "Login failed. Please try again.");
-    }
   };
-  
 
   return (
     <div>
@@ -106,6 +132,10 @@ const Loginuser = () => {
 
               <input type="submit" value="Sign In" />
             </form>
+
+            <div className="fogotlogin">
+              <p>Don't you have an account? <a href="/signup">Sign up</a></p>
+            </div>
           </div>
         </div>
 
@@ -113,6 +143,8 @@ const Loginuser = () => {
           <img src={bg3} alt="Promotion visual" />
         </div>
       </section>
+
+      <Toaster position="top-center" reverseOrder={false} />
 
       <Footer />
     </div>
