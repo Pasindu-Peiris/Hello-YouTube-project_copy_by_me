@@ -94,10 +94,10 @@ userRouter.post('/signup',
         })
 
         if (!save_user) {
-          return res.status(401).json({ success: false, message: "Error in saving user." });
+          return res.status(401).json({ success: false, message: "Error in Sign Up." });
         }
 
-        return res.status(200).json({ success: true, message: "User registered successfully." });
+        return res.status(200).json({ success: true, message: "Sign Up Successfully." });
 
       } else {
         return res.status(404).json({ message: validation_result });
@@ -147,19 +147,19 @@ userRouter.post('/signin',
 
         return res.status(200).json({
           success: true,
-          message: "Login successful.",
+          message: "Sign In Successful.",
           user: { id: user.userID, username: user.username, email: user.email },
           token,
         });
 
 
       } else {
-        return res.status(404).json({ message: validation_result });
+        return res.status(404).json({ success: false, message: validation_result });
       }
 
     } catch (error) {
       console.log(error);
-      return res.status(500).json({ error: error, message: 'Internal sever Error!' })
+      return res.status(500).json({success: false, error: error, message: 'Internal sever Error!' })
     }
   }
 )
@@ -302,7 +302,6 @@ userRouter.delete('/delete-user/:id',
         res.status(200).json({ success: true, message: "User deleted successfully." });
 
       }
-
 
     } catch (error) {
       console.error(error);
