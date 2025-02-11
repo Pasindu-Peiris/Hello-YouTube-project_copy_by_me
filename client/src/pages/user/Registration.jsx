@@ -5,38 +5,75 @@ import signup from "../../assets/images/Signup.png";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import axios from "axios"; // Import Axios
+import { Toaster, toast } from "react-hot-toast";
+import { validatePassword } from "../../utils/Passwordcheck";
+import { useNavigate } from "react-router-dom";
 
 const Registration = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [showModal, setShowModal] = useState(false); // State to control modal visibility
 
-  // Handle form submission
+  const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const response = await axios.post("http://localhost:4005/api/v1/user/register", {
-        username,
-        email,
-        password,
+    const passwordResult = validatePassword(password);
+
+    if (passwordResult !== true) {
+      passwordResult.forEach((error) => {
+        toast.error(error, {
+          duration: 3000,
+          style: {
+            borderRadius: "10px",
+            height: "60px",
+            background: "#171617",
+            color: "#fff",
+          },
+        });
       });
+    } else {
+      axios.post("http://localhost:4005/api/v1/user/signup/", {
+          username,
+          email,
+          password,
+        })
+        .then((response) => {
+          toast.success(response.data.message, {
+            duration: 3000,
+            style: {
+              borderRadius: "10px",
+              height: "60px",
+              background: "#171617",
+              color: "#fff",
+            },
+          });
 
-      console.log("Registration successful", response.data);
-      setShowModal(true); // Show success modal
-      setTimeout(() => {
-        setShowModal(false); // Close the modal after 3 seconds
-      }, 3000);
-      
-      // Redirect to login page
-      setTimeout(() => {
-        window.location.href = "/login";
-      }, 3000);
+          setTimeout(() => {
+            navigate("/signin");
+        }, 3000); 
 
-    } catch (error) {
-      console.error("Registration failed", error.response?.data);
-      alert(error.response?.data?.message || "Registration failed. Please try again.");
+
+        })
+        .catch((error) => {
+          toast.error(
+            error.response?.data?.message &&
+              typeof error.response.data.message === "string"
+              ? error.response.data.message
+              : error.response?.data?.message?.error ||
+              "An error occurred. Please try again.",
+            {
+              duration: 3000,
+              style: {
+                borderRadius: "10px",
+                height: "60px",
+                background: "#171617",
+                color: "#fff",
+              },
+            }
+          );
+        });
     }
   };
 
@@ -45,16 +82,28 @@ const Registration = () => {
       {/* Add Helmet for SEO */}
       <Helmet>
         <title>Register - Hello YT</title>
-        <meta name="description" content="Join Hello YT and start growing your YouTube channel. Increase subscribers, views, and watch time effortlessly." />
-        <meta name="keywords" content="YouTube growth, register, increase subscribers, YouTube views, watch time, Hello YT" />
+        <meta
+          name="description"
+          content="Join Hello YT and start growing your YouTube channel. Increase subscribers, views, and watch time effortlessly."
+        />
+        <meta
+          name="keywords"
+          content="YouTube growth, register, increase subscribers, YouTube views, watch time, Hello YT"
+        />
         <meta name="author" content="Hello YT" />
         <meta property="og:title" content="Register - Hello YT" />
-        <meta property="og:description" content="Join Hello YT and start growing your YouTube channel today!" />
+        <meta
+          property="og:description"
+          content="Join Hello YT and start growing your YouTube channel today!"
+        />
         <meta property="og:image" content={signup} />
         <meta property="og:url" content="https://www.helloyt.com/register" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Register - Hello YT" />
-        <meta name="twitter:description" content="Join Hello YT and start growing your YouTube channel today!" />
+        <meta
+          name="twitter:description"
+          content="Join Hello YT and start growing your YouTube channel today!"
+        />
         <meta name="twitter:image" content={signup} />
       </Helmet>
 
@@ -64,7 +113,10 @@ const Registration = () => {
         <div className="firstregister">
           <div className="textregister">
             <h1>Join Hello YT Today</h1>
-            <p>Sign up and start growing your YouTube channel <br />quickly and effortlessly.</p>
+            <p>
+              Sign up and start growing your YouTube channel <br />
+              quickly and effortlessly.
+            </p>
           </div>
 
           <div className="formregister">
@@ -99,6 +151,12 @@ const Registration = () => {
 
               <input type="submit" value="Sign Up" />
             </form>
+
+            <div className="fogotlogin">
+              <p>
+                Already have an account ? <a href="/signin">Sign In</a>
+              </p>
+            </div>
           </div>
         </div>
 
@@ -108,15 +166,7 @@ const Registration = () => {
       </section>
 
       <Footer />
-
-      {/* Modal for successful registration */}
-      {showModal && (
-        <div className="modal">
-          <div className="modal-content">
-            <p>User registered successfully! Redirecting to login...</p>
-          </div>
-        </div>
-      )}
+      <Toaster position="top-center" reverseOrder={false} />
     </div>
   );
 };
