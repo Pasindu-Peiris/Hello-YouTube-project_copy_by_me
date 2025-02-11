@@ -1,11 +1,13 @@
 import React from "react";
 import "../assets/componentscss/Header.css";
-
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
+
+    const navigate = useNavigate();
     //onclick
     const buttonOnclick = () => {
-        window.location.href = "/registration";
+        navigate("/signup");
     };
 
     return (
