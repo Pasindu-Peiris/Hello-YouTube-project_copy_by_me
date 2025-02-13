@@ -1,5 +1,5 @@
 export const tableData = [
-    { id: 1, channelLink: 'htttps:"//sdsd', description: 32, completedCount: 'A', grade: 'A' },
+    { id: 1, channelLink: 1, description: 32, completedCount: 'A', grade: 'A' },
     { id: 2, channelLink: 'htttps:"//sdsd', description: 42, completedCount: 'B', grade: 'B' },
     { id: 3, channelLink: 'htttps:"//sdsd', description: 32, completedCount: 'C', grade: 'C' },
     { id: 4, channelLink: 'htttps:"//sdsd', description: 32, completedCount: 'D', grade: 'D' },

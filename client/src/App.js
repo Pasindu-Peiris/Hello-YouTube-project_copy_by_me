@@ -8,6 +8,7 @@ import Userdashboard from './pages/user/Userdashboard';
 import Subadd from './pages/user/Subadd';
 import Subtask from './pages/user/Subtask';
 import Tasksubtab from './pages/user/Tasksubtab';
+import Tasksubupload from './pages/user/Tasksubupload';
 
 
 function App() {
@@ -22,7 +23,11 @@ function App() {
         <Route path='/sub' element={<Subtask/>}/>
 
         <Route path='/tasksub' element={<Tasksubtab />} />
+        <Route path='/tasksubcomplete/:taskid' element={<Tasksubupload/>}/>
 
+
+        
+        
         {/* protected routers */}
         <Route element={<ProtectedRouters />}>
 
@@ -43,4 +48,4 @@ function App() {
   );
 }
 
-export default App;
+export default App; 
