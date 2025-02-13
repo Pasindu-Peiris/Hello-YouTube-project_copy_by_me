@@ -78,7 +78,7 @@ const Userdashboard = () => {
               <span>User Profile</span>
             </li>
             <li
-            className="active"
+            className=""
               onClick={(e) => {
                 onChangePage("/sub");
               }}
