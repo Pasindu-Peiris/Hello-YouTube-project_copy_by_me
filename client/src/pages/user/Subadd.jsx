@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../../assets/pagecss/Subadd.css";
 import Userdashboard from "./Userdashboard";
+import axios from "axios";
 
 const Subadd = () => {
+  
   const [user, setUser] = useState({
-    username: "JohnDoe",
-    email: "johndoe@example.com",
+    username: "",
+    email: "",
   });
 
   const [editMode, setEditMode] = useState(false);
@@ -23,19 +25,41 @@ const Subadd = () => {
     setEditMode(false);
   };
 
+  const getUserDetails = async () => {
+    const token = localStorage.getItem("token");
+
+    await axios.get(`http://localhost:4005/api/v1/user/get-data-from-jwt/${token}`)
+      .then((response) => {
+        console.log(response.data);
+        setUser({
+          username: response.data.decoded.username,
+          email: response.data.decoded.email,
+        });
+      });
+
+    console.log(token);
+  };
+
+  useEffect(() => {
+    getUserDetails();
+  }, [])
+
   return (
     <div id="subadd">
       <Userdashboard />
 
       {/* Main Content */}
-      <div >
+      <div>
         <section id="hero-user-dash">
           <div className="profile-container">
             <h1> User Profile Details</h1>
             {editMode ? (
               <form onSubmit={handleSubmit}>
                 <div className="form-group">
-                  <label> <i class="fa-solid fa-at"></i> Name</label>
+                  <label>
+                    {" "}
+                    <i class="fa-solid fa-at"></i> Name
+                  </label>
                   <input
                     type="text"
                     name="username"
@@ -44,7 +68,10 @@ const Subadd = () => {
                   />
                 </div>
                 <div className="form-group">
-                  <label> <i class="fa-regular fa-envelope"></i> Email</label>
+                  <label>
+                    {" "}
+                    <i class="fa-regular fa-envelope"></i> Email
+                  </label>
                   <input
                     type="email"
                     name="email"
@@ -53,7 +80,11 @@ const Subadd = () => {
                   />
                 </div>
                 <button type="submit">Save</button>
-                <button id="cancel-profile" type="button" onClick={() => setEditMode(false)}>
+                <button
+                  id="cancel-profile"
+                  type="button"
+                  onClick={() => setEditMode(false)}
+                >
                   Cancel
                 </button>
               </form>

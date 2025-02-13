@@ -159,7 +159,7 @@ userRouter.post('/signin',
 
     } catch (error) {
       console.log(error);
-      return res.status(500).json({success: false, error: error, message: 'Internal sever Error!' })
+      return res.status(500).json({ success: false, error: error, message: 'Internal sever Error!' })
     }
   }
 )
@@ -313,20 +313,35 @@ userRouter.delete('/delete-user/:id',
 
 
 //get data from jwt
-userRouter.get('/get-data-from-jwt', async (req, res) => {
+userRouter.get('/get-data-from-jwt/:token',
+  param('token').notEmpty().withMessage("Invalid token."),
 
-  try {
+  async (req, res) => {
+
+    try {
+
+      const validation_result = validationResult(req);
+
+      if (validation_result.isEmpty()) {
+
+        const match_result = matchedData(req);
+        const token = match_result.token;
+        const decoded = decodeToken(token);
+
+        return res.status(200).json({ success: true, decoded });
+
+      }
 
 
 
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false, message: "Internal server error." });
-  }
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: "Internal server error." });
+    }
 
 
 
-})
+  })
 
 
 

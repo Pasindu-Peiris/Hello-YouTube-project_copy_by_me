@@ -13,29 +13,30 @@ function App() {
 
     <BrowserRouter>
 
-        <Routes>
+      <Routes>
 
-          <Route path='/' element={<Home/>}/>
-          <Route path='/signin' element={<Loginuser/>}/>
-          <Route path='/signup' element={<Registration/>}/>
-          <Route path='/user-dashboard' element={<Userdashboard/>}/>
-          <Route path='/dash' element={<Subadd/>}/>
+        <Route path='/' element={<Home />} />
+        <Route path='/signin' element={<Loginuser />} />
+        <Route path='/signup' element={<Registration />} />
 
-    
-         
 
-          {/* protected routers */}
-          <Route element={<ProtectedRouters/>}>
-            
-          </Route>
 
-          {/* 404 Page Route */}
-          <Route path='*' element={<Notfound/>} />
-          
 
-        </Routes>
+        {/* protected routers */}
+        <Route element={<ProtectedRouters />}>
+        
+          <Route path='/user-dashboard' element={<Userdashboard />} />
+          <Route path='/dash' element={<Subadd />} />
 
-      </BrowserRouter>
+        </Route>
+
+        {/* 404 Page Route */}
+        <Route path='*' element={<Notfound />} />
+
+
+      </Routes>
+
+    </BrowserRouter>
 
 
   );

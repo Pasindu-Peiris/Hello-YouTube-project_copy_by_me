@@ -5,7 +5,7 @@ import bg3 from "../../assets/images/bg3.png";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import axios from "axios";
-import { Toaster, toast } from "react-hot-toast"; 
+import { Toaster, toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 const Loginuser = () => {
@@ -20,30 +20,39 @@ const Loginuser = () => {
 
     e.preventDefault();
 
-    axios.post("http://localhost:4005/api/v1/user/signin/", { email, password }).then((response) => {
+    await axios.post("http://localhost:4005/api/v1/user/signin/", { email, password }).then((response) => {
 
-        console.log(response.data);
+      console.log(response.data);
 
-          toast.success(response.data.message, {
-            duration: 3000,
-            style: {
-              borderRadius: "10px",
-              height: "60px",
-              background: "#171617",
-              color: "#fff",
-            },
-          });
+      toast.success(response.data.message, {
+        duration: 3000,
+        style: {
+          borderRadius: "10px",
+          height: "60px",
+          background: "#171617",
+          color: "#fff",
+        },
+      });
 
-          setTimeout(() => {
-            navigate("/user-dashboard");
-        }, 3000); 
+      setTimeout(() => {
+        navigate("/user-dashboard");
+      }, 3000);
 
-        //set local storage
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("user", response.data.user.id);
+      //set local storage
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("user", response.data.user.id);
+      localStorage.setItem("role", "user");
 
-       
-      })
+      const now = new Date().getTime(); // Current time in milliseconds
+      const expirationTime = now + 24 * 60 * 60 * 1000; // 1 day in milliseconds
+
+      sessionStorage.setItem("isAuth", JSON.stringify({
+        value: true,
+        expiresAt: expirationTime,
+      }));
+
+
+    })
       .catch((error) => {
 
         toast.error(
@@ -60,7 +69,7 @@ const Loginuser = () => {
             },
           }
         );
-        console.log(error );
+        console.log(error);
       });
   };
 

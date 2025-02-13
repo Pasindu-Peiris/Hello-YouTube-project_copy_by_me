@@ -34,7 +34,7 @@ const Registration = () => {
         });
       });
     } else {
-      axios.post("http://localhost:4005/api/v1/user/signup/", {
+    await  axios.post("http://localhost:4005/api/v1/user/signup/", {
           username,
           email,
           password,

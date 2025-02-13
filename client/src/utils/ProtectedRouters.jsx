@@ -6,6 +6,7 @@ const ProtectedRouters = () => {
     const isAuth = sessionStorage.getItem('isAuth')
 
 
+
     return isAuth ? <Outlet /> : <Navigate to='/' />
 }
 

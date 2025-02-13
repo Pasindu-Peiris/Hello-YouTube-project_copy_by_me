@@ -1,12 +1,42 @@
 import React, { useState } from "react";
 import { Helmet } from "react-helmet";
 import "../../assets/pagecss/Userdashboard.css";
+import { useNavigate } from "react-router-dom";
+import { Toaster, toast } from "react-hot-toast";
 
 const Userdashboard = () => {
   const [isSidebarVisible, setIsSidebarVisible] = useState(true);
 
+  const navigate = useNavigate();
+
   const toggleSidebar = () => {
     setIsSidebarVisible((prevState) => !prevState);
+  };
+
+  const onChangePage = (page) => {
+    navigate(page);
+  };
+
+  const signOut = () => {
+    sessionStorage.removeItem("isAuth");
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    localStorage.removeItem("role");
+
+    toast.success("Sign Out Successfully", {
+      duration: 3000,
+      style: {
+        borderRadius: "10px",
+        height: "60px",
+        background: "#171617",
+        color: "#fff",
+      },
+    });
+
+    setTimeout(() => {
+      navigate("/");
+    }, 2000);
+
   };
 
   return (
@@ -24,19 +54,26 @@ const Userdashboard = () => {
       </Helmet>
 
       {/* Header */}
-     
-      
 
       {/* Enhanced Sidebar */}
-      <div className={`dashboard-sidebar ${isSidebarVisible ? "visible" : "hidden"}`}>
+      <div
+        className={`dashboard-sidebar ${
+          isSidebarVisible ? "visible" : "hidden"
+        }`}
+      >
         <div className="sidebar-header">
           <h2>HelloYT</h2>
           <p>Creator Dashboard</p>
         </div>
-        
+
         <div className="sidebar-links">
           <ul>
-            <li className="active">
+            <li
+              className="active"
+              onClick={(e) => {
+                onChangePage("/dash");
+              }}
+            >
               <i className="fas fa-user-circle"></i>
               <span>User Profile</span>
             </li>
@@ -56,8 +93,10 @@ const Userdashboard = () => {
         </div>
 
         <div className="sidebar-footer">
-          <button className="support-btn">
-            Log Out
+          <button className="support-btn"  onClick={(e) => {
+                signOut();
+              }}>
+            Sign Out
             <i class="fa-solid fa-right-from-bracket"></i>
           </button>
         </div>
@@ -66,13 +105,17 @@ const Userdashboard = () => {
       {/* Toggle Button */}
       <div className="sidebar-toggle-container">
         <button className="toggle-btn" onClick={toggleSidebar}>
-          <span>{isSidebarVisible ? <i class="fa-solid fa-arrow-left"></i> : <i class="fa-solid fa-arrow-right"></i>}</span>
+          <span>
+            {isSidebarVisible ? (
+              <i class="fa-solid fa-arrow-left"></i>
+            ) : (
+              <i class="fa-solid fa-arrow-right"></i>
+            )}
+          </span>
         </button>
       </div>
 
-      
-
-      
+      <Toaster position="top-center" reverseOrder={false} />
     </div>
   );
 };
