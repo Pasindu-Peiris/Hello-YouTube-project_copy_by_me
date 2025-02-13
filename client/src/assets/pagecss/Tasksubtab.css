@@ -1,0 +1,47 @@
+#user-dashboard-profile-view{
+    margin: 20px 0px 0px 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width:auto;
+    height: 90vh;
+   
+}
+.textintasksub{
+    display: flex;
+    width: 100%;
+    padding: 20px 0px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    font-family: "Fredoka", serif;
+
+}
+
+.textintasksub h1{
+    font-size:2rem ;
+    font-weight: 600;
+    padding: 5px 0px;
+    color: rgb(33, 32, 32);
+
+} 
+.textintasksub p{
+    font-size:1rem ;
+    font-weight: 500;
+    font-family: "Poppins", serif;
+    color: rgb(33, 32, 32);
+
+} 
+.data-table{
+    height: 100vh;
+}
+
+.tableintasksub{
+    width: 100%;
+    display:block;
+    border-radius: 8px;
+    box-shadow: 5px 0px 10px 6px #bcbbbb;
+    border: 1px solid #302d2d;
+    padding: 4px;
+    background-color: #eeecec;
+}

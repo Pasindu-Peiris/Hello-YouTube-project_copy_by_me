@@ -7,12 +7,13 @@ import Registration from './pages/user/Registration';
 import Userdashboard from './pages/user/Userdashboard';
 import Subadd from './pages/user/Subadd';
 import Subtask from './pages/user/Subtask';
+import Tasksubtab from './pages/user/Tasksubtab';
 
 
 function App() {
   return (
     <BrowserRouter>
-    
+
       <Routes>
 
         <Route path='/' element={<Home />} />
@@ -20,11 +21,11 @@ function App() {
         <Route path='/signup' element={<Registration />} />
         <Route path='/sub' element={<Subtask/>}/>
 
-
+        <Route path='/tasksub' element={<Tasksubtab />} />
 
         {/* protected routers */}
         <Route element={<ProtectedRouters />}>
-        
+
           <Route path='/user-dashboard' element={<Userdashboard />} />
           <Route path='/dash' element={<Subadd />} />
 
