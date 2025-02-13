@@ -59,7 +59,8 @@ const Tasksubtab = () => {
     });
 
     setTimeout(() => {
-      navigate("/user-dashboard");
+      
+      navigate(`/tasksubcomplete/${row.channelLink}`);
     }, 3000);
 
     
