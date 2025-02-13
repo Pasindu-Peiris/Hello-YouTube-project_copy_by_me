@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import ProtectedRouters from './utils/ProtectedRouters';
 import Notfound from './pages/Notfound';
 import Home from './pages/Home';
@@ -7,18 +7,16 @@ import Registration from './pages/user/Registration';
 import Userdashboard from './pages/user/Userdashboard';
 import Subadd from './pages/user/Subadd';
 
+
 function App() {
-
   return (
-
     <BrowserRouter>
-
+    
       <Routes>
 
         <Route path='/' element={<Home />} />
         <Route path='/signin' element={<Loginuser />} />
         <Route path='/signup' element={<Registration />} />
-
 
 
 
@@ -40,7 +38,6 @@ function App() {
 
 
   );
-
 }
 
 export default App;
