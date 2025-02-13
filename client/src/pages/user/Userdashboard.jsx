@@ -63,7 +63,7 @@ const Userdashboard = () => {
       >
         <div className="sidebar-header">
           <h2>HelloYT</h2>
-          <p>Creator Dashboard</p>
+          <p>Wellcome</p>
         </div>
 
         <div className="sidebar-links">
@@ -77,7 +77,12 @@ const Userdashboard = () => {
               <i className="fas fa-user-circle"></i>
               <span>User Profile</span>
             </li>
-            <li>
+            <li
+            className="active"
+              onClick={(e) => {
+                onChangePage("/sub");
+              }}
+            >
               <i className="fas fa-tasks"></i>
               <span>Sub Tasks</span>
             </li>

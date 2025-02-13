@@ -6,6 +6,7 @@ import Loginuser from './pages/user/Loginuser';
 import Registration from './pages/user/Registration';
 import Userdashboard from './pages/user/Userdashboard';
 import Subadd from './pages/user/Subadd';
+import Subtask from './pages/user/Subtask';
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <Route path='/' element={<Home />} />
         <Route path='/signin' element={<Loginuser />} />
         <Route path='/signup' element={<Registration />} />
+        <Route path='/sub' element={<Subtask/>}/>
 
 
 
