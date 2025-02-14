@@ -10,6 +10,9 @@ import { validatePassword } from "../../utils/Passwordcheck";
 import { useNavigate } from "react-router-dom";
 
 const Registration = () => {
+  
+  const apiUrl = process.env.REACT_APP_API_URL;
+
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -34,7 +37,8 @@ const Registration = () => {
         });
       });
     } else {
-    await  axios.post("http://localhost:4005/api/v1/user/signup/", {
+      await axios
+        .post(`${apiUrl}user/signup/`, {
           username,
           email,
           password,
@@ -52,9 +56,7 @@ const Registration = () => {
 
           setTimeout(() => {
             navigate("/signin");
-        }, 3000); 
-
-
+          }, 3000);
         })
         .catch((error) => {
           toast.error(
@@ -62,7 +64,7 @@ const Registration = () => {
               typeof error.response.data.message === "string"
               ? error.response.data.message
               : error.response?.data?.message?.error ||
-              "An error occurred. Please try again.",
+                  "An error occurred. Please try again.",
             {
               duration: 3000,
               style: {
@@ -130,7 +132,6 @@ const Registration = () => {
                 required
                 onChange={(e) => setUsername(e.target.value)}
               />
-
               <input
                 type="email"
                 id="email"
@@ -139,7 +140,6 @@ const Registration = () => {
                 required
                 onChange={(e) => setEmail(e.target.value)}
               />
-
               <input
                 type="password"
                 id="password"
@@ -148,13 +148,12 @@ const Registration = () => {
                 required
                 onChange={(e) => setPassword(e.target.value)}
               />
-
               <input type="submit" value="Sign Up" />
             </form>
 
             <div className="fogotlogin">
               <p>
-                Already have an account ? <a href="/signin">Sign In</a>
+                Already have an account? <a href="/signin">Sign In</a>
               </p>
             </div>
           </div>
