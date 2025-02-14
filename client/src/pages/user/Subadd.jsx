@@ -5,9 +5,7 @@ import axios from "axios";
 import { Toaster, toast } from "react-hot-toast";
 
 const Subadd = () => {
-
   const apiUrl = process.env.REACT_APP_API_URL;
-
 
   const [user, setUser] = useState({
     username: "",
@@ -31,60 +29,55 @@ const Subadd = () => {
   };
 
   const getUserDetails = async () => {
-
     const id = localStorage.getItem("user");
-   
-    await axios.get(`${apiUrl}user/get-user/${id}`).then((response) => {
-      console.log(response.data);
-      setUser({
-        username: response.data.user.username,
-        email: response.data.user.email,
+
+    await axios
+      .get(`${apiUrl}user/get-user/${id}`)
+      .then((response) => {
+        console.log(response.data);
+        setUser({
+          username: response.data.user.username,
+          email: response.data.user.email,
+        });
+      })
+      .catch((error) => {
+        toast.error("Internal server error", {
+          duration: 3000,
+          style: {
+            borderRadius: "10px",
+            height: "60px",
+            background: "#171617",
+            color: "#fff",
+          },
+        });
       });
-
-      toast.success(response.data.message, {
-        duration: 3000,
-        style: {
-          borderRadius: "10px",
-          height: "60px",
-          background: "#171617",
-          color: "#fff",
-        },
-      });
-
-    }).catch((error) => {
-      toast.error("Internal server error", {
-        duration: 3000,
-        style: {
-          borderRadius: "10px",
-          height: "60px",
-          background: "#171617",
-          color: "#fff",
-        },
-      });
-
-    });
-
   };
 
   useEffect(() => {
     getUserDetails();
-  }, [])
+  }, []);
 
-  //update profile 
+  //update profile
   const updateProfile = async () => {
-
     const id = localStorage.getItem("user");
 
-    await axios.put(`${apiUrl}user/update-user/${id}`, {
-      username: user.username,
-      email: user.email,
-    }
-    ).then((response) => {
-      console.log(response.data);
-      alert("Profile Updated Successfully!");
-    });
-
-  }
+    await axios
+      .put(`${apiUrl}user/update-user/${id}`, {
+        username: user.username,
+        email: user.email,
+      })
+      .then((response) => {
+        toast.success(response.data.message, {
+          duration: 3000,
+          style: {
+            borderRadius: "10px",
+            height: "60px",
+            background: "#171617",
+            color: "#fff",
+          },
+        });
+      });
+  };
 
   return (
     <div id="subadd">
