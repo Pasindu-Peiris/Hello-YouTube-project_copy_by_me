@@ -37,13 +37,12 @@ const Registration = () => {
         });
       });
     } else {
-      await axios
-        .post(`${apiUrl}user/signup/`, {
+      await axios.post(`${apiUrl}user/signup/`, {
           username,
           email,
           password,
-        })
-        .then((response) => {
+
+        }).then((response) => {
           toast.success(response.data.message, {
             duration: 3000,
             style: {
