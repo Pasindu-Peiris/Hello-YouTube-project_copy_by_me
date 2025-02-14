@@ -31,7 +31,8 @@ const Subadd = () => {
   const getUserDetails = async () => {
     const id = localStorage.getItem("user");
 
-    await axios.get(`${apiUrl}user/get-user/${id}`)
+    await axios
+      .get(`${apiUrl}user/get-user/${id}`)
       .then((response) => {
         console.log(response.data);
         setUser({
