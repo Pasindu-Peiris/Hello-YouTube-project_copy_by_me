@@ -81,9 +81,9 @@ const Registration = () => {
 
   return (
     <div>
-      {/* Add Helmet for SEO */}
+      
       <Helmet>
-        <title>Register - Hello YT</title>
+        <title>Register Hello YT</title>
         <meta
           name="description"
           content="Join Hello YT and start growing your YouTube channel. Increase subscribers, views, and watch time effortlessly."
