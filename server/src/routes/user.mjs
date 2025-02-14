@@ -254,7 +254,7 @@ userRouter.put('/update-user/:id',
           },
         });
 
-        return res.status(200).json({ success: true, user: updatedUser });
+        return res.status(200).json({ success: true, user: updatedUser, message: "User updated successfully." });
 
       } else {
         return res.status(404).json({ message: validation_result });
