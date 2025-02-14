@@ -10,7 +10,7 @@ import { validatePassword } from "../../utils/Passwordcheck";
 import { useNavigate } from "react-router-dom";
 
 const Registration = () => {
-  
+
   const apiUrl = process.env.REACT_APP_API_URL;
 
   const [username, setUsername] = useState("");
@@ -64,7 +64,7 @@ const Registration = () => {
               typeof error.response.data.message === "string"
               ? error.response.data.message
               : error.response?.data?.message?.error ||
-                  "An error occurred. Please try again.",
+              "An error occurred. Please try again.",
             {
               duration: 3000,
               style: {
@@ -81,7 +81,7 @@ const Registration = () => {
 
   return (
     <div>
-      
+
       <Helmet>
         <title>Register Hello YT</title>
         <meta
