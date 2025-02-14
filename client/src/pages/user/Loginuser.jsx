@@ -10,6 +10,8 @@ import { useNavigate } from "react-router-dom";
 
 const Loginuser = () => {
 
+  const apiUrl = process.env.REACT_APP_API_URL;
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -20,7 +22,7 @@ const Loginuser = () => {
 
     e.preventDefault();
 
-    await axios.post("http://localhost:4005/api/v1/user/signin/", { email, password }).then((response) => {
+    await axios.post(`${apiUrl}user/signin/`, { email, password }).then((response) => {
 
       console.log(response.data);
 
