@@ -61,7 +61,7 @@ const Tasksubtab = () => {
     setTimeout(() => {
       
       navigate(`/tasksubcomplete/${row.channelLink}`);
-    }, 3000);
+    }, 2000);
 
     
   };
