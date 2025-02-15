@@ -5,10 +5,14 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 
 const Subtask = () => {
+  const apiUrl = process.env.REACT_APP_API_URL;
+
   const [user, setUser] = useState({
     url: "",
     description: "",
   });
+
+  const [isEditing, setIsEditing] = useState(false); // State to track edit mode
 
   const isValidYouTubeUrl = (url) => {
     const regex = /^(https?:\/\/)?(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
@@ -38,14 +42,8 @@ const Subtask = () => {
       return;
     }
 
-    const storedUserId = localStorage.getItem("userId");
-    if (storedUserId) {
-      localStorage.setItem(
-        `youtubeData_${storedUserId}`,
-        JSON.stringify(user)
-      );
-    }
-
+    console.log(user);
+    // Simulate form submission (replace with actual API call)
     toast.success("Successfully submitted!", {
       duration: 3000,
       style: {
@@ -55,27 +53,32 @@ const Subtask = () => {
         color: "#fff",
       },
     });
+
+    // Disable editing after submission
+    setIsEditing(false);
   };
 
-  const getUserDetails = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      const response = await axios.get(
-        `http://localhost:4005/api/v1/user/get-data-from-jwt/${token}`
-      );
-      const userId = response.data.decoded.id;
-      localStorage.setItem("userId", userId);
-      setUser({
-        url: response.data.decoded.url || "",
-        description: response.data.decoded.description || "",
-      });
-    } catch (error) {
-      console.error("Error fetching user details:", error);
-    }
+  const handleEditClick = () => {
+    setIsEditing(true); // Enable editing mode
   };
+
+  const handleCancelClick = () => {
+    // Reset form fields and disable editing mode
+    setUser({
+      url: "",
+      description: "",
+    });
+    setIsEditing(false);
+  };
+
+  const fetchTask = async () => {
+
+ 
+
+  }
 
   useEffect(() => {
-    getUserDetails();
+    // Fetch initial data (if needed)
   }, []);
 
   return (
@@ -96,21 +99,34 @@ const Subtask = () => {
                   value={user.url}
                   onChange={handleInputChange}
                   placeholder="Enter a valid YouTube URL"
+                  disabled={!isEditing} // Disable if not in edit mode
                 />
               </div>
               <div className="form-group">
                 <label>
                   <i className="fa-regular fa-envelope"></i> Description
                 </label>
-                <input
+                <textarea
                   type="text"
                   name="description"
                   value={user.description}
                   onChange={handleInputChange}
-                  placeholder="Enter a description"
+                  placeholder="Enter a description about the video..."
+                  disabled={!isEditing} // Disable if not in edit mode
                 />
               </div>
-              <button type="submit">Submit</button>
+              {isEditing ? (
+                <div className="form-buttons">
+                  <button type="submit">Submit</button>
+                  <button type="button" onClick={handleCancelClick}>
+                    Cancel
+                  </button>
+                </div>
+              ) : (
+                <button type="button" onClick={handleEditClick}>
+                  Edit Details
+                </button>
+              )}
             </form>
           </div>
         </section>
