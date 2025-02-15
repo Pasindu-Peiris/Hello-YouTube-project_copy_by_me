@@ -39,6 +39,10 @@ const Userdashboard = () => {
 
   };
 
+  const changeAcPageActive = () => {
+
+  }
+
   return (
     <div>
       <Helmet>
@@ -71,7 +75,7 @@ const Userdashboard = () => {
             <li
               className="active"
               onClick={(e) => {
-                onChangePage("/dash");
+                onChangePage("/user-dashboard");
               }}
             >
               <i className="fas fa-user-circle"></i>
@@ -80,7 +84,16 @@ const Userdashboard = () => {
             <li
             className=""
               onClick={(e) => {
-                onChangePage("/tasksub");
+                onChangePage("/subscription");
+              }}
+            >
+              <i className="fas fa-tasks"></i>
+              <span>Add Sub Tasks</span>
+            </li>
+            <li
+            className=""
+              onClick={(e) => {
+                onChangePage("/tasksubscription");
               }}
             >
               <i className="fas fa-tasks"></i>
