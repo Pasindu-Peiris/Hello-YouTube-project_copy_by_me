@@ -213,6 +213,27 @@ subRouter.delete('/deletesubuser/:id', async (req, res) => {
 })
 
 
+subRouter.get('/getallsubtask', async (req, res) => {
+
+    try {
+        const task = await DB.taskSub.findMany({
+            include: {
+                USER: true
+            }
+        })
+
+        if (!task) {
+            return res.status(404).json({success: false, message: 'Task not found.'});
+        }
+
+        return res.status(200).json({success: true, task});
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({error: error, message: 'Internal sever Error!'});
+    }
+})
+
+
 
 
 
