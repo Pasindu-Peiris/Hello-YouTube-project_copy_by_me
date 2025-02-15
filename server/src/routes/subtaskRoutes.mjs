@@ -1,49 +1,8 @@
 import { Router } from "express";
 import DB from "../db/db.mjs";
-import { body, param, validationResult } from "express-validator";
+import { body, matchedData, param, validationResult } from "express-validator";
 
 const subRouter = Router();
-
-// CREATE: Assign submission task to a user
-subRouter.post(
-  "/assign",
-  [
-    body("userID").isInt().withMessage("User ID must be an integer."),
-    body("tasks")
-      .isArray({ min: 1 })
-      .withMessage("Tasks should be an array and cannot be empty."),
-    body("tasks.*.channelLink")
-      .isURL()
-      .withMessage("Each channelLink must be a valid URL."),
-    body("tasks.*.description")
-      .isString()
-      .withMessage("Each description must be a string."),
-  ],
-  async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-
-    const { userID, tasks } = req.body;
-    try {
-      // Create task assignments for the user
-      const taskAssignments = tasks.map((task) => ({
-        userID,
-        channelLink: task.channelLink,
-        description: task.description || "No description provided",
-        status: "pending",
-        completedCount: 0,
-      }));
-
-      const createdTasks = await DB.taskSub.createMany({ data: taskAssignments });
-      res.status(201).json({ message: "Task assignments created.", createdTasks });
-    } catch (error) {
-      console.error("Error in /assign route:", error.stack || error);
-      res.status(500).json({ message: "Error assigning tasks.", error: error.message });
-    }
-  }
-);
 
 // READ: Fetch all submission tasks by userID
 subRouter.get(
@@ -62,13 +21,17 @@ subRouter.get(
       });
 
       if (!tasks.length) {
-        return res.status(404).json({ message: "No tasks found for this user." });
+        return res
+          .status(404)
+          .json({ message: "No tasks found for this user." });
       }
 
       res.status(200).json(tasks);
     } catch (error) {
       console.error("Error in /:userID route:", error.stack || error);
-      res.status(500).json({ message: "Error fetching tasks.", error: error.message });
+      res
+        .status(500)
+        .json({ message: "Error fetching tasks.", error: error.message });
     }
   }
 );
@@ -96,7 +59,9 @@ subRouter.get(
       res.status(200).json(task);
     } catch (error) {
       console.error("Error in /task/:taskSubID route:", error.stack || error);
-      res.status(500).json({ message: "Error fetching task.", error: error.message });
+      res
+        .status(500)
+        .json({ message: "Error fetching task.", error: error.message });
     }
   }
 );
@@ -122,10 +87,14 @@ subRouter.put(
         where: { taskSubID: parseInt(taskSubID, 10) },
         data: { status },
       });
-      res.status(200).json({ message: "Task updated successfully.", updatedTask });
+      res
+        .status(200)
+        .json({ message: "Task updated successfully.", updatedTask });
     } catch (error) {
       console.error("Error in /:taskSubID route:", error.stack || error);
-      res.status(500).json({ message: "Error updating task.", error: error.message });
+      res
+        .status(500)
+        .json({ message: "Error updating task.", error: error.message });
     }
   }
 );
@@ -149,9 +118,117 @@ subRouter.delete(
       res.status(200).json({ message: "Task deleted successfully." });
     } catch (error) {
       console.error("Error in DELETE /:taskSubID route:", error.stack || error);
-      res.status(500).json({ message: "Error deleting task.", error: error.message });
+      res
+        .status(500)
+        .json({ message: "Error deleting task.", error: error.message });
     }
   }
 );
+
+//create task
+subRouter.post(
+  "/add-sub/:id",
+
+  param("id").notEmpty().withMessage("Invalid user id."),
+  body("channelLink")
+    .trim()
+    .notEmpty()
+    .withMessage("Channel Link is required."),
+  body("description").trim().notEmpty().withMessage("Description is required."),
+
+  async (req, res) => {
+    const validation_result = validationResult(req);
+
+    if (validation_result.isEmpty()) {
+      try {
+        const match_result = matchedData(req);
+
+        const CreateTask = await DB.taskSub.create({
+          data: {
+            userID: parseInt(req.params.id),
+            channelLink: match_result.channelLink,
+            description: match_result.description,
+            status: "Active",
+            completedCount: 0,
+          },
+        });
+
+        if (!CreateTask) {
+          return res
+            .status(404)
+            .json({ success: false, message: "Task not created." });
+        }
+
+        return res
+          .status(201)
+          .json({
+            success: true,
+            message: "Task created successfully.",
+            task: CreateTask,
+          });
+      } catch (error) {
+        console.log(error);
+        return res
+          .status(500)
+          .json({ error: error, message: "Internal sever Error!" });
+      }
+    } else {
+      return res
+        .status(404)
+        .json({ success: false, message: validation_result });
+    }
+  }
+);
+
+//get task by userid
+subRouter.get(
+  "/get-task/:id",
+
+  param("id").notEmpty().withMessage("Invalid user id."),
+
+  async (req, res) => {
+    const validation_result = validationResult(req);
+
+    if (validation_result.isEmpty()) {
+      try {
+        const match_result = matchedData(req);
+
+        const task = await DB.taskSub.findMany({
+          where: { userID: parseInt(req.params.id) },
+          include: {
+            USER: true,
+          },
+        });
+
+        if (!task) {
+          return res
+            .status(404)
+            .json({ success: false, message: "Task not found." });
+        }
+
+        return res.status(200).json({ success: true, task });
+      } catch (error) {
+        console.log(error);
+        return res
+          .status(500)
+          .json({ error: error, message: "Internal sever Error!" });
+      }
+    } else {
+      return res
+        .status(404)
+        .json({ success: false, message: validation_result });
+    }
+  }
+);
+
+
+
+
+
+
+
+
+
+
 
 export default subRouter;
