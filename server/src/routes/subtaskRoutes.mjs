@@ -171,8 +171,46 @@ subRouter.put('/update-subtask/:id',
 
 
       }
-) 
+)
 
+//delete by subtaskid
+subRouter.delete('/deletesub/:id', async (req, res) => {
+
+    try {
+        const task = await DB.taskSub.delete({
+            where: {taskSubID: parseInt(req.params.id)}
+        })
+
+        if (!task) {
+            return res.status(404).json({success: false, message: 'Task not found.'});
+        }
+
+        return res.status(200).json({success: true, message: 'Task deleted successfully.'});
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({error: error, message: 'Internal sever Error!'});
+    }
+})
+
+
+//delete all subtask by userid
+subRouter.delete('/deletesubuser/:id', async (req, res) => {
+
+    try {
+        const task = await DB.taskSub.deleteMany({
+            where: {userID: parseInt(req.params.id)}
+        })
+
+        if (!task) {
+            return res.status(404).json({success: false, message: 'Task not found.'});
+        }
+
+        return res.status(200).json({success: true, message: 'Task deleted successfully.'});
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({error: error, message: 'Internal sever Error!'});
+    }
+})
 
 
 
