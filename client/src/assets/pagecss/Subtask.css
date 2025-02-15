@@ -62,7 +62,8 @@
     border-radius: 8px;
 }
 
-.form-group input {
+.form-group input,
+.form-group textarea {
     width: 100%;
     padding: 12px;
     outline: none;
@@ -70,6 +71,17 @@
     border-radius: 6px;
     border: 1px solid #ccc;
     font-family: "Fredoka", serif;
+}
+
+.form-group textarea {
+    height: 30vh;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #a09d9d;
+    font-family: "Fredoka", serif;
+
 }
 
 .user-profile-container button {
@@ -164,4 +176,143 @@
     #cancel-profile {
         margin: 0px 5px;
     }
+}
+
+.user-profile-container {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #f6e2e2a9;
+    width: 650px;
+    font-family: "Poppins", serif;
+    box-shadow: 0px 0px 10px 0px #b4b1b1;
+}
+
+.user-profile-container h1 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    font-family: "Fredoka", serif;
+    color: #1e1c1c;
+    padding: 10px 8px;
+    background-color: #cccccc98;
+    border-radius: 8px;
+    margin: 0px 0px 20px 0px;
+}
+
+.profile-details p {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0px;
+    background-color: #cccccc37;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #272525;
+    border-radius: 8px;
+}
+
+.profile-details p strong {
+    font-weight: 600;
+    color: #272525;
+    background-color: #f7d52b;
+    font-family: "Fredoka", serif;
+    height: 100%;
+    padding: 12px;
+    border-radius: 8px;
+}
+
+.profile-details {
+    margin-bottom: 10px;
+}
+
+.form-group {
+    margin: 15px 0px;
+}
+
+.form-group label {
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #272525;
+    background-color: #f7d52b;
+    font-family: "Fredoka", serif;
+    padding: 12px;
+    border-radius: 8px;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    outline: none;
+    font-size: 1.2rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-family: "Fredoka", serif;
+}
+
+.form-group textarea {
+    height: 30vh;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #a09d9d;
+    font-family: "Fredoka", serif;
+}
+
+/* Style for disabled input fields */
+.form-group input:disabled,
+.form-group textarea:disabled {
+    background-color: #d6d2d2;
+    /* Set background color to white */
+    color: #0a0909;
+    /* Set text color to black */
+    cursor: not-allowed;
+    /* Change cursor to indicate the field is disabled */
+}
+
+.user-profile-container button {
+    width: auto;
+    padding: 10px;
+    background-color: #0056b3;
+    border: none;
+    border-radius: 6px;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    font-family: "poppins", serif;
+    margin-top: 10px;
+}
+
+.user-profile-container button[type="button"] {
+    background-color: #2e3bf4;
+    /* Different color for Edit button */
+    color: #f6f2f2;
+}
+
+.user-profile-container button[type="button"]:hover {
+    background-color: #e62020;
+    /* Hover effect for Edit button */
+}
+
+.form-buttons {
+    display: flex;
+    gap: 10px;
+    /* Space between buttons */
+}
+
+.form-buttons button[type="button"] {
+    background-color: #ff3b3b;
+    /* Red color for Cancel button */
+    color: #ffffff;
+}
+
+.form-buttons button[type="button"]:hover {
+    background-color: #e63232;
+    /* Darker red on hover */
 }
