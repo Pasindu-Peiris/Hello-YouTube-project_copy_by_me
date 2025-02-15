@@ -159,9 +159,7 @@ subRouter.post(
             .json({ success: false, message: "Task not created." });
         }
 
-        return res
-          .status(201)
-          .json({
+        return res.status(201).json({
             success: true,
             message: "Task created successfully.",
             task: CreateTask,
@@ -201,9 +199,7 @@ subRouter.get(
         });
 
         if (!task) {
-          return res
-            .status(404)
-            .json({ success: false, message: "Task not found." });
+          return res.status(404).json({ success: false, message: "Task not found." });
         }
 
         return res.status(200).json({ success: true, task });
@@ -220,6 +216,84 @@ subRouter.get(
     }
   }
 );
+
+//get sub task by subtaskid
+subRouter.get('/getsubtask/:id' ,
+
+    param('id').notEmpty().withMessage('Invalid subtask id.'),
+    async (req, res) => {
+
+    const validation_result = validationResult(req);
+
+    if(validation_result.isEmpty()){
+        try {
+            const match_result = matchedData(req);
+            const task = await DB.taskSub.findUnique({
+                where: { taskSubID: parseInt(match_result.id) },
+                include: {
+                    USER: true,
+                }
+            })
+
+            if (!task) {
+                return res.status(404).json({ success: false, message: 'Task not found.' });
+            }
+
+            return res.status(200).json({ success: true, task });
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({ error: error, message: 'Internal sever Error!' });
+        }
+
+
+      }
+});
+
+
+//update task using subtaskid
+subRouter.put('/update-subtask/:id',
+
+    param('id').notEmpty().withMessage('Invalid subtask id.'),
+    body('channelLink').trim().notEmpty().withMessage('Channel Link is required.'),
+    body('description').trim().notEmpty().withMessage('Description is required.'),
+
+    async (req, res) => {
+
+      const validation_result = validationResult(req);
+
+      try {
+
+          if (validation_result.isEmpty()) {
+              const match_result = matchedData(req);
+
+              const task = await DB.taskSub.update({
+                  where: {taskSubID: parseInt(match_result.id)},
+                  data: {
+                      channelLink: match_result.channelLink,
+                      description: match_result.description,
+                  }
+              })
+
+              if (!task) {
+                  return res.status(404).json({success: false, message: 'Task not found.'});
+              }
+
+              return res.status(200).json({success: true, message: 'Task updated successfully.', updatetask: task});
+
+          }else{
+              return res.status(404).json({success: false, message: validation_result});
+          }
+
+      }catch(error)
+          {
+              console.log(error);
+              return res.status(500).json({error: error, message: 'Internal sever Error!'});
+          }
+
+
+      }
+) 
+
 
 
 
