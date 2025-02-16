@@ -97,9 +97,9 @@ subRouter.get(
 );
 
 //get sub task by subtaskid
-subRouter.get('/getsubtask/:id' ,
+subRouter.get('/getsubtask/:taskSubID' ,
 
-    param('id').notEmpty().withMessage('Invalid subtask id.'),
+    param('taskSubID').notEmpty().withMessage('Invalid subtask id.'),
     async (req, res) => {
 
     const validation_result = validationResult(req);
@@ -108,7 +108,7 @@ subRouter.get('/getsubtask/:id' ,
         try {
             const match_result = matchedData(req);
             const task = await DB.taskSub.findUnique({
-                where: { taskSubID: parseInt(match_result.id) },
+                where: { taskSubID: parseInt(match_result.taskSubID) },
                 include: {
                     USER: true,
                 }
@@ -234,10 +234,63 @@ subRouter.get('/getallsubtask', async (req, res) => {
 })
 
 
+//update completed count by incrementing
+subRouter.put('/update-completedcount/:id', async (req, res) => {
+
+    try {
+        const task = await DB.taskSub.update({
+            where: {taskSubID: parseInt(req.params.id)},
+            data: {
+                completedCount: {
+                    increment: 1
+                }
+            }
+        })
+
+        if (!task) {
+            return res.status(404).json({success: false, message: 'Task not found.'});
+        }
+
+        return res.status(200).json({success: true, message: 'Task updated successfully.', updatetask: task});
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({error: error, message: 'Internal sever Error!'});
+    }
+})
 
 
+//only send not completed task
+subRouter.get('/get-only-not-done/:userID',
 
+  param('userID').notEmpty().withMessage('Invalid user id.'),
 
+  async (req, res) => {
+
+  try {
+      const userId = parseInt(req.params.userID);
+
+      // Fetch all tasks
+      const allTask = await DB.taskSub.findMany();
+
+      // Fetch tasks completed by the user
+      const completeTask = await DB.completedSub.findMany({
+          where: { userID: userId }
+      });
+
+      // Extract taskSubIDs from completed tasks
+      const completedTaskSubIDs = completeTask.map(task => task.taskSubID);
+
+      // Filter out tasks that are already completed by the user
+      const notCompletedTasks = allTask.filter(task => !completedTaskSubIDs.includes(task.taskSubID));
+
+      // Return the filtered tasks
+      return res.status(200).json({message: true, task :notCompletedTasks});
+
+  } catch (err) {
+      console.log(err);
+      return res.status(500).json({ error: err, message: 'Internal Server Error!' });
+  }
+});
 
 
 
