@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import "../../assets/pagecss/Userdashboard.css";
 import { useNavigate } from "react-router-dom";
@@ -39,9 +39,31 @@ const Userdashboard = () => {
 
   };
 
+  const [activeCSS1, setActiveCSS1] = useState("");
+    const [activeCSS2, setActiveCSS2] = useState("");
+    const [activeCSS3, setActiveCSS3] = useState("");
+    const [activeCSS4, setActiveCSS4] = useState("");
+    const [activeCSS5, setActiveCSS5] = useState("");
+
+
   const changeAcPageActive = () => {
 
+    const currentPage = window.location.pathname;
+
+    if (currentPage.includes("/user-dashboard") ) {
+      setActiveCSS1("active");
+    }else if( currentPage.includes("/subscription") ) {
+      setActiveCSS2("active");
+    }else if(currentPage.includes("/tasksubscription") ) {
+      setActiveCSS3("active");
+    }
+
+
   }
+  useEffect(() => {
+    changeAcPageActive();
+  }, []);
+
 
   return (
     <div>
@@ -73,7 +95,7 @@ const Userdashboard = () => {
         <div className="sidebar-links">
           <ul>
             <li
-              className="active"
+              className={activeCSS1}
               onClick={(e) => {
                 onChangePage("/user-dashboard");
               }}
@@ -82,7 +104,7 @@ const Userdashboard = () => {
               <span>User Profile</span>
             </li>
             <li
-            className=""
+                className={activeCSS2}
               onClick={(e) => {
                 onChangePage("/subscription");
               }}
@@ -91,7 +113,7 @@ const Userdashboard = () => {
               <span>Add Sub Tasks</span>
             </li>
             <li
-            className=""
+                className={activeCSS3}
               onClick={(e) => {
                 onChangePage("/tasksubscription");
               }}
@@ -99,7 +121,9 @@ const Userdashboard = () => {
               <i className="fas fa-tasks"></i>
               <span>Sub Tasks</span>
             </li>
-            <li>
+            <li
+                className={activeCSS4}
+            >
               <i className="fas fa-video"></i>
               <span>Task Videos</span>
             </li>
