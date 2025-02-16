@@ -26,7 +26,7 @@ function App() {
           <Route path="/user-dashboard" element={<Subadd />} />
           <Route path="/subscription" element={<Subtask />} />
           <Route path="/tasksubscription" element={<Tasksubtab />} />
-          <Route path="/tasksubcomplete/:taskid" element={<Tasksubupload />} />
+          <Route path="/tasksubcomplete/:taskSubID" element={<Tasksubupload />} />
         </Route>
 
         {/* 404 Page Route */}
