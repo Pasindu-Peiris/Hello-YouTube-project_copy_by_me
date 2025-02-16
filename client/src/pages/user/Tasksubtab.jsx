@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import DataTable from "react-data-table-component";
 import { tableData } from "../../utils/Sampledata";
 import "../../assets/pagecss/Tasksubtab.css";
@@ -6,6 +6,7 @@ import Userdashboard from "./Userdashboard";
 import { Toaster, toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import styled from "styled-components";
 
 const Tasksubtab = () => {
 
@@ -51,29 +52,50 @@ const Tasksubtab = () => {
 
   const handleEdit = (row) => {
 
-    toast.success(`Editing student: ${row.channelLink}`, {
-      duration: 3000,
-      style: {
-        borderRadius: "10px",
-        height: "60px",
-        background: "#171617",
-        color: "#fff",
-      },
-    });
+    toast(
+        `We will send you the task page to complete and provide all the instructions on this page,\n\n you can proceed through the instructions.`,
+        {
+          duration: 3500,
+        }
+    )
 
     setTimeout(() => {
       
-      navigate(`/tasksubcomplete/${row.channelLink}`);
-    }, 2000);
+      navigate(`/tasksubcomplete/${row.taskSubID}`);
+    }, 3500);
     
   };
 
+  const [tasksub, setTasksub] = useState([]);
+
   const getAllSubTasks = async () => {
 
-    await axios.get('/')
+    const userID = localStorage.getItem("user");
+
+  await axios.get(`${apiUrl}/subtasks/get-only-not-done/${userID}`).then((response) => {
+
+    console.log(response.data);
+    setTasksub(response.data.task);
+
+  }).catch((error) => {
+    console.log(error);
+    toast.error("Failed to fetch data. Please try again.", {
+        duration: 3000,
+        style: {
+            borderRadius: "10px",
+            height: "60px",
+            background: "#171617",
+            color: "#fff",
+        },
+    });
+  })
 
 
   };
+
+  useEffect(() => {
+    getAllSubTasks();
+  }, []);
 
   return (
     <div>
@@ -94,7 +116,7 @@ const Tasksubtab = () => {
         <div className="tableintasksub">
           <DataTable
             columns={columns}
-            data={tableData}
+            data={tasksub}
             fixedHeader
             fixedHeaderScrollHeight="62vh"
             pagination
