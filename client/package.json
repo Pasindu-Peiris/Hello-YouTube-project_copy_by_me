@@ -8,10 +8,15 @@
     "@testing-library/user-event": "^13.5.0",
     "ajv": "^8.17.1",
     "ajv-keywords": "^5.1.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "axios": "^1.7.9",
+    "react": "^18.2.0",
+    "react-data-table-component": "^7.6.2",
+    "react-dom": "^18.2.0",
+    "react-helmet": "^6.1.0",
+    "react-hot-toast": "^2.5.1",
     "react-router-dom": "^7.1.5",
     "react-scripts": "5.0.1",
+    "styled-components": "^6.1.15",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

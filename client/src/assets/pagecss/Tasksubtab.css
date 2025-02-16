@@ -1,0 +1,138 @@
+#user-dashboard-profile-view {
+    margin: 20px 0px 0px 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: 92vh;
+}
+
+.textintasksub {
+    display: flex;
+    width: 100%;
+    padding: 30px 0px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    font-family: "Fredoka", serif;
+}
+
+.textintasksub h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    padding: 5px 0px;
+    color: rgb(33, 32, 32);
+}
+
+.textintasksub p {
+    font-size: 1rem;
+    font-weight: 500;
+    font-family: "Poppins", serif;
+    color: rgb(33, 32, 32);
+}
+
+.data-table {
+    height: 100vh;
+}
+
+.tableintasksub {
+    width: 100%;
+    display: block;
+    border-radius: 8px;
+    box-shadow: 2px 0px 10px 2px #bcbbbb;
+    border: 0.5px solid #302d2d34;
+    padding: 4px;
+    background-color: #eeecec;
+}
+
+.buttoncompletetasksub {
+    color: #fbf2f2;
+    background-color: #ff3b3b;
+    padding: 4px;
+    font-size: 0.9rem;
+    border-radius: 2px;
+    font-family: "Poppins", serif;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0px 0px 2px 0.5px #1f1e1e;
+}
+
+/* Responsive Styles */
+
+/* Tablet Landscape / Small Desktop */
+@media (min-width: 769px) and (max-width: 1024px) {
+    #user-dashboard-profile-view {
+        margin: 20px 0px 0px 200px;
+    }
+
+    .textintasksub h1 {
+        font-size: 1.8rem;
+    }
+
+    .textintasksub p {
+        font-size: 0.9rem;
+    }
+
+    .tableintasksub {
+        width: 90%;
+    }
+
+    .buttoncompletetasksub {
+        font-size: 0.8rem;
+        padding: 3px;
+    }
+}
+
+/* Tablet Portrait */
+@media (max-width: 768px) {
+    #user-dashboard-profile-view {
+        margin: 20px 0px 0px 100px;
+    }
+
+    .textintasksub h1 {
+        font-size: 1.6rem;
+    }
+
+    .textintasksub p {
+        font-size: 0.8rem;
+    }
+
+    .tableintasksub {
+        width: 95%;
+    }
+
+    .buttoncompletetasksub {
+        font-size: 0.7rem;
+        padding: 2px;
+    }
+}
+
+/* Mobile Devices */
+@media (max-width: 480px) {
+    #user-dashboard-profile-view {
+        margin: 20px 0px 0px 20px;
+    }
+
+    .textintasksub h1 {
+        font-size: 1.4rem;
+    }
+
+    .textintasksub p {
+        font-size: 0.7rem;
+    }
+
+    .tableintasksub {
+        width: 100%;
+        padding: 2px;
+    }
+
+    .buttoncompletetasksub {
+        font-size: 0.6rem;
+        padding: 1px;
+    }
+
+    .data-table {
+        height: auto;
+    }
+}

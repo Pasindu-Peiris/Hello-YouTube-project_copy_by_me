@@ -1,0 +1,211 @@
+#register {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.firstregister {
+    width: 580px;
+    font-family: "Fredoka", serif;
+}
+
+.secondregister img {
+    width: 100%;
+    max-width: 550px;
+    height: auto;
+}
+
+.textregister h1 {
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: #FF3B3B;
+}
+
+.textregister p {
+    margin: 18px 0px;
+    font-size: 1.1rem;
+    line-height: 1.6rem;
+    font-family: "Poppins", serif;
+}
+
+.formregister form {
+    display: block;
+    width: 100%;
+    max-width: 440px;
+    margin: 20px 0px;
+}
+
+.formregister form h1 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: 12px 0px;
+}
+
+.formregister form input {
+    width: 100%;
+    padding: 16px;
+    margin: 12px 0px;
+    border: none;
+    outline: none;
+    font-size: 1.2rem;
+    border-radius: 6px;
+    background-color: rgb(237, 237, 237);
+}
+
+.formregister form input[type="submit"] {
+    background-color:#FF3B3B;;
+    color: #ffffff;
+    cursor: pointer;
+    font-weight: 500;
+    font-family: "Fredoka", serif;
+}
+
+.formregister form ::placeholder {
+    padding: 4px;
+    font-size: 1.2rem;
+    color: #2d2d2d;
+}
+
+/* Tablet Landscape / Small Desktop */
+@media (min-width: 769px) and (max-width: 1024px) {
+    #register {
+        padding: 0 20px;
+        flex-direction: column-reverse;
+    }
+
+    .firstregister {
+        width: 450px;
+    }
+
+    .secondregister img {
+        max-width: 500px;
+    }
+
+    .textregister h1 {
+        font-size: 1.8rem;
+    }
+
+    .textregister p {
+        font-size: 1.1rem;
+        line-height: 1.8rem;
+    }
+
+    .formregister form h1 {
+        font-size: 1.3rem;
+    }
+
+    .formregister form input {
+        padding: 14px;
+        font-size: 1.1rem;
+    }
+
+    .formregister form ::placeholder {
+        font-size: 1.1rem;
+    }
+}
+
+/* Tablet Portrait and Below */
+@media (max-width: 768px) {
+    #register {
+        flex-direction: column-reverse;
+        height: auto;
+        padding: 40px 20px;
+    }
+
+    .firstregister {
+        width: 100%;
+        max-width: 500px;
+        text-align: center;
+    }
+
+    .secondregister img {
+        max-width: 400px;
+        margin-top: 30px;
+    }
+
+    .textregister h1 {
+        font-size: 1.6rem;
+    }
+
+    .textregister p {
+        font-size: 1rem;
+        line-height: 1.6rem;
+    }
+
+    .formregister form {
+        max-width: 100%;
+    }
+
+    .formregister form h1 {
+        font-size: 1.2rem;
+    }
+
+    .formregister form input {
+        padding: 14px;
+        font-size: 1rem;
+    }
+
+    .formregister form ::placeholder {
+        font-size: 1rem;
+    }
+}
+
+/* Mobile Devices */
+@media (max-width: 480px) {
+    #register {
+        padding: 30px 15px;
+        flex-direction: column-reverse;
+    }
+
+    .textregister h1 {
+        font-size: 1.4rem;
+    }
+
+    .textregister p {
+        font-size: 0.9rem;
+        line-height: 1.4rem;
+    }
+
+    .formregister form h1 {
+        font-size: 1.1rem;
+    }
+
+    .formregister form input {
+        padding: 12px;
+        font-size: 0.9rem;
+    }
+
+    .formregister form ::placeholder {
+        font-size: 0.9rem;
+    }
+
+    .secondregister img {
+        max-width: 300px;
+    }
+}
+
+/* Modal Styles */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 18px;
+  }
+  

@@ -20,13 +20,13 @@ footer {
 }
 
 .links h3 {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     margin: 0px 0px 14px;
     color: #ffffff;
 }
 
 .links ul li {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     font-family: "Poppins", serif;
     margin: 10px 0px;
     color: #191818;
@@ -41,6 +41,7 @@ footer {
     border: 3px solid #191818;
     font-family: "Fredoka", serif;
     font-size: 1.4rem;
+    margin: 0px 4px;
 }
 
 .links ul li form input[type="submit"] {
