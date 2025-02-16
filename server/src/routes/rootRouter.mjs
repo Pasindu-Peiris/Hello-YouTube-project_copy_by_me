@@ -18,7 +18,7 @@ rootRouter.use('/admin', adminRouter);
 rootRouter.use("/user", userRouter);
 rootRouter.use("/videos",videoRouter);
 rootRouter.use("/completed-videos", completedVideoRouter);
-rootRouter.use("/completed_sub",completedSubRouter);
+rootRouter.use("/completed-sub",completedSubRouter);
 rootRouter.use("/subtasks", subtaskRoutes);
 
 export default rootRouter;
