@@ -1,16 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "../../assets/pagecss/Tasksubupload.css";
 import { Toaster, toast } from "react-hot-toast";
+import axios from "axios";
 
 const Tasksubupload = () => {
 
-  const { taskid } = useParams();
+  const { taskSubID } = useParams();
 
   const apiUrl = process.env.REACT_APP_API_URL;
 
-  console.log(taskid);
-
+  console.log(taskSubID);
 
   const [imagePreview, setImagePreview] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
@@ -30,17 +30,87 @@ const Tasksubupload = () => {
     }
   };
 
+  const updateCompletedSub = async () => {
+
+    await axios.put(`${apiUrl}subtasks/update-completedcount/${taskSubID}`).then((res) => {
+      console.log('don complete count')
+    }).catch((err) => {
+      console.log(err)
+    })
+
+
+  }
+
 
   // Handle form submission
-  const handleUpload = (event) => {
+  const handleUpload = async (event) => {
     event.preventDefault(); // Prevent the default form submission behavior
-    if (selectedFile) {
-      // Perform the upload logic here (e.g., send the file to a server)
-      console.log("Uploading file:", selectedFile.name);
-      alert(`File "${selectedFile.name}" uploaded successfully!`);
 
-    } else {
-      toast.error("Please select a file first!", {
+    if(linkClickcheck === true){
+      if (selectedFile) {
+
+        const formdata = new FormData();
+
+        const userID = localStorage.getItem("user");
+
+        formdata.append("proofLink", selectedFile);
+        formdata.append("userID", userID );
+
+
+        await axios.post(`${apiUrl}completed-sub/create-completesub/${taskSubID}`, formdata).then((res) => {
+          toast.success(res.data.message, {
+            duration: 2000,
+            style: {
+              borderRadius: "10px",
+              height: "60px",
+              background: "#171617",
+              fontFamily: "Poppins",
+              color: "#fff",
+            },
+          });
+
+          setTimeout(() => {
+            updateCompletedSub();
+            toast('You Completed task Successfully \n\n Redirecting to Task Subscription Page', {
+              duration: 3000,
+            } )
+
+            setTimeout(() => {
+              navigate('/tasksubscription')
+            }, 3000)
+
+          }, 2000);
+
+        }).catch((err) => {
+          toast.error(err.response.data.message, {
+            duration: 3000,
+            style: {
+              borderRadius: "10px",
+              height: "60px",
+              background: "#171617",
+              fontFamily: "Poppins",
+              color: "#fff",
+            },
+          });
+        })
+
+
+      } else {
+        toast.error("Please select a file first!", {
+          duration: 3000,
+          style: {
+            borderRadius: "10px",
+            height: "60px",
+            background: "#171617",
+            fontFamily: "Poppins",
+            color: "#fff",
+          },
+        });
+
+      }
+    }else{
+
+      toast.error("Please visit Link and Subscribe It !", {
         duration: 3000,
         style: {
           borderRadius: "10px",
@@ -50,8 +120,8 @@ const Tasksubupload = () => {
           color: "#fff",
         },
       });
-    
     }
+
   };
 
   const deleteImage = () => {
@@ -75,12 +145,40 @@ const Tasksubupload = () => {
 
     setTimeout(() => {
 
-      navigate('/tasksub')
+      navigate('/tasksubscription')
     }, 2000);
 
-
-
   }
+
+
+  const [subTask, setSubTask] = useState('');
+
+  const getSubTask = async () => {
+
+
+    await axios.get(`${apiUrl}subtasks/getsubtask/${taskSubID}`).then((res) => {
+      console.log(res.data.task);
+      setSubTask(res.data.task);
+    }).catch((err) => {
+        console.log(err)
+    })
+
+  };
+
+
+  const [linkClickcheck, setLinkClickcheck] = useState(false);
+
+    const navigateYoutube = () => {
+
+        setLinkClickcheck(true);
+      window.open(subTask.channelLink, '_blank');
+
+    }
+
+
+  useEffect(() => {
+    getSubTask();
+  }, [taskSubID]);
 
   return (
 
@@ -93,7 +191,7 @@ const Tasksubupload = () => {
           <h1>Step guide lines </h1>
 
           <ul>
-            <li>Visite YouTube Channel using the link.  <a href="!#">Channel Link</a> </li>
+            <li>Visite YouTube Channel using the link.  <span id="sunlinknav" onClick={navigateYoutube} >Channel Link</span> </li>
             <li>Subscribe the channel and get screenshot as  proof of subscription</li>
             <li>Upload the screenshots in the given image upload area and click the upload button.</li>
             <li>The system will notify you with a message once the screenshot has been successfully uploaded.</li>
