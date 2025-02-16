@@ -7,7 +7,7 @@ const Header = () => {
     const navigate = useNavigate();
     //onclick
     const buttonOnclick = () => {
-        navigate("/signup");
+        navigate("/signin");
     };
 
     return (
