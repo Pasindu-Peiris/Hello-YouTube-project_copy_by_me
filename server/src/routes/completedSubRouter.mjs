@@ -1,6 +1,8 @@
 import { Router } from "express";
 import DB from "../db/db.mjs";
-import { body, param, validationResult } from "express-validator";
+import { body, param, validationResult, matchedData } from "express-validator";
+import multer from 'multer';
+import path from 'path';
 
 const completedSubRouter = Router();
 
@@ -125,5 +127,110 @@ completedSubRouter.delete(
     }
   }
 );
+
+
+//start me
+
+//create multer storage
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        return cb(null, 'src/upload');
+    },
+    filename: (req, file, cb) => {
+        return cb(null, file.fieldname + '_' + Date.now() + path.extname(file.originalname));
+    }
+
+});
+
+//upload image
+const upload = multer({
+    storage: storage
+});
+
+
+
+completedSubRouter.post('/create-completesub/:taskSubID', upload.single('proofLink'),
+    param('taskSubID').notEmpty().withMessage('Task Sub ID is required.'),
+    body('userID').notEmpty().withMessage('User ID is required.'),
+
+    async (req, res) => {
+
+    try{
+        const validation_result = validationResult(req);
+
+        if(validation_result.isEmpty()) {
+            const match_result = matchedData(req);
+
+            const completeTask = await DB.completedSub.create({
+                data: {
+                    userID: parseInt(match_result.userID),
+                    taskSubID: parseInt(match_result.taskSubID),
+                    proofLink: req.file.filename,
+                    status: 'Active'
+                }
+            })
+
+            if(!completeTask){
+                return res.status(404).json({success: false, message: 'Task not found.'});
+            }
+
+            return res.status(200).json({success: true, message: 'Task completed successfully.', task: completeTask});
+
+        }else{
+            return res.status(404).json({success: false, message: validation_result});
+        }
+
+    }catch (error) {
+        console.log(error);
+        return res.status(500).json({error: error, message: 'Internal sever Error!'});
+    }
+
+})
+
+
+completedSubRouter.get('/get-completedsub/:id',
+    param('id').notEmpty().withMessage('Invalid user id.'),
+
+    async (req, res) => {
+    const validation_result = validationResult(req);
+
+    if(validation_result.isEmpty()) {
+        try {
+            const match_result = matchedData(req);
+
+            const task = await DB.completedSub.findMany({
+                where: { completedSubID: parseInt(req.params.id) },
+                include: {
+                    USER: true,
+                    taskSub: true,
+                },
+            });
+
+            if(!task){
+                return res.status(404).json({success: false, message: 'Task not found.'});
+            }
+
+            return res.status(200).json({success: true, task});
+
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({error: error, message: 'Internal sever Error!'});
+        }
+    } else {
+        return res.status(404).json({success: false, message: validation_result});
+    }
+})
+
+
+
+
+
+
+
+
+
+
+
+
 
 export default completedSubRouter;
