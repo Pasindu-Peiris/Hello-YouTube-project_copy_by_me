@@ -44,7 +44,7 @@ const UserDashboardClient = () => {
         <div className="UserDashboardClientlogout-button">
             <button className="btn btn-primary" onClick={() => {
                 signOut();
-            }}>Sign Out </button>
+            }}>Sign Out <i className="fa-solid fa-right-from-bracket"></i></button>
         </div>
 
       </div>
