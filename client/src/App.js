@@ -8,6 +8,7 @@ import Subadd from "./pages/user/Subadd";
 import Subtask from "./pages/user/Subtask";
 import Tasksubtab from "./pages/user/Tasksubtab";
 import Tasksubupload from "./pages/user/Tasksubupload";
+import UserDashboardClient from "./pages/user/UserDashboardClient";
 
 function App() {
   return (
@@ -21,12 +22,17 @@ function App() {
         <Route path="/signin" element={<Loginuser />} />
         <Route path="/signup" element={<Registration />} />
 
+
+
+
         {/* protected routers */}
         <Route element={<ProtectedRouters />}>
-          <Route path="/user-dashboard" element={<Subadd />} />
+          <Route path="/user-dashboard" element={<UserDashboardClient/>} />
+          <Route path="/user-dashboard-old" element={<Subadd />} />
           <Route path="/subscription" element={<Subtask />} />
           <Route path="/tasksubscription" element={<Tasksubtab />} />
           <Route path="/tasksubcomplete/:taskSubID" element={<Tasksubupload />} />
+
         </Route>
 
         {/* 404 Page Route */}
