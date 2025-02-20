@@ -3,9 +3,11 @@ import "../../assets/pagecss/Linkupload.css";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import Header from "../../components/Header"; // Import Header
-import linkUploadImage from "../../assets/images/linkupload.png"; // Import the image
+import linkUploadImage from "../../assets/images/Mobup.svg";
+import Footer from "../../components/Footer";
 
 const Linkupload = () => {
+
   const apiUrl = process.env.REACT_APP_API_URL;
   const [userprof, setUserprof] = useState(null);
   const [user, setUser] = useState({ url: "" });
@@ -80,40 +82,65 @@ const Linkupload = () => {
   };
 
   return (
-    <div className="page-container">
-      <Header /> {/* Include Header Component */}
 
-      <div className="content">
-        <div className="link-upload-container">
-          {/* Input Box Positioned to the Middle Left Side */}
-          <div className="youtube-input-box left-side">
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg"
-              alt="YouTube"
-              className="youtube-icon"
-            />
-            <input
-              type="text"
-              name="url"
-              value={user.url}
-              onChange={handleInputChange}
-              placeholder="www.youtube.com/yourchannel"
-              className="youtube-input"
-            />
-            <button className="promotion-button" onClick={handleSubmit}>
-              Start your promotion
-            </button>
+      <div>
+
+        <Header/>
+
+        <div id="linkuploadmain">
+
+          <div className="linkuploadtextsection">
+
+            <div className="firstloginlinkuploadtextsection">
+              <div className="textloginlinkuploadtextsection">
+                <h1>Upload  channel Link </h1>
+                <p>
+                  Upload your YouTube Channel link here to <br /> continue the registration process.
+
+                </p>
+              </div>
+
+              <div className="formloginlinkuploadtextsection">
+                <form onSubmit={handleSubmit}>
+                  <h1>Upload</h1>
+                  <input
+                      type="url"
+                      id="url"
+                      name="url"
+                      placeholder="Enter Channel Link"
+                      required
+
+                  />
+
+
+
+
+                  <input type="submit" value="Upload" />
+                </form>
+
+
+              </div>
+            </div>
+
+
+
+
+
           </div>
 
-          {/* Sign-in with YouTube Below Input Box */}
-          <p className="signin-text">
-            or sign in with <a href="#">YouTube</a> →
-          </p>
+          <div className="imagelinkuploadhome">
+
+            <img src={linkUploadImage} alt="Link Upload" />
+
+          </div>
+
+
+
         </div>
 
-        <img src={linkUploadImage} alt="Link upload visual" className="right-corner-image" /> {/* Image in the right corner */}
+        <Footer/>
+
       </div>
-    </div>
   );
 };
 
