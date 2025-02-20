@@ -1,191 +1,95 @@
-/* Positioning the link upload container */
-.link-upload-container {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    transform: translateY(-50%);
+#linkuploadmain{
+    width: 100%;
+    height: 90vh;
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    margin-left: 70px;
-    height: 400px; /* Adjust the height to make it longer */
-    padding-top: 20px; /* Optional: Adjust the padding for spacing */
-    padding-bottom: 20px; /* Optional: Adjust the padding for spacing */
-}
-
-/* Input box styles */
-.youtube-input-box {
-    display: flex;
+    justify-content: space-around;
     align-items: center;
-    background: #fff;
-    padding: 15px 20px;
-    border-radius: 50px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    width: 400px;
-    max-width: 100%;
-}
 
-/* YouTube icon styles */
-.youtube-icon {
-    width: 40px;
+}
+.linkuploadtextsection{
+    width: 550px;
+    font-family: "Fredoka", serif;
+}
+.imagelinkuploadhome{
+    width: 600px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.imagelinkuploadhome img{
+    width: 100%;
+    max-width: 650px;
     height: auto;
-    margin-right: 10px;
 }
 
-/* Input field styles */
-.youtube-input {
-    flex: 1;
+.firstloginlinkuploadtextsection {
+    width: 550px;
+    font-family: "Fredoka", serif;
+}
+
+
+
+.textloginlinkuploadtextsection h1 {
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: #FF3B3B;
+}
+
+.textloginlinkuploadtextsection p {
+    margin: 18px 0px;
+    font-size: 1.1rem;
+    line-height: 1.6rem;
+    font-family: "Poppins", serif;
+}
+
+.formloginlinkuploadtextsection form {
+    display: block;
+    width: 100%;
+    max-width: 440px;
+    margin: 20px 0px;
+}
+
+.formloginlinkuploadtextsection form h1 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: 12px 0px;
+}
+
+.formloginlinkuploadtextsection form input {
+    width: 100%;
+    padding: 16px;
+    margin: 12px 0px;
     border: none;
     outline: none;
-    font-size: 16px;
-    color: #333;
-    background: transparent;
-    width: 100%;
+    font-size: 1.2rem;
+    border-radius: 6px;
+    background-color: rgb(237, 237, 237);
 }
 
-/* Button styles */
-.promotion-button {
-    background: linear-gradient(to right, #a855f7, #9333ea);
-    color: white;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 25px;
+.formloginlinkuploadtextsection form input[type="submit"] {
+    background-color: #FF3B3B;
+    color: #ffffff;
     cursor: pointer;
-    font-size: 16px;
-    transition: 0.3s;
-    margin-left: 10px;
-}
-
-.promotion-button:hover {
-    background: linear-gradient(to right, #9333ea, #7e22ce);
-}
-
-/* Sign-in text styles */
-.signin-text {
-    margin-top: 15px;
-    font-size: 16px;
-    color: #6b7280;
     font-weight: 500;
-    text-align: left;
+    font-family: "Fredoka", serif;
 }
 
-.signin-text a {
-    color: #6d28d9;
+.formloginlinkuploadtextsection form ::placeholder {
+    padding: 4px;
+    font-size: 1.2rem;
+    color: #2d2d2d;
+}
+
+.fogotloginlinkuploadtextsection {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin: 12px 0px;
+}
+
+.fogotloginlinkuploadtextsection a {
+    color: #FF3B3B;
     text-decoration: none;
-    font-weight: bold;
 }
 
-.signin-text a:hover {
-    text-decoration: underline;
-}
-
-/* Image positioned in the middle-right corner (Desktop View) */
-.right-corner-image {
-    position: absolute;
-    top: 50%;
-    right: 50px;
-    transform: translateY(-50%);
-    width: 500px;
-    height: auto;
-}
-
-/* ========== Responsive Styles ========== */
-
-/* 🖥️ Large Screens & Laptops */
-@media (max-width: 1024px) {
-    .link-upload-container {
-        margin-left: 30px;
-    }
-
-    .youtube-input-box {
-        width: 350px;
-    }
-
-    .signin-text {
-        font-size: 15px;
-    }
-
-    .right-corner-image {
-        width: 400px;
-        right: 20px;
-    }
-}
-
-/* 📱 Tablet Landscape View */
-@media (max-width: 768px) {
-    .link-upload-container {
-        width: 100%;
-        align-items: center;
-        margin-left: 0;
-        position: relative;
-        top: auto;
-        transform: none;
-        margin-top: 20vh;
-    }
-
-    .youtube-input-box {
-        width: 80%;
-        justify-content: center;
-    }
-
-    .signin-text {
-        text-align: center;
-        font-size: 14px;
-    }
-
-    .right-corner-image {
-        width: 350px;
-        position: relative;
-        right: auto;
-        top: auto;
-        transform: none;
-        margin-top: 30px;
-    }
-}
-
-/* 📱 Mobile View */
-@media (max-width: 480px) {
-    .link-upload-container {
-        width: 100%;
-        align-items: center;
-        margin-left: 0;
-        position: relative;
-        margin-top: 15vh;
-    }
-
-    .youtube-input-box {
-        width: 90%;
-        flex-direction: column;
-        padding: 12px;
-        border-radius: 20px;
-    }
-
-    .youtube-icon {
-        margin-bottom: 5px;
-    }
-
-    .promotion-button {
-        width: 100%;
-        margin-left: 0;
-        margin-top: 20px;
-    }
-
-    .signin-text {
-        font-size: 14px;
-        text-align: center;
-        margin-top: 10px;
-    }
-
-    /* Move image below input box on mobile */
-    .right-corner-image {
-        width: 250px;
-        position: relative;
-        top: auto;
-        right: auto;
-        transform: none;
-        margin-top: 20px;
-        margin-right: 50;
-        margin-left: 50;
-    }
-}
