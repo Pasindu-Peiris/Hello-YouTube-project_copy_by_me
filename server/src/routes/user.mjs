@@ -97,7 +97,7 @@ userRouter.post('/signup',
           return res.status(401).json({ success: false, message: "Error in Sign Up." });
         }
 
-        return res.status(200).json({ success: true, message: "Sign Up Successfully." });
+        return res.status(200).json({ success: true, message: "Sign Up Successfully.",  user:save_user });
 
       } else {
         return res.status(404).json({ message: validation_result });
