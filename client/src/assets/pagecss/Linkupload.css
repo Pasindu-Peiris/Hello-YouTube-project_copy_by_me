@@ -1,23 +1,25 @@
-#linkuploadmain{
+#linkuploadmain {
     width: 100%;
     height: 90vh;
     display: flex;
     justify-content: space-around;
     align-items: center;
-
 }
-.linkuploadtextsection{
+
+.linkuploadtextsection {
     width: 550px;
     font-family: "Fredoka", serif;
 }
-.imagelinkuploadhome{
+
+.imagelinkuploadhome {
     width: 600px;
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.imagelinkuploadhome img{
+
+.imagelinkuploadhome img {
     width: 100%;
     max-width: 650px;
     height: auto;
@@ -27,8 +29,6 @@
     width: 550px;
     font-family: "Fredoka", serif;
 }
-
-
 
 .textloginlinkuploadtextsection h1 {
     font-size: 2.2rem;
@@ -81,15 +81,84 @@
     color: #2d2d2d;
 }
 
-.fogotloginlinkuploadtextsection {
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    margin: 12px 0px;
+/* Media Queries for Responsive Design */
+
+/* For tablets and small desktops (769px to 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+    #linkuploadmain {
+        flex-direction: column;
+        height: auto;
+        padding: 20px;
+    }
+
+    .linkuploadtextsection,
+    .firstloginlinkuploadtextsection {
+        width: 100%;
+        text-align: center;
+    }
+
+    .imagelinkuploadhome {
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .imagelinkuploadhome img {
+        max-width: 500px;
+    }
 }
 
-.fogotloginlinkuploadtextsection a {
-    color: #FF3B3B;
-    text-decoration: none;
+/* For mobile devices (up to 768px) */
+@media (max-width: 768px) {
+    #linkuploadmain {
+        flex-direction: column;
+        height: auto;
+        padding: 20px;
+    }
+
+    .linkuploadtextsection,
+    .firstloginlinkuploadtextsection {
+        width: 100%;
+        text-align: center;
+    }
+
+    .imagelinkuploadhome {
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .imagelinkuploadhome img {
+        max-width: 400px;
+    }
+
+    .textloginlinkuploadtextsection h1 {
+        font-size: 1.8rem;
+    }
+
+    .textloginlinkuploadtextsection p {
+        font-size: 1rem;
+    }
+
+    .formloginlinkuploadtextsection form input {
+        font-size: 1rem;
+    }
 }
 
+/* For small mobile devices (up to 480px) */
+@media (max-width: 480px) {
+    .textloginlinkuploadtextsection h1 {
+        font-size: 1.5rem;
+    }
+
+    .textloginlinkuploadtextsection p {
+        font-size: 0.9rem;
+    }
+
+    .formloginlinkuploadtextsection form input {
+        font-size: 0.9rem;
+        padding: 12px;
+    }
+
+    .imagelinkuploadhome img {
+        max-width: 300px;
+    }
+}
