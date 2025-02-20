@@ -43,6 +43,7 @@ const Registration = () => {
           password,
 
         }).then((response) => {
+        localStorage.setItem("user", response.data.user.userID);
           toast.success(response.data.message, {
             duration: 3000,
             style: {
@@ -53,8 +54,10 @@ const Registration = () => {
             },
           });
 
+
+
           setTimeout(() => {
-            navigate("/signin");
+            navigate("/link");
           }, 3000);
         })
         .catch((error) => {
