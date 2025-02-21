@@ -10,7 +10,7 @@ import Tasksubtab from "./pages/user/Tasksubtab";
 import Tasksubupload from "./pages/user/Tasksubupload";
 import UserDashboardClient from "./pages/user/UserDashboardClient";
 import Linkupload from "./pages/user/Linkupload";
-import Tasktwo from "./pages/user/Tasktwo";
+
 
 function App() {
   return (
@@ -24,7 +24,7 @@ function App() {
         <Route path="/signin" element={<Loginuser />} />
         <Route path="/signup" element={<Registration />} />
         <Route path="/link" element={<Linkupload/>}/>
-        <Route path="/task" element={<Tasktwo/>}/>
+       
 
         {/* protected routers */}
         <Route element={<ProtectedRouters />}>
