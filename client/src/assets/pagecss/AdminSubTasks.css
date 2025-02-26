@@ -1,0 +1,55 @@
+/* Admin Subtasks Container */
+.admin-subtasks {
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-left: 250px; /* Adjust based on your sidebar width */
+  width: calc(100% - 260px);
+}
+
+/* Title & Description */
+.admin-subtasks h1 {
+  font-size: 28px;
+  font-weight: bold;
+  color: #25242b;
+  margin-bottom: 5px;
+  margin-left: 50px;
+}
+
+.admin-subtasks p {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 20px;
+  margin-left: 50px;
+}
+
+/* Table Container */
+.table-container {
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Table Custom Styles */
+.data-table {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Button Styles */
+.buttoncompletetasksub {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.buttoncompletetasksub:hover {
+  background-color: #e60000;
+}
