@@ -1,6 +1,5 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
-import { tableData } from "../../utils/Sampledata";
 import "../../assets/pagecss/Tasksubtab.css";
 import Userdashboard from "./Userdashboard";
 import { Toaster, toast } from "react-hot-toast";
@@ -13,7 +12,7 @@ const Tasksubtab = () => {
   const navigate = useNavigate();
 
   const apiUrl = process.env.REACT_APP_API_URL;
- 
+
   const customStyles = {
     headCells: {
       style: {
@@ -38,7 +37,7 @@ const Tasksubtab = () => {
       selector: (row) => row.completedCount,
       sortable: true,
     },
-   
+
     {
       name: "Actions",
       cell: (row) => (
@@ -53,17 +52,17 @@ const Tasksubtab = () => {
   const handleEdit = (row) => {
 
     toast(
-        `We will send you the task page to complete and provide all the instructions on this page,\n\n you can proceed through the instructions.`,
-        {
-          duration: 3500,
-        }
+      `We will send you the task page to complete and provide all the instructions on this page,\n\n you can proceed through the instructions.`,
+      {
+        duration: 3500,
+      }
     )
 
     setTimeout(() => {
-      
+
       navigate(`/tasksubcomplete/${row.taskSubID}`);
     }, 3500);
-    
+
   };
 
   const [tasksub, setTasksub] = useState([]);
@@ -72,23 +71,23 @@ const Tasksubtab = () => {
 
     const userID = localStorage.getItem("user");
 
-  await axios.get(`${apiUrl}/subtasks/get-only-not-done/${userID}`).then((response) => {
+    await axios.get(`${apiUrl}/subtasks/get-only-not-done/${userID}`).then((response) => {
 
-    console.log(response.data);
-    setTasksub(response.data.task);
+      console.log(response.data);
+      setTasksub(response.data.task);
 
-  }).catch((error) => {
-    console.log(error);
-    toast.error("Failed to fetch data. Please try again.", {
+    }).catch((error) => {
+      console.log(error);
+      toast.error("Failed to fetch data. Please try again.", {
         duration: 3000,
         style: {
-            borderRadius: "10px",
-            height: "60px",
-            background: "#171617",
-            color: "#fff",
+          borderRadius: "10px",
+          height: "60px",
+          background: "#171617",
+          color: "#fff",
         },
-    });
-  })
+      });
+    })
 
 
   };
