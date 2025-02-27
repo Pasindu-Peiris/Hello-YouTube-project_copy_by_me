@@ -53,8 +53,8 @@
 
 .UserDashboardClient_herosection1,
 .UserDashboardClient_herosection2 {
-    width: 500px;
-    height: 300px; /* Fixed height for consistency */
+    width: 400px;
+    height: 250px; /* Fixed height for consistency */
     font-family: "Fredoka", serif;
     background-color: #FF3B3B;
     border: 2px solid #1a1d24;
@@ -71,7 +71,7 @@
 
 .UserDashboardClient_herosection1:hover,
 .UserDashboardClient_herosection2:hover {
-    background-color: #f43739;
+    background-color: #b51a1c;
 }
 
 .UserDashboardClient_herosection1 h2,
