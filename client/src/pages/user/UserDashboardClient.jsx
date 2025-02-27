@@ -71,6 +71,20 @@ const UserDashboardClient = () => {
             {/*<p>Subscription Details</p>*/}
           </div>
         </div>
+
+        <div
+          className="UserDashboardClient_herosection2"
+          onClick={() => navigate("/tasktwo")}
+          style={{ cursor: "pointer" }} // Ensures the section looks clickable
+        >
+          <div>
+            <h2>
+              <span>Add Video URL</span> 
+            </h2>
+            {/*<p>Subscription Details</p>*/}
+          </div>
+        </div>
+        
       </div>
 
       <div className="fotter_UserDashboardClient">
