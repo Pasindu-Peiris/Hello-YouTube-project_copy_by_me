@@ -1,85 +1,78 @@
 import React, { useEffect, useState } from "react";
 import "../../assets/pagecss/Linkupload.css";
 import axios from "axios";
-import { toast } from "react-hot-toast";
+import { toast, Toaster } from "react-hot-toast";
 import Header from "../../components/Header"; // Import Header
 import linkUploadImage from "../../assets/images/Mobup.svg";
 import Footer from "../../components/Footer";
 import { useNavigate } from "react-router-dom";
 
 const Linkupload = () => {
+
   const apiUrl = process.env.REACT_APP_API_URL; // Use API URL from .env
-  const apiKey = process.env.REACT_APP_API_KEY; // Use API key from .env (if needed)
-  const [userprof, setUserprof] = useState(null);
-  const [user, setUser] = useState({ url: "" });
-  const [istaskIn, setIstaskIn] = useState(true);
+  const id = localStorage.getItem("user");
+
+  const [link, setLink] = useState('')
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const getUserDetails = async () => {
-      const id = localStorage.getItem("user");
-
-      try {
-        const config = {
-          headers: {
-            Authorization: `Bearer ${apiKey}`, // If API key is required for authorization
-          },
-        };
-        const res = await axios.get(`${apiUrl}user/get-user/${id}`, config);
-        setUserprof(res.data.user);
-
-        if (
-          !res.data.user.taskSub ||
-          Object.keys(res.data.user.taskSub).length === 0 ||
-          (Array.isArray(res.data.user.taskSub) && res.data.user.taskSub.length === 0)
-        ) {
-          setIstaskIn(false);
-          toast("First time login. Please add your YouTube channel link.", { duration: 6000 });
-        }
-      } catch (error) {
-        toast.error("Internal server error", {
-          duration: 3000,
-          style: { borderRadius: "10px", background: "#171617", color: "#fff" },
-        });
-      }
-    };
-    getUserDetails();
-  }, [apiUrl, apiKey]);
-
   const isValidYouTubeUrl = (url) => {
     const regex =
-      /^(https?:\/\/)?(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+      /^(https?:\/\/)?(www\.)?(youtube\.com\/(channel\/|c\/|@)[a-zA-Z0-9_-]+)/;
     return regex.test(url);
-  };
+};
 
-  const handleInputChange = (e) => {
-    const { value } = e.target;
-    setUser({ url: value });
-  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
 
-    // Validate the URL when clicking the Start your promotion button
-    if (!isValidYouTubeUrl(user.url)) {
+    e.preventDefault();
+    alert(link)
+
+    const test = isValidYouTubeUrl(link);
+
+    if(test === true){
+
+      await axios.post(`${apiUrl}subtasks/add-sub/${id}`,{
+        channelLink: link,
+        description: "none_des",
+      }).then((response) => {
+
+        toast.success("Successfully uploaded!", {
+          duration: 3000,
+          style: { borderRadius: "10px",
+          height: "60px",
+          background: "#171617",
+          color: "#fff" },
+        });
+
+        setTimeout(() => {
+          navigate("/signin"); // Redirect to the sign-in page after 3 seconds
+        }, 3000);
+
+      }).catch((error) => {
+        toast.error("Internal Server Error !", {
+          duration: 3000,
+          style: { borderRadius: "10px",
+          height: "60px",
+          background: "#171617",
+          color: "#fff" },
+        });
+
+      })
+
+    }else{
       toast.error("Enter a valid YouTube URL", {
         duration: 3000,
-        style: { borderRadius: "10px", background: "#171617", color: "#fff" },
+        style: { borderRadius: "10px",
+          height: "60px",
+          background: "#171617",
+          color: "#fff" },
       });
-      return;
+
     }
 
-    // If valid, submit the form and navigate to the sign-in page
-    toast.success("Successfully uploaded!", {
-      duration: 3000,
-      style: { borderRadius: "10px", background: "#171617", color: "#fff" },
-    });
 
-    setTimeout(() => {
-      navigate("/signin"); // Redirect to the sign-in page after 3 seconds
-    }, 3000);
-  };
+  }
 
   return (
     <div>
@@ -104,7 +97,9 @@ const Linkupload = () => {
                   name="url"
                   placeholder="Enter Channel Link"
                   required
-                  onChange={handleInputChange}
+                  onChange={(e) => {
+                    setLink(e.target.value)
+                  }}
                 />
 
                 <input type="submit" value="Upload" />
@@ -117,7 +112,7 @@ const Linkupload = () => {
           <img src={linkUploadImage} alt="Link Upload" />
         </div>
       </div>
-
+      <Toaster position="top-center" reverseOrder={false} />
       <Footer />
     </div>
   );
