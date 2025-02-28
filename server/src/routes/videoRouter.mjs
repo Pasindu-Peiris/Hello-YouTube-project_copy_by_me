@@ -284,7 +284,7 @@ videoRouter.get(
 
 //get only not done
 videoRouter.get('/only-get-not-done/:userID',
-  
+
   param('userID').notEmpty().withMessage('userID is Empty'),
   async (req, res) => {
 
@@ -292,7 +292,7 @@ videoRouter.get('/only-get-not-done/:userID',
 
       const result_validation = validationResult(req);
 
-      if(result_validation.isEmpty()){
+      if (result_validation.isEmpty()) {
 
         const match_result = matchedData(req);
 
@@ -313,27 +313,53 @@ videoRouter.get('/only-get-not-done/:userID',
         console.log(videoUrl);
 
         // Extract taskSubIDs from completed tasks
-      const completedTaskSubIDs = completeVideos.map(task => task.taskVideoID);
+        const completedTaskSubIDs = completeVideos.map(task => task.taskVideoID);
 
-      // Filter out tasks that are already completed by the user
-      const notCompletedTasks = videoUrl.filter(task => !completedTaskSubIDs.includes(task.taskVideoID));
+        // Filter out tasks that are already completed by the user
+        const notCompletedTasks = videoUrl.filter(task => !completedTaskSubIDs.includes(task.taskVideoID));
 
-      // Return the filtered tasks
-      return res.status(200).json({message: true, videos:notCompletedTasks});
-
-
+        // Return the filtered tasks
+        return res.status(200).json({ message: true, videos: notCompletedTasks });
 
       }
-      
+
     } catch (error) {
-      
+      console.log(error);
+      return res
+        .status(500)
+        .json({ error: error, message: "Internal sever Error!" });
+
     }
 
+  }
+)
 
+
+//update completecount
+videoRouter.post('/update-completedcount/:id', async (req, res) => {
+
+  try {
+    const task = await DB.taskVideo.update({
+      where: { taskVideoID: parseInt(req.params.id) },
+      data: {
+        completedCount: {
+          increment: 1
+        }
+      }
+    })
+
+    if (!task) {
+      return res.status(404).json({ success: false, message: 'Task not found.' });
+    }
+
+    return res.status(200).json({ success: true, message: 'Task updated successfully.', updatetask: task });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: error, message: 'Internal sever Error!' });
+  }
 
 
 })
-
 
 
 
