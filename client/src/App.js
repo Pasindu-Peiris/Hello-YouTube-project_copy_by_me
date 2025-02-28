@@ -15,6 +15,8 @@ import AdminSubTasks from "./pages/admin/AdminSubTasks";
 import Taskone from "./pages/user/Taskone";
 import Tasktwo from "./pages/user/Tasktwo";
 import Addurl from "./pages/user/Addurl";
+import AdminUser from "./pages/admin/AdminUser";
+import AdminVideoTasks from "./pages/admin/AdminVideoTasks";
 
 function App() {
   return (
@@ -30,7 +32,9 @@ function App() {
         <Route path="/link" element={<Linkupload/>}/>
 
         <Route path="/admin" element={<Admindashboard/>}/>
-        <Route path="/adminsub" element={<AdminSubTasks/>}/>
+        <Route path="/admin-video-task" element={<AdminSubTasks/>}/>
+        <Route path="/admin-users" element={<AdminUser/>}/>
+        <Route path="/admin-sub-task" element={<AdminVideoTasks/>}/>
 
         {/* protected routers */}
         <Route element={<ProtectedRouters />}>
