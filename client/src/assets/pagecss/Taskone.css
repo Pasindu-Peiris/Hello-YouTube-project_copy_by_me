@@ -23,6 +23,7 @@
 
 .tableintasksubtaskone {
     width: 100%;
+    height: 70vh;
     display: block;
     border-radius: 8px;
     box-shadow: 2px 0px 10px 2px #231d1d1b;
