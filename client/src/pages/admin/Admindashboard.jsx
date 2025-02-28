@@ -19,7 +19,6 @@ const Admindashboard = () => {
 
   const signOut = () => {
     sessionStorage.removeItem("isAuth");
-    localStorage.removeItem("token");
     localStorage.removeItem("user");
     localStorage.removeItem("role");
 
