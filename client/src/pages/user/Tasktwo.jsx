@@ -115,7 +115,7 @@ const Tasktwo = () => {
                     onClick={() => navigate("/user-dashboard")} 
                     className="buttoncompletetasksubtaskone"
                 >
-                    Back to Home
+                    Back
                 </button>
 
                 <button
@@ -124,7 +124,7 @@ const Tasktwo = () => {
                     id="nextbuttontwo"
                     disabled={isNextDisabled}
                 >
-                    Next
+                    Next Video
                 </button>
             </div>
             
