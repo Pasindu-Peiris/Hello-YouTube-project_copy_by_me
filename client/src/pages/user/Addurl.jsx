@@ -156,6 +156,7 @@ const Addurl = () => {
 
                     setTimeout(() => {
                         getAllSubTasks();
+                        setLink('')
                     }, 3001);
                 }
 
@@ -212,7 +213,7 @@ const Addurl = () => {
             <div className="formaddurl">
 
                 <form onSubmit={handleSubmit}>
-                    <input type="url" id="url" placeholder="Enter Video URL" onChange={(e) => {
+                    <input type="url" id="url" value={link} placeholder="Enter Video URL" onChange={(e) => {
                         setLink(e.target.value);
                     }} />
                     <input type="submit" value="ADD URL" />
