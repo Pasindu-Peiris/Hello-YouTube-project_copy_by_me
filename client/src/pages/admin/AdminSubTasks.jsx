@@ -6,9 +6,10 @@ import "../../assets/pagecss/AdminSubTasks.css";
 import { useNavigate } from "react-router-dom";
 import Admindashboard from "./Admindashboard";
 
-
 const AdminSubTasks = () => {
+
   const navigate = useNavigate();
+  
   const apiUrl = process.env.REACT_APP_API_URL;
 
   const customStyles = {
@@ -28,47 +29,73 @@ const AdminSubTasks = () => {
     },
   };
 
+  // Columns
   const columns = [
-    { name: "Channel Link", selector: (row) => row.channelLink, sortable: true },
-    { name: "Description", selector: (row) => row.description, sortable: true },
-    { name: "Completed Count", selector: (row) => row.completedCount, sortable: true },
     {
-      name: "Actions",
-      cell: (row) => (
-        <div>
-          <button onClick={() => handleEdit(row)} className="buttoncompletetasksub">
-            Complete Task
-          </button>
-        </div>
-      ),
+      name: "#",
+      cell: (row, rowIndex) => <div>{rowIndex + 1}</div>,
+      width: "50px",
     },
+    {
+      name: "Channel Link",
+      selector: (row) => row.videoLink,
+      cell: (row) => (
+        <button
+          onClick={() => navigateYoutube(row.videoLink, row.taskSubID)}
+          className="buttoncompletetasksubtaskonechannle buttoncompletetasksubtaskone"
+        >
+          Video URL
+        </button>
+      ),
+      sortable: true,
+    },
+
+    {
+      name: "Completed Count",
+      selector: (row) => row.completedCount,
+      sortable: true,
+    },
+
+    {
+      name: "Created Date",
+      selector: (row) => formatDateToYYYYMMDD(row.createdDate),
+      sortable: true,
+    },
+    {
+      name: "Username",
+      selector: (row) => row.USER.username,
+      sortable: true,
+    }
   ];
 
-  const handleEdit = (row) => {
-    toast(
-      `We will send you the task page to complete and provide all the instructions on this page,\n\n you can proceed through the instructions.`,
-      { duration: 3500 }
-    );
-
-    setTimeout(() => {
-      navigate(`/tasksubcomplete/${row.taskSubID}`);
-    }, 3500);
+  const navigateYoutube = (linkUp, taskSubID) => {
+    window.open(linkUp, "_blank");
   };
 
-  const handleRowClick = (row) => {
-    navigate(`/adminsub/${row.taskSubID}`);
+  const formatDateToYYYYMMDD = (isoDateString) => {
+    const date = new Date(isoDateString);
+
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
   };
+
 
   const [tasksub, setTasksub] = useState([]);
 
   const getAllSubTasks = async () => {
-    try {
-      const userID = localStorage.getItem("user");
-      const response = await axios.get(`${apiUrl}/subtasks/get-only-not-done/${userID}`);
+
+    await axios.get(`${apiUrl}/videos/get-video`).then((response) => {
+
       console.log(response.data);
-      setTasksub(response.data.task);
-    } catch (error) {
-      console.error("Error fetching subtasks:", error);
+      setTasksub(response.data.videos);
+
+      console.log(tasksub)
+
+    }).catch((error) => {
+      console.log(error);
       toast.error("Failed to fetch data. Please try again.", {
         duration: 3000,
         style: {
@@ -78,47 +105,50 @@ const AdminSubTasks = () => {
           color: "#fff",
         },
       });
-    }
+    })
+
+
   };
+
 
   useEffect(() => {
     getAllSubTasks();
   }, []);
 
   return (
+
     <div className="admin-subtasks">
-      {/* Added Admindashboard component */}
       <Admindashboard />
 
-      <h1>Sub Tasks</h1>
-      <p>View and manage all subtasks assigned to users.</p>
+      <div className="admin-content-wrapper">
+        <h1>Video Tasks</h1>
+        <p>View and manage all Video tasks assigned to users.</p>
 
-      <div className="table-container">
-        {tasksub.length === 0 ? (
-          <p>No subtasks found.</p>
-        ) : (
-          <DataTable
-            columns={columns}
-            data={tasksub}
-            fixedHeader
-            fixedHeaderScrollHeight="62vh"
-            pagination
-            className="data-table"
-            customStyles={customStyles}
-            onRowClicked={handleRowClick}
-            conditionalRowStyles={[
-              {
-                when: (row) => row.completedCount > 20, 
-                style: {
-                  backgroundColor: "#fffdfd",
-                  border: "1px solid #1c1a1a",
-                  color: "black",
-                  fontSize: "16px",
+        <section id="tasksubtabaddurl3">
+          <div className="tableintasksubaddurl" id="newadminsubtask3">
+            <DataTable
+              columns={columns}
+              data={tasksub}
+              fixedHeader
+              fixedHeaderScrollHeight="66vh"
+              pagination
+              className="data-table"
+              customStyles={customStyles}
+
+              conditionalRowStyles={[
+                {
+                  when: (row) => row.channelLink > 20,
+                  style: {
+                    backgroundColor: "#fffdfd",
+                    border: "1px solid #1c1a1a",
+                    color: "black",
+                    fontSize: "16px",
+                  },
                 },
-              },
-            ]}
-          />
-        )}
+              ]}
+            />
+          </div>
+        </section>
       </div>
 
       <Toaster position="top-center" reverseOrder={false} />
