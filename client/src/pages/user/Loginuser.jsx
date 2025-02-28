@@ -51,7 +51,7 @@ const Loginuser = () => {
         const now = new Date().getTime(); // Current time in milliseconds
         const expirationTime = now + 24 * 60 * 60 * 1000; // 1 day in milliseconds
 
-
+        localStorage.setItem("username", response.data.user.username);
         // subTask 
         let subTask = JSON.parse(localStorage.getItem("subTask"));
 
@@ -195,7 +195,7 @@ const Loginuser = () => {
               />
 
               <div className="fogotlogin">
-                <a href="/">Forgot Password?</a>
+                <a href="/"></a>
               </div>
 
               <input type="submit" value="Sign In" />
