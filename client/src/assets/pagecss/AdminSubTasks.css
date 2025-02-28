@@ -1,20 +1,23 @@
 /* Admin Subtasks Container */
 .admin-subtasks {
   padding: 20px;
-  background-color: #f8f9fa;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin-left: 250px; /* Adjust based on your sidebar width */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0);
+  margin-left: 250px;
+  /* Adjust based on your sidebar width */
   width: calc(100% - 260px);
+  height: 100vh;
 }
 
 /* Title & Description */
 .admin-subtasks h1 {
-  font-size: 28px;
+  font-size: 30px;
   font-weight: bold;
   color: #25242b;
   margin-bottom: 5px;
   margin-left: 50px;
+  margin-top: 50px;
+  font-family: "Fredoka", serif;
 }
 
 .admin-subtasks p {
@@ -29,7 +32,7 @@
   padding: 20px;
   background-color: #fff;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0);
 }
 
 /* Table Custom Styles */
@@ -41,7 +44,7 @@
 /* Button Styles */
 .buttoncompletetasksub {
   background-color: #ff4d4d;
-  color: white;
+  color: #ffffff;
   border: none;
   padding: 8px 15px;
   border-radius: 5px;
@@ -52,4 +55,154 @@
 
 .buttoncompletetasksub:hover {
   background-color: #e60000;
+}
+
+#tasksubtabaddurl3 {
+  width: 100%;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+#newadminsubtask3 {
+  width: 100%;
+}
+
+/* Updated CSS with Responsive Styles */
+.admin-subtasks {
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0);
+  margin-left: 250px;
+  width: calc(100% - 260px);
+  transition: all 0.3s ease;
+}
+
+.admin-content-wrapper {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.admin-subtasks h1 {
+  font-size: 28px;
+  font-weight: bold;
+  color: #25242b;
+  margin-bottom: 5px;
+  margin-left: 0;
+}
+
+.admin-subtasks p {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 20px;
+  margin-left: 0;
+}
+
+.tableintasksubaddurl {
+  width: 100%;
+  overflow-x: auto;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0);
+}
+
+.data-table {
+  min-width: 800px;
+}
+
+/* Media Queries */
+@media (max-width: 1200px) {
+  .admin-subtasks {
+    margin-left: 200px;
+    width: calc(100% - 210px);
+  }
+}
+
+@media (max-width: 992px) {
+  .admin-subtasks {
+    margin-left: 180px;
+    width: calc(100% - 190px);
+  }
+
+  .admin-subtasks h1 {
+    font-size: 24px;
+  }
+
+  .admin-subtasks p {
+    font-size: 14px;
+  }
+
+  .admin-subtasks h1 {
+
+    margin-top: 70px;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-subtasks {
+    margin-left: 0;
+    width: 100%;
+    padding: 15px;
+  }
+
+  .admin-content-wrapper {
+    padding: 0 10px;
+  }
+
+  .data-table {
+    min-width: 600px;
+  }
+
+  .admin-subtasks h1 {
+
+    margin-top: 70px;
+  }
+}
+
+@media (max-width: 576px) {
+  .admin-subtasks h1 {
+    font-size: 20px;
+  }
+
+  .admin-subtasks p {
+    font-size: 13px;
+  }
+
+  .buttoncompletetasksubtaskonechannle {
+    padding: 5px 10px;
+    font-size: 12px;
+  }
+
+  .data-table {
+    font-size: 13px;
+  }
+
+  .admin-subtasks h1 {
+
+    margin-top: 70px;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-subtasks {
+    padding: 10px;
+  }
+
+  .data-table {
+    min-width: 100%;
+  }
+
+  .tableintasksubaddurl {
+    border-radius: 6px;
+  }
+
+  .admin-subtasks h1 {
+
+    margin-top: 70px;
+  }
 }
