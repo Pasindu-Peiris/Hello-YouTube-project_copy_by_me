@@ -40,7 +40,7 @@ const Addurl = () => {
                     onClick={() => navigateYoutube(row.videoLink, row.taskSubID)}
                     className="buttoncompletetasksubtaskonechannle buttoncompletetasksubtaskone"
                 >
-                    Channel URL
+                    Video URL
                 </button>
             ),
             sortable: true,
