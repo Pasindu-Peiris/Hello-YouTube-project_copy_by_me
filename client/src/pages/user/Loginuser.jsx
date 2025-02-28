@@ -25,6 +25,23 @@ const Loginuser = () => {
       .then((response) => {
         console.log(response.data);
 
+        let status = response.data.user.status;
+
+        if(status === 'inactive'){
+          toast.error("Your account is not deleted.", {
+            duration: 3000,
+            style:{
+              borderRadius: "10px",
+              height: "60px",
+              background: "#171617",
+              color: "#fff",
+
+            }
+          }) 
+
+          return false;
+        }
+
         toast.success(response.data.message, {
           duration: 3000,
           style: {
@@ -42,7 +59,7 @@ const Loginuser = () => {
         //set local storage
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("user", response.data.user.id);
-        localStorage.setItem("role", "user");
+        sessionStorage.setItem('role', 'user'); 
         localStorage.setItem('lastTime', true);
         // Set lastCallDate to today's date
         const today = new Date().toISOString().split("T")[0];

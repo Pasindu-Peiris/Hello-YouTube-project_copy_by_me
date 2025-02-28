@@ -1,13 +1,21 @@
-import React from 'react'
-import { Outlet, Navigate } from 'react-router-dom'
+import { Navigate, Outlet } from 'react-router-dom';
 
-const ProtectedRouters = () => {
+const ProtectedRouters = ({ allowedRoles }) => {
+  const isAuth = sessionStorage.getItem('isAuth');
+  const role = sessionStorage.getItem('role');
 
-    const isAuth = sessionStorage.getItem('isAuth')
+ 
+  if (!isAuth) {
+    return <Navigate to="/" replace />;
+  }
 
+  
+  if (!allowedRoles.includes(role)) {
+    const redirectPath = role === 'admin' ? '/admin-video-task' : '/user-dashboard';
+    return <Navigate to={redirectPath} replace />;
+  }
 
-
-    return isAuth ? <Outlet /> : <Navigate to='/' />
-}
+  return <Outlet />;
+};
 
 export default ProtectedRouters;

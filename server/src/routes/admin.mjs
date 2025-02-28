@@ -56,4 +56,33 @@ adminRouter.post('/save_admin',
 )
 
 
+//admin login
+adminRouter.post('/admin-login', async (req, res) => {
+
+    try {
+
+        const { email, password } = req.body;
+
+        const admin = await DB.admin.findUnique({
+            where: {
+                email: email,
+                password: password
+            }
+        });
+
+        if (!admin) {
+            return res.status(404).json({ message: "admin not found!" });
+        }
+
+        return res.status(200).json({ message: "Login successful", admin: admin });
+
+    } catch (error) {
+
+        return res.status(500).json({ message: "admin login error!" });
+
+    }
+
+})
+
+
 export default adminRouter;
