@@ -41,17 +41,16 @@ const Admindashboard = () => {
   const [activeCSS1, setActiveCSS1] = useState("");
   const [activeCSS2, setActiveCSS2] = useState("");
   const [activeCSS3, setActiveCSS3] = useState("");
-  const [activeCSS4, setActiveCSS4] = useState("");
-  const [activeCSS5, setActiveCSS5] = useState("");
+ 
 
   const changeAcPageActive = () => {
     const currentPage = window.location.pathname;
 
-    if (currentPage.includes("/admin-dashboard")) {
+    if (currentPage.includes("/admin-video-task")) {
       setActiveCSS1("active");
-    } else if (currentPage.includes("/manage-users")) {
+    } else if (currentPage.includes("/admin-sub-task")) {
       setActiveCSS2("active");
-    } else if (currentPage.includes("/manage-tasks")) {
+    } else if (currentPage.includes("/admin-users")) {
       setActiveCSS3("active");
     }
   };
@@ -90,10 +89,10 @@ const Admindashboard = () => {
             <li
               className={activeCSS1}
               onClick={(e) => {
-                onChangePage("/admin-dashboard");
+                onChangePage("/admin-video-task");
               }}
             >
-              <i className="fas fa-user-circle"></i>
+              <i className="fas fa-video"></i> 
               <span>Video Task
                 
               </span>
@@ -101,16 +100,20 @@ const Admindashboard = () => {
             <li
               className={activeCSS2}
               onClick={(e) => {
-                onChangePage("/adminsub");
+                onChangePage("/admin-sub-task");
               }}
             >
-              <i className="fas fa-users"></i>
+             <i className="fas fa-check-double"></i>
               <span>Sub Task</span>
             </li>
            
-            <li>
-              <i className="fas fa-cog"></i>
-              <span>Settings</span>
+            <li className={activeCSS3}
+              onClick={(e) => {
+                onChangePage("/admin-users");
+              }}
+              >
+            <i class="fa fa-users" aria-hidden="true"></i>
+              <span>Users</span>
             </li>
           </ul>
         </div>
