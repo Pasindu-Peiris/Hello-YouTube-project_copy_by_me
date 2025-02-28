@@ -3,6 +3,7 @@ import "../../assets/pagecss/Tasktwo.css";
 import { useNavigate } from "react-router-dom";
 import { Toaster, toast } from "react-hot-toast";
 import YouTube from 'react-youtube';
+import axios from "axios";
 
 const Tasktwo = () => {
 
@@ -10,25 +11,57 @@ const Tasktwo = () => {
     const timeoutRef = useRef(null);
     const playerRef = useRef(null);
 
-    const [channelLinks, setChannelLinks] = useState([]);
+    const apiUrl = process.env.REACT_APP_API_URL;
 
-    const YoutubechnanleLink = [
-        { channelLink: "https://www.youtube.com/watch?v=oj1QAkvmXVw" },
-        { channelLink: "https://www.youtube.com/watch?v=q5FO8KC-zbE" },
-        { channelLink: "https://www.youtube.com/watch?v=Ec08db2hP10" },
-        { channelLink: "https://www.youtube.com/watch?v=Ec08db2hP18" },
-        { channelLink: "https://www.youtube.com/watch?v=Ec08db2hP19" },
-    ];
+
+    const [tasksub, setTasksub] = useState([]);
+    const userID = localStorage.getItem("user");
+
+    const getAllSubTasks = async () => {
+
+     
+        let counttaskVideo = localStorage.getItem("videoTask");
+
+
+        await axios.get(`${apiUrl}/videos/only-get-not-done/${userID}`).then((response) => {
+
+            console.log(response.data);
+            const first20Tasks = response.data.videos.slice(0, JSON.parse(counttaskVideo).value);
+
+            setTasksub(first20Tasks);
+
+            console.log(tasksub)
+
+        }).catch((error) => {
+            console.log(error);
+            toast.error("Failed to fetch data. Please try again.", {
+                duration: 3000,
+                style: {
+                    borderRadius: "10px",
+                    height: "60px",
+                    background: "#171617",
+                    color: "#fff",
+                },
+            });
+        })
+
+
+    };
+
+
+    useEffect(() => {
+        getAllSubTasks();
+    }, []);
 
     // Extract video IDs from the links
-    const videoIds = YoutubechnanleLink.map(link => {
+    const videoIds = tasksub.map(link => {
         try {
-            const url = new URL(link.channelLink);
+            const url = new URL(link.videoLink);
             const videoId = url.searchParams.get("v");
             if(!videoId) throw new Error("Invalid video ID");
             return videoId;
         } catch (error) {
-            console.error("Invalid URL:", link.channelLink);
+            console.error("Invalid URL:", link.videoLink);
             return null;
         }
     }).filter(id => id !== null);
@@ -61,20 +94,25 @@ const Tasktwo = () => {
     };
 
     // Handle player ready event
-    const onReady = (event) => {
-        playerRef.current = event.target;
-        setIsNextDisabled(true);
+const onReady = (event) => {
+    playerRef.current = event.target;
+    setIsNextDisabled(true);
+    
+    // Force play and prevent pause
+    event.target.playVideo();
+    
+    if(timeoutRef.current) clearTimeout(timeoutRef.current);
+    
+    timeoutRef.current = setTimeout(() => {
+        playerRef.current.pauseVideo();
         
-        // Force play and prevent pause
-        event.target.playVideo();
-        
-        if(timeoutRef.current) clearTimeout(timeoutRef.current);
-        
-        timeoutRef.current = setTimeout(() => {
-            playerRef.current.pauseVideo();
+        const currentVideoId = tasksub[currentVideoIndex].taskVideoID; 
+        submitCompletevideo(currentVideoId);
+        setTimeout(() => {
             handleNextVideo();
-        }, 10000);
-    };
+        }, 2000);
+    }, 10000);
+};
 
     // Block all player interactions
     const onStateChange = (event) => {
@@ -103,10 +141,73 @@ const Tasktwo = () => {
             setCurrentVideoIndex(prev => prev + 1);
             setIsNextDisabled(false);
         } else {
-            toast.success("All videos completed!");
-            navigate("/user-dashboard");
+            toast.success("All Videos Task completed!",{
+                duration:2000,
+                style:{
+                    borderRadius: "10px",
+                    height: "60px",
+                    background: "#171617",
+                    color: "#fff",
+                }
+            });
+            setTimeout(() => {
+                navigate("/user-dashboard");
+            }, 2000)
         }
     };
+
+    const submitCompletevideo = async (taskVideoID) => {
+
+        await axios.post(`${apiUrl}/completed-videos/add-comvideo/${userID}`, {
+            taskVideoID: taskVideoID
+        }).then((response) => {
+
+            updateLocalSubTask()
+            toast.success("task complete.", {
+                duration: 2000,
+                style:{
+                    borderRadius: "10px",
+                    height: "60px",
+                    background: "#171617",
+                    color: "#fff",
+                }
+            });
+
+
+        }).catch((error) => {
+            console.log(error);
+            toast.error("task not complete.", {
+                duration: 3000,
+                style: {
+                    borderRadius: "10px",
+                    height: "60px",
+                    background: "#171617",
+                    color: "#fff",
+                },
+            });
+        })
+
+
+
+    }
+
+
+    const updateLocalSubTask = () => {
+
+        const now = new Date().getTime(); // Current time in milliseconds
+        const expirationTime = now + 24 * 60 * 60 * 1000; // 1 day in milliseconds
+
+        let counttaskVideoGet = localStorage.getItem("videoTask");
+
+        let newCount = JSON.parse(counttaskVideoGet).value - 1;
+
+        localStorage.setItem("videoTask",
+          JSON.stringify({
+            value:newCount,
+            expiresAt: expirationTime,
+          }))
+
+    }
 
     return (
         <div id="headtaskone">
