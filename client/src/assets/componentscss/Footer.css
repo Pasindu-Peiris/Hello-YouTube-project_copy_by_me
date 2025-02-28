@@ -10,11 +10,11 @@ footer {
 }
 
 .fottercontainer {
-    width: 100%;
+    width:92%;
     height: auto;
     display: flex;
     align-items: flex-start;
-    justify-content: space-between;
+    justify-content: space-around;
     padding: 15px 35px;
     font-family: "Fredoka", serif;
 }
@@ -54,7 +54,9 @@ footer {
     font-size: 1.4rem;
     font-family: "Fredoka", serif;
 }
-
+.links ul li  a{
+    color: #191818;
+}
 #logofooter {
     font-family: "Fredoka", serif;
 }
@@ -70,6 +72,10 @@ footer {
 .footerdwon p {
     font-size: 1rem;
     font-family: "Poppins", serif;
+}
+
+#logoimagefotter{
+    width: 200px;
 }
 
 /* Tablet Landscape / Small Desktop */
@@ -116,6 +122,9 @@ footer {
 
     .links h1 {
         font-size: 2rem;
+    }
+    #logoimagefotter{
+        width: 180px;
     }
 }
 
@@ -174,6 +183,9 @@ footer {
     .links h1 {
         font-size: 2rem;
     }
+    #logoimagefotter{
+        width: 160px;
+    }
 }
 
 /* Mobile Devices */
@@ -197,5 +209,9 @@ footer {
 
     .links h1 {
         font-size: 1.8rem;
+    }
+
+    #logoimagefotter{
+        width: 120px;
     }
 }
