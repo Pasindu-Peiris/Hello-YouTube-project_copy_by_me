@@ -19,7 +19,7 @@ const Tasktwo = () => {
 
     const getAllSubTasks = async () => {
 
-     
+
         let counttaskVideo = localStorage.getItem("videoTask");
 
 
@@ -31,6 +31,27 @@ const Tasktwo = () => {
             setTasksub(first20Tasks);
 
             console.log(tasksub)
+
+
+            if (JSON.parse(counttaskVideo).value === 0) {
+                toast((t) => (
+                    <span className="toast-tasktwo">
+                        <p> Your task is completed, you can now proceed to the next task after 24HR</p>
+                    </span>
+                ), {
+                    position: "top-center",
+                    icon: '👏',
+                    style: {
+                        borderRadius: '10px',
+                        background: '#333',
+                        color: '#fff',
+                    },
+                });
+
+                setTimeout(() => {
+                    navigate("/user-dashboard");
+                }, 5000);
+            }
 
         }).catch((error) => {
             console.log(error);
@@ -58,7 +79,7 @@ const Tasktwo = () => {
         try {
             const url = new URL(link.videoLink);
             const videoId = url.searchParams.get("v");
-            if(!videoId) throw new Error("Invalid video ID");
+            if (!videoId) throw new Error("Invalid video ID");
             return videoId;
         } catch (error) {
             console.error("Invalid URL:", link.videoLink);
@@ -71,7 +92,7 @@ const Tasktwo = () => {
 
     useEffect(() => {
         return () => {
-            if(timeoutRef.current) clearTimeout(timeoutRef.current);
+            if (timeoutRef.current) clearTimeout(timeoutRef.current);
         };
     }, []);
 
@@ -94,25 +115,26 @@ const Tasktwo = () => {
     };
 
     // Handle player ready event
-const onReady = (event) => {
-    playerRef.current = event.target;
-    setIsNextDisabled(true);
-    
-    // Force play and prevent pause
-    event.target.playVideo();
-    
-    if(timeoutRef.current) clearTimeout(timeoutRef.current);
-    
-    timeoutRef.current = setTimeout(() => {
-        playerRef.current.pauseVideo();
-        
-        const currentVideoId = tasksub[currentVideoIndex].taskVideoID; 
-        submitCompletevideo(currentVideoId);
-        setTimeout(() => {
-            handleNextVideo();
-        }, 2000);
-    }, 10000);
-};
+    const onReady = (event) => {
+        playerRef.current = event.target;
+        setIsNextDisabled(true);
+
+        // Force play and prevent pause
+        event.target.playVideo();
+
+        if (timeoutRef.current) clearTimeout(timeoutRef.current);
+
+        timeoutRef.current = setTimeout(() => {
+            playerRef.current.pauseVideo();
+
+            const currentVideoId = tasksub[currentVideoIndex].taskVideoID;
+            submitCompletevideo(currentVideoId);
+            updateCompletecount(currentVideoId);
+            setTimeout(() => {
+                handleNextVideo();
+            }, 2000);
+        }, 10000);
+    };
 
     // Block all player interactions
     const onStateChange = (event) => {
@@ -125,8 +147,8 @@ const onReady = (event) => {
             CUED: 5
         };
 
-        if(event.data === PLAYER_STATES.PAUSED || 
-           event.data === PLAYER_STATES.BUFFERING) {
+        if (event.data === PLAYER_STATES.PAUSED ||
+            event.data === PLAYER_STATES.BUFFERING) {
             playerRef.current.playVideo();
         }
     };
@@ -141,9 +163,9 @@ const onReady = (event) => {
             setCurrentVideoIndex(prev => prev + 1);
             setIsNextDisabled(false);
         } else {
-            toast.success("All Videos Task completed!",{
-                duration:2000,
-                style:{
+            toast.success("All Videos Task completed!", {
+                duration: 2000,
+                style: {
                     borderRadius: "10px",
                     height: "60px",
                     background: "#171617",
@@ -165,7 +187,7 @@ const onReady = (event) => {
             updateLocalSubTask()
             toast.success("task complete.", {
                 duration: 2000,
-                style:{
+                style: {
                     borderRadius: "10px",
                     height: "60px",
                     background: "#171617",
@@ -202,18 +224,29 @@ const onReady = (event) => {
         let newCount = JSON.parse(counttaskVideoGet).value - 1;
 
         localStorage.setItem("videoTask",
-          JSON.stringify({
-            value:newCount,
-            expiresAt: expirationTime,
-          }))
+            JSON.stringify({
+                value: newCount,
+                expiresAt: expirationTime,
+            }))
+
+    }
+
+    const updateCompletecount = async (id) => {
+
+        await axios.post(`${apiUrl}/videos/update-completedcount/${id}`).then((response) => {
+            console.log('don complete count')
+        }).catch((error) => {
+            console.log(error);
+
+        })
 
     }
 
     return (
         <div id="headtaskone">
             <div className="backbuttontaskone headtasktwo">
-                <button 
-                    onClick={() => navigate("/user-dashboard")} 
+                <button
+                    onClick={() => navigate("/user-dashboard")}
                     className="buttoncompletetasksubtaskone"
                 >
                     Back
@@ -228,7 +261,7 @@ const onReady = (event) => {
                     Next Video
                 </button>
             </div>
-            
+
             <div id="taskone">
                 <section id="taskonecontent">
                     {videoIds[currentVideoIndex] && (
