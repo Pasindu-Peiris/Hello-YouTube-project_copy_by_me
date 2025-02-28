@@ -1,5 +1,6 @@
 import React from 'react'
 import '../assets/componentscss/Footer.css'
+import Img from '../assets/images/logo2.png'
 
 const Footer = () => {
     return (
@@ -12,7 +13,7 @@ const Footer = () => {
                             <ul>
                                 <h3>Logo</h3>
                                 <li>
-                                    <h1 id="logofooter">Hello YT</h1>
+                                    <img src={Img} id="logoimagefotter"  alt="logo"/>
                                 </li>
                             </ul>
                         </div>
@@ -44,14 +45,9 @@ const Footer = () => {
                     <div class="footertree">
                         <div class="links">
                             <ul>
-                                <h3>Subscribe Us</h3>
-                                <li>Subscribe to receive our new updates</li>
-                                <li>
-                                    <form action>
-                                        <input type="text" name="email" placeholder="Email Address" />
-                                        <input type="submit" value="Send" />
-                                    </form>
-                                </li>
+                                <h3>Follow Us</h3>
+                                <li><a href=""><i class="fa-brands fa-square-facebook"></i> Facebook</a></li>
+                                <li><a href=""><i class="fa-brands fa-square-instagram"></i> Instagram</a></li>
                             </ul>
                         </div>
                     </div>
