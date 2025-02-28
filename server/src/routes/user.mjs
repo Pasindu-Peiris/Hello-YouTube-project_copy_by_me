@@ -148,7 +148,7 @@ userRouter.post('/signin',
         return res.status(200).json({
           success: true,
           message: "Sign In Successful.",
-          user: { id: user.userID, username: user.username, email: user.email },
+          user: { id: user.userID, username: user.username, email: user.email, status: user.status },
           token,
         });
 
