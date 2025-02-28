@@ -1,0 +1,59 @@
+
+#addurl{
+    width: 100%;
+    height: 100vh;
+    
+
+}
+
+#tasksubtabaddurl2{
+    width: 100%;
+    height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -10px;
+  
+  
+}
+
+.tableintasksubaddurl{
+    width: 60%;
+    box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.269);
+    border-radius: 10px;
+}
+
+.formaddurl{
+    width: 100%;
+    height: auto;
+    padding: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.formaddurl form input {
+    width: auto;
+    padding: 16px;
+    margin: 12px 10px;
+    border: none;
+    outline: none;
+    font-size: 1.2rem;
+    border-radius: 6px;
+    background-color: rgb(237, 237, 237);
+
+}
+
+.formaddurl form input[type="submit"] {
+    background-color: #FF3B3B;
+    color: #ffffff;
+    cursor: pointer;
+    font-weight: 500;
+    font-family: "Fredoka", serif;
+}
+
+.formaddurl form ::placeholder {
+    padding: 4px;
+    font-size: 1.2rem;
+    color: #2d2d2d;
+}
