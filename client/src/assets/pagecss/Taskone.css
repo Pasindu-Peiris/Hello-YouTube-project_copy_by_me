@@ -62,17 +62,21 @@
 }
 
 .backbuttontaskone button {
-    background-color: #03ca5c;
+    background-color: #FF3B3B;
+    color: #ffffff;
+    cursor: pointer;
+    font-weight: 500;
+    font-family: "Fredoka", serif;
     color: #fff;
     border: none;
-    padding: 8px 12px;
+    padding: 16px;
     cursor: pointer;
     border-radius: 4px;
     font-size: 1.2rem;
     transition: all 0.3s ease;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0);
     margin: 20px 0px 20px 30px;
-    font-family: "poppins", serif;
+    
 }
 
 #headtaskone {
