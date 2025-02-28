@@ -281,4 +281,61 @@ videoRouter.get(
   }
 );
 
+
+//get only not done
+videoRouter.get('/only-get-not-done/:userID',
+  
+  param('userID').notEmpty().withMessage('userID is Empty'),
+  async (req, res) => {
+
+    try {
+
+      const result_validation = validationResult(req);
+
+      if(result_validation.isEmpty()){
+
+        const match_result = matchedData(req);
+
+        const videoUrl = await DB.taskVideo.findMany({
+          include: {
+            USER: true,
+          },
+        });
+
+        const completeVideos = await DB.completedVideo.findMany({
+          where: {
+            userID: parseInt(match_result.userID)
+          }
+        })
+
+        console.log(completeVideos);
+
+        console.log(videoUrl);
+
+        // Extract taskSubIDs from completed tasks
+      const completedTaskSubIDs = completeVideos.map(task => task.taskVideoID);
+
+      // Filter out tasks that are already completed by the user
+      const notCompletedTasks = videoUrl.filter(task => !completedTaskSubIDs.includes(task.taskVideoID));
+
+      // Return the filtered tasks
+      return res.status(200).json({message: true, videos:notCompletedTasks});
+
+
+
+      }
+      
+    } catch (error) {
+      
+    }
+
+
+
+
+})
+
+
+
+
+
 export default videoRouter;
