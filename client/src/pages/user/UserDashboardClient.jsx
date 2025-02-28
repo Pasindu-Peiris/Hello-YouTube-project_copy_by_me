@@ -10,7 +10,7 @@ const UserDashboardClient = () => {
     sessionStorage.removeItem("isAuth");
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-    localStorage.removeItem("role");
+    sessionStorage.removeItem("role");
 
     toast.success("Sign Out Successfully", {
       duration: 3000,
