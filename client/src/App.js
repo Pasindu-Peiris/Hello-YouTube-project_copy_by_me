@@ -14,6 +14,7 @@ import Admindashboard from "./pages/admin/Admindashboard";
 import AdminSubTasks from "./pages/admin/AdminSubTasks";
 import Taskone from "./pages/user/Taskone";
 import Tasktwo from "./pages/user/Tasktwo";
+import Addurl from "./pages/user/Addurl";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
           <Route path="/user-dashboard" element={<UserDashboardClient/>} />
           <Route path="/taskone" element={<Taskone/>} />
           <Route path="/tasktwo" element={<Tasktwo/>} />
+          <Route path="/addurl" element={<Addurl/>} />
 
 
 
