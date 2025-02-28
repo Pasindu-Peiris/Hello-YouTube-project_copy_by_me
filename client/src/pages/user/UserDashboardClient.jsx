@@ -74,7 +74,7 @@ const UserDashboardClient = () => {
 
         <div
           className="UserDashboardClient_herosection2"
-          onClick={() => navigate("/tasktwo")}
+          onClick={() => navigate("/addurl")}
           style={{ cursor: "pointer" }} // Ensures the section looks clickable
         >
           <div>
