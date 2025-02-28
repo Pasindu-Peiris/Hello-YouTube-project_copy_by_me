@@ -27,12 +27,14 @@ const UserDashboardClient = () => {
     }, 2000);
   };
 
+  const name = localStorage.getItem("username");
+
   return (
     <div id="UserDashboardClient">
       <div className="UserDashboardClient_heading">
         <div className="UserDashboardClient-h1">
           <h1>User Dashboard</h1>
-          <p>Hi, Pasindu Peiris</p>
+          <p>Hi, {name}</p>
         </div>
 
         <div className="UserDashboardClientlogout-button">
