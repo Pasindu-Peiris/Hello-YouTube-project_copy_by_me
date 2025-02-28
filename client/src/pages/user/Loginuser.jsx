@@ -9,7 +9,6 @@ import { Toaster, toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 const Loginuser = () => {
-
   const apiUrl = process.env.REACT_APP_API_URL;
 
   const [email, setEmail] = useState("");
@@ -19,48 +18,106 @@ const Loginuser = () => {
 
   // Handle form submission
   const handleSubmit = async (e) => {
-
     e.preventDefault();
 
-    await axios.post(`${apiUrl}user/signin/`, { email, password }).then((response) => {
+    await axios
+      .post(`${apiUrl}user/signin/`, { email, password })
+      .then((response) => {
+        console.log(response.data);
 
-      console.log(response.data);
+        toast.success(response.data.message, {
+          duration: 3000,
+          style: {
+            borderRadius: "10px",
+            height: "60px",
+            background: "#171617",
+            color: "#fff",
+          },
+        });
 
-      toast.success(response.data.message, {
-        duration: 3000,
-        style: {
-          borderRadius: "10px",
-          height: "60px",
-          background: "#171617",
-          color: "#fff",
-        },
-      });
+        setTimeout(() => {
+          navigate("/user-dashboard");
+        }, 3000);
 
-      setTimeout(() => {
-        navigate("/user-dashboard");
-      }, 3000);
+        //set local storage
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("user", response.data.user.id);
+        localStorage.setItem("role", "user");
+        localStorage.setItem('lastTime', true);
+        // Set lastCallDate to today's date
+        const today = new Date().toISOString().split("T")[0];
+        localStorage.setItem("lastCallDate", today);
 
-      //set local storage
-      localStorage.setItem("token", response.data.token);
-      localStorage.setItem("user", response.data.user.id);
-      localStorage.setItem("role", "user");
+        const now = new Date().getTime(); // Current time in milliseconds
+        const expirationTime = now + 24 * 60 * 60 * 1000; // 1 day in milliseconds
 
-      const now = new Date().getTime(); // Current time in milliseconds
-      const expirationTime = now + 24 * 60 * 60 * 1000; // 1 day in milliseconds
-
-      sessionStorage.setItem("isAuth", JSON.stringify({
-        value: true,
-        expiresAt: expirationTime,
-      }));
+        localStorage.setItem("username", response.data.user.username);
+        // subTask 
+        let subTask = JSON.parse(localStorage.getItem("subTask"));
 
 
-    })
+        if (subTask === null || subTask === undefined) {
+
+          localStorage.setItem(
+            "subTask",
+            JSON.stringify({
+              value: 20,
+              expiresAt: expirationTime,
+            })
+          );
+        } else if (subTask.value < 20) {
+
+        } else if (subTask.value > 20) {
+
+          localStorage.setItem(
+            "subTask",
+            JSON.stringify({
+              value: 20,
+              expiresAt: expirationTime,
+            })
+          );
+        }
+
+
+        let videoTask = JSON.parse(localStorage.getItem("videoTask"));
+
+        if (videoTask === null || videoTask === undefined) {
+          localStorage.setItem(
+            "videoTask",
+            JSON.stringify({
+              value: 5,
+              expiresAt: expirationTime,
+            })
+          )
+        } else if (videoTask.value < 5) {
+
+        } else if (videoTask.value > 5) {
+          localStorage.setItem(
+            "videoTask",
+            JSON.stringify({
+              value: 5,
+              expiresAt: expirationTime,
+            })
+          )
+        }
+
+
+
+        sessionStorage.setItem(
+          "isAuth",
+          JSON.stringify({
+            value: true,
+            expiresAt: expirationTime,
+          })
+        );
+      })
       .catch((error) => {
-
         toast.error(
-          error.response?.data?.message && typeof error.response.data.message === "string"
+          error.response?.data?.message &&
+            typeof error.response.data.message === "string"
             ? error.response.data.message
-            : error.response?.data?.message?.error || "An error occurred. Please try again.",
+            : error.response?.data?.message?.error ||
+            "An error occurred. Please try again.",
           {
             duration: 3000,
             style: {
@@ -138,14 +195,16 @@ const Loginuser = () => {
               />
 
               <div className="fogotlogin">
-                <a href="/">Forgot Password?</a>
+                <a href="/"></a>
               </div>
 
               <input type="submit" value="Sign In" />
             </form>
 
             <div className="fogotlogin">
-              <p>Don't you have an account? <a href="/signup">Sign up</a></p>
+              <p>
+                Don't you have an account? <a href="/signup">Sign up</a>
+              </p>
             </div>
           </div>
         </div>

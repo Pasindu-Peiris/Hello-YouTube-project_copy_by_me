@@ -1,6 +1,6 @@
 import { Router } from "express";
 import DB from "../db/db.mjs";
-import { param, validationResult } from "express-validator";
+import { body, param, validationResult, matchedData } from "express-validator";
 
 const completedVideoRouter = Router();
 
@@ -117,5 +117,56 @@ completedVideoRouter.delete(
     }
   }
 );
+
+
+
+completedVideoRouter.post('/add-comvideo/:userID',
+  
+  param('userID').notEmpty().withMessage('Invalid user id.'),
+  body('taskVideoID').notEmpty().withMessage('Invalid task video id.'),
+  
+  async (req, res) => {
+
+    try {
+
+      const result_validation = validationResult(req);
+
+      if(result_validation.isEmpty()){
+
+        const match_result = matchedData(req);
+
+        const completedVideo = await DB.completedVideo.create({
+          data: {
+            userID: parseInt(req.params.userID),
+            taskVideoID: parseInt(match_result.taskVideoID),
+            proofLink: "none",
+            status: 'Active'
+            
+          }
+        })
+
+        if(!completedVideo){
+          return res.status(404).json({success: false, message: 'Completed video not added.'});
+        }
+
+        return res.status(200).json({success: true, message: 'Completed video added successfully.', video :completedVideo});
+
+
+      }
+      
+    } catch (error) {
+
+      console.error('Error in POST /add-comvideo/:userID route:', error.stack || error);
+      console.log(error);
+      return res
+        .status(500)
+        .json({ error: error, message: "Internal sever Error!" });
+    
+      
+    }
+
+
+
+})
 
 export default completedVideoRouter;

@@ -199,7 +199,7 @@ completedSubRouter.get('/get-completedsub/:id',
             const match_result = matchedData(req);
 
             const task = await DB.completedSub.findMany({
-                where: { completedSubID: parseInt(req.params.id) },
+                where: { completedSubID: parseInt( match_result.id) },
                 include: {
                     USER: true,
                     taskSub: true,

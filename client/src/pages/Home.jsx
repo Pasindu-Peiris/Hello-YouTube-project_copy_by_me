@@ -4,8 +4,16 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import "../assets/pagecss/Home.css";
 import bg2 from "../assets/images/bg2.png";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+
+      const navigate = useNavigate();
+
+
+      const navigateRegister = () => {
+        navigate('/signup')
+      }
   
   return (
     <div>
@@ -59,7 +67,7 @@ const Home = () => {
             for your channel. Additionally, you can double your revenue and
             enhance your satisfaction. Connecting You with Millions, Seamlessly!
           </p>
-          <button>Join Us</button>
+          <button onClick={navigateRegister}>Join Us</button>
         </div>
         <div className="herosecond">
           <img src={bg2} alt="Promotion visual" />

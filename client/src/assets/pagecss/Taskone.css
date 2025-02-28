@@ -1,0 +1,184 @@
+#taskone {
+    width: 100%;
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    font-family: "Fredoka", serif;
+}
+
+#taskonecontent {
+    width: 80%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    border-radius: 10px;
+    font-family: "poppins", serif;
+
+}
+
+.tableintasksubtaskone {
+    width: 100%;
+    display: block;
+    border-radius: 8px;
+    box-shadow: 2px 0px 10px 2px #231d1d1b;
+    border: 0.5px solid #00000060;
+    padding: 0px;
+    background-color: #ffffff;
+}
+
+.buttoncompletetasksubtaskone {
+    color: #fbf2f2;
+    font-weight: 600;
+    background-color: #0e4dd6;
+    padding: 4px;
+    font-size: 0.9rem;
+    border-radius: 4px;
+    font-family: "Poppins", serif;
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+
+.buttoncompletetasksubtaskonechannle {
+    background-color: #ec0f0f;
+    font-family: "poppins", serif;
+
+}
+
+.rowuploadtaskone {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    padding: 10px;
+}
+
+.filetaskone {
+    font-family: "Fredoka", serif;
+}
+
+.backbuttontaskone button {
+    background-color: #FF3B3B;
+    color: #ffffff;
+    cursor: pointer;
+    font-weight: 500;
+    font-family: "Fredoka", serif;
+    color: #fff;
+    border: none;
+    padding: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0);
+    margin: 20px 0px 20px 30px;
+    
+}
+
+#headtaskone {
+    width: 100%;
+    height: 100vh;
+    display: block;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Media Queries for Responsive Design */
+
+/* For tablets and smaller desktops */
+@media (min-width: 769px) and (max-width: 1024px) {
+    #taskonecontent {
+        width: 90%; /* Increase width for better fit */
+    }
+
+    .tableintasksubtaskone {
+        width: 95%; /* Adjust table width */
+    }
+
+    .buttoncompletetasksubtaskone {
+        font-size: 0.8rem; /* Adjust button font size */
+        padding: 5px;
+    }
+
+    .backbuttontaskone button {
+        font-size: 1rem; /* Adjust back button font size */
+        padding: 10px 12px;
+    }
+}
+
+/* For mobile devices (landscape and portrait) */
+@media (max-width: 768px) {
+    #taskone {
+        height: auto; /* Adjust height for smaller screens */
+        padding: 20px 0; /* Add padding */
+    }
+
+    #taskonecontent {
+        width: 95%; /* Increase width for better fit */
+    }
+
+    .tableintasksubtaskone {
+        width: 100%; /* Full width for small screens */
+    }
+
+    .buttoncompletetasksubtaskone {
+        font-size: 0.7rem; /* Adjust button font size */
+        padding: 4px;
+    }
+
+    .backbuttontaskone button {
+        font-size: 0.9rem; /* Adjust back button font size */
+        padding: 8px 10px;
+        margin: 10px 0px 10px 20px; /* Adjust margin */
+    }
+
+    .rowuploadtaskone {
+        flex-direction: column; /* Stack form elements vertically */
+        align-items: center;
+    }
+
+    .filetaskone {
+        width: 100%; /* Full width for file input */
+        margin-bottom: 10px; /* Add spacing */
+    }
+}
+
+/* For small mobile devices */
+@media (max-width: 480px) {
+    #taskonecontent {
+        width: 100%; /* Full width for very small screens */
+    }
+
+    .buttoncompletetasksubtaskone {
+        font-size: 0.6rem; /* Further reduce button font size */
+        padding: 3px;
+    }
+
+    .backbuttontaskone button {
+        font-size: 0.8rem; /* Further reduce back button font size */
+        padding: 6px 8px;
+        margin: 5px 0px 5px 10px; /* Adjust margin */
+    }
+
+    .rowuploadtaskone {
+        padding: 5px; /* Reduce padding */
+    }
+
+    .filetaskone {
+        font-size: 0.8rem; /* Adjust file input font size */
+    }
+}
+
+.toast-tasktwo{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    text-align: justify;
+    padding:"30px";
+    font-size: 1.2rem;
+   
+}
