@@ -219,7 +219,19 @@ const Taskone = () => {
             <div className="backbuttontaskone">
                 <button
                     onClick={() => {
-                        navigate("/user-dashboard");
+
+                        toast.error("Your task is not complete", {
+                            duration: 3000,
+                            style: {
+                                borderRadius: "10px",
+                                height: "60px",
+                                background: "#171617",
+                                color: "#fff",
+                            },
+                        });
+                        setTimeout(() => {
+                            navigate("/user-dashboard");
+                        }, 3000)
                     }}
                     className="buttoncompletetasksubtaskone"
                 >
