@@ -20,114 +20,152 @@ const Loginuser = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await axios
-      .post(`${apiUrl}user/signin/`, { email, password })
-      .then((response) => {
-        console.log(response.data);
+    await axios.post(`${apiUrl}user/signin/`, { email, password }).then((response) => {
+      console.log(response.data);
 
-        let status = response.data.user.status;
+      let status = response.data.user.status;
 
-        if(status === 'inactive'){
-          toast.error("Your account is not deleted.", {
-            duration: 3000,
-            style:{
-              borderRadius: "10px",
-              height: "60px",
-              background: "#171617",
-              color: "#fff",
+      const today = new Date().toISOString().split("T")[0];
 
-            }
-          }) 
+      let lastLogin = localStorage.getItem("lastLogin");
+      let inactiveLogin = localStorage.getItem("inactiveLogin");
 
-          return false;
-        }
+      if (lastLogin === null || lastLogin === undefined) {
 
-        toast.success(response.data.message, {
-          duration: 3000,
-          style: {
-            borderRadius: "10px",
-            height: "60px",
-            background: "#171617",
-            color: "#fff",
-          },
-        });
+        localStorage.setItem("lastLogin", today); //set last login date
 
-        setTimeout(() => {
-          navigate("/user-dashboard");
-        }, 3000);
+        if (inactiveLogin === null || inactiveLogin === undefined) {
 
-        //set local storage
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("user", response.data.user.id);
-        sessionStorage.setItem('role', 'user'); 
-        localStorage.setItem('lastTime', true);
-        // Set lastCallDate to today's date
-        const today = new Date().toISOString().split("T")[0];
-        localStorage.setItem("lastCallDate", today);
+          lastLogin = localStorage.getItem("lastLogin");
 
-        const now = new Date().getTime(); // Current time in milliseconds
-        const expirationTime = now + 24 * 60 * 60 * 1000; // 1 day in milliseconds
-
-        localStorage.setItem("username", response.data.user.username);
-        // subTask 
-        let subTask = JSON.parse(localStorage.getItem("subTask"));
+          let lastLoginDate = new Date(lastLogin);
+          let inactiveLoginDate = new Date(lastLoginDate);
+          inactiveLoginDate.setDate(inactiveLoginDate.getDate() + 3);
 
 
-        if (subTask === null || subTask === undefined) {
+          const inactiveLogin = inactiveLoginDate.toLocaleDateString("en-CA");
 
-          localStorage.setItem(
-            "subTask",
-            JSON.stringify({
-              value: 20,
-              expiresAt: expirationTime,
-            })
-          );
-        } else if (subTask.value < 20) {
 
-        } else if (subTask.value > 20) {
+          localStorage.setItem("inactiveLogin", inactiveLogin);
 
-          localStorage.setItem(
-            "subTask",
-            JSON.stringify({
-              value: 20,
-              expiresAt: expirationTime,
-            })
-          );
+        } else {
+
+          const shouldTriggerAction = checkInactiveLogin();
+
+          if (shouldTriggerAction) {
+            toast.error("Your account is Deleted.", {
+              duration: 3000,
+              style: {
+                borderRadius: "10px",
+                height: "60px",
+                background: "#171617",
+                color: "#fff",
+              },
+            });
+
+            return false;
+          } else {
+
+            localStorage.setItem("lastLogin", today); //set last login date
+
+            lastLogin = localStorage.getItem("lastLogin");
+
+            let lastLoginDate = new Date(lastLogin);
+            let inactiveLoginDate = new Date(lastLoginDate);
+            inactiveLoginDate.setDate(inactiveLoginDate.getDate() + 3);
+
+
+            const inactiveLogin = inactiveLoginDate.toLocaleDateString("en-CA");
+
+
+            localStorage.setItem("inactiveLogin", inactiveLogin);
+
+
+          }
+
         }
 
 
-        let videoTask = JSON.parse(localStorage.getItem("videoTask"));
-
-        if (videoTask === null || videoTask === undefined) {
-          localStorage.setItem(
-            "videoTask",
-            JSON.stringify({
-              value: 5,
-              expiresAt: expirationTime,
-            })
-          )
-        } else if (videoTask.value < 5) {
-
-        } else if (videoTask.value > 5) {
-          localStorage.setItem(
-            "videoTask",
-            JSON.stringify({
-              value: 5,
-              expiresAt: expirationTime,
-            })
-          )
-        }
+      }
 
 
+      toast.success(response.data.message, {
+        duration: 3000,
+        style: {
+          borderRadius: "10px",
+          height: "60px",
+          background: "#171617",
+          color: "#fff",
+        },
+      });
 
-        sessionStorage.setItem(
-          "isAuth",
+      setTimeout(() => {
+        navigate("/user-dashboard");
+      }, 3000);
+
+      //set local storage
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("user", response.data.user.id);
+      sessionStorage.setItem("role", "user");
+      localStorage.setItem("lastTime", true);
+
+      localStorage.setItem("lastCallDate", today);
+
+      const now = new Date().getTime(); // Current time in milliseconds
+      const expirationTime = now + 24 * 60 * 60 * 1000; // 1 day in milliseconds
+
+      localStorage.setItem("username", response.data.user.username);
+      // subTask
+      let subTask = JSON.parse(localStorage.getItem("subTask"));
+
+      if (subTask === null || subTask === undefined) {
+        localStorage.setItem(
+          "subTask",
           JSON.stringify({
-            value: true,
+            value: 20,
             expiresAt: expirationTime,
           })
         );
-      })
+      } else if (subTask.value < 20) {
+      } else if (subTask.value > 20) {
+        localStorage.setItem(
+          "subTask",
+          JSON.stringify({
+            value: 20,
+            expiresAt: expirationTime,
+          })
+        );
+      }
+
+      let videoTask = JSON.parse(localStorage.getItem("videoTask"));
+
+      if (videoTask === null || videoTask === undefined) {
+        localStorage.setItem(
+          "videoTask",
+          JSON.stringify({
+            value: 5,
+            expiresAt: expirationTime,
+          })
+        );
+      } else if (videoTask.value < 5) {
+      } else if (videoTask.value > 5) {
+        localStorage.setItem(
+          "videoTask",
+          JSON.stringify({
+            value: 5,
+            expiresAt: expirationTime,
+          })
+        );
+      }
+
+      sessionStorage.setItem(
+        "isAuth",
+        JSON.stringify({
+          value: true,
+          expiresAt: expirationTime,
+        })
+      );
+    })
       .catch((error) => {
         toast.error(
           error.response?.data?.message &&
@@ -148,6 +186,25 @@ const Loginuser = () => {
         console.log(error);
       });
   };
+
+
+  const checkInactiveLogin = () => {
+
+    const inactiveLogin = localStorage.getItem("inactiveLogin"); // "2023-10-08"
+    const today = new Date().toLocaleDateString("en-CA"); // "2023-10-08"
+
+
+    if (!inactiveLogin) {
+      console.log("inactiveLogin දිනය localStorage එකේ නොමැත!");
+      return false;
+    }
+
+
+    const isInactiveDateReached = today >= inactiveLogin;
+
+
+    return isInactiveDateReached;
+  }
 
   return (
     <div>
