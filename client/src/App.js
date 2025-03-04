@@ -13,6 +13,10 @@ import Addurl from "./pages/user/Addurl";
 import AdminUser from "./pages/admin/AdminUser";
 import AdminVideoTasks from "./pages/admin/AdminVideoTasks";
 import Adminlogin from "./pages/admin/Adminlogin";
+import Contactus from "./pages/Contactus";
+import Privacypolicy from "./pages/Privacypolicy";
+import Termsandconditions from "./pages/Termsandconditions";
+import Aboutus from "./pages/Aboutus";
 
 function App() {
   return (
@@ -25,6 +29,10 @@ function App() {
         <Route path="/signin" element={<Loginuser />} />
         <Route path="/signup" element={<Registration />} />
         <Route path="/link" element={<Linkupload />} />
+        <Route path="/contact-us" element={<Contactus/>}/> 
+        <Route path="/about-us" element={<Aboutus/>}/>
+        <Route path="/privacy-policy" element={<Privacypolicy/>}/>
+        <Route path="/Terms-and-conditions" element={<Termsandconditions/>}/>
 
         <Route path="/admin-login-url-only-client" element={<Adminlogin/>} />
 
