@@ -308,9 +308,7 @@ videoRouter.get('/only-get-not-done/:userID',
           }
         })
 
-        console.log(completeVideos);
-
-        console.log(videoUrl);
+        
 
         // Extract taskSubIDs from completed tasks
         const completedTaskSubIDs = completeVideos.map(task => task.taskVideoID);
