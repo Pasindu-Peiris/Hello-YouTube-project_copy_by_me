@@ -11,9 +11,13 @@ const Header = () => {
     navigate("/signin");
   };
 
+  const ToHome =() => {
+    navigate("/");
+  }
+
   return (
     <header id="menu">
-      <div class="logo">
+      <div class="logo" onClick={ToHome}>
         <img src={Img} id="logoimagefotter" alt="logo" />
       </div>
 
