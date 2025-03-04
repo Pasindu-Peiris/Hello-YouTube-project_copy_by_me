@@ -1,8 +1,18 @@
 import React from 'react'
 import '../assets/componentscss/Footer.css'
 import Img from '../assets/images/logo2.png'
+import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
+
+    const navigate = useNavigate();
+
+    const chnageRouter = (routers) => {
+        navigate(routers);
+    }
+
+
+
     return (
         <>
             <footer>
@@ -33,10 +43,22 @@ const Footer = () => {
                         <div class="links">
                             <ul>
                                 <h3>Other Links</h3>
-                                <li>Contact Us</li>
-                                <li>About Us</li>
-                                <li>Terms and Conditions</li>
-                                <li>Privacy Policy</li>
+
+                                <li style={{cursor:'pointer'}} onClick={(e) => {
+                                    chnageRouter('/contact-us')
+                                }}>Contact Us</li>
+
+                                <li style={{cursor:'pointer'}} onClick={(e) => {
+                                    chnageRouter('/about-us')
+                                }} >About Us</li>
+
+                                <li style={{cursor:'pointer'}} onClick={(e) => {
+                                    chnageRouter('/Terms-and-conditions')
+                                }}>Terms and Conditions</li>
+
+                                <li style={{cursor:'pointer'}} onClick={(e) => {
+                                    chnageRouter('/privacy-policy')
+                                }}>Privacy Policy</li>
                                 <li></li>
                             </ul>
                         </div>
@@ -55,7 +77,7 @@ const Footer = () => {
             </footer>
 
             <div class="footerdwon">
-                <p>Copyright © 2024 Developed BY eSupport Technologies.</p>
+                <p>Copyright © 2024 Developed by eSupport Technologies.</p>
             </div>
         </>
     )
