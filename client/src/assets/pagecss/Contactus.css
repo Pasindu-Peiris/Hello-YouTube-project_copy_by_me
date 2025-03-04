@@ -1,0 +1,134 @@
+.contactus {
+    width: 100%;
+    min-height: 50vh;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 0;
+}
+
+.contactustaxt {
+    width: 85%;
+    height: auto;
+    font-family: "Fredoka", serif;
+}
+
+.contactustaxt h1 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: #FF3B3B;
+    margin: 0 0 40px 0;
+}
+
+.contactustaxt p {
+    font-size: 1.2rem;
+    line-height: 1.6rem;
+    font-family: "Poppins", serif;
+}
+
+.links-contact {
+    font-size: 1.2rem;
+    line-height: 1.6rem;
+    font-family: "Poppins", serif;
+
+}
+
+.links-contact ul {
+    margin: 40px 0;
+}
+
+.links-contact ul li {
+    margin: 15px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Tablet Styles (769px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .contactus {
+        padding: 40px 0;
+    }
+    
+    .contactustaxt {
+        width: 85%;
+    }
+    
+    .contactustaxt h1 {
+        font-size: 2rem;
+        margin-bottom: 30px;
+    }
+    
+    .contactustaxt p {
+        font-size: 1.1rem;
+        line-height: 1.5rem;
+    }
+    
+    .links-contact {
+        font-size: 1.1rem;
+    }
+}
+
+/* Mobile Styles (max-width: 768px) */
+@media (max-width: 768px) {
+    .contactus {
+        padding: 30px 0;
+    }
+    
+    .contactustaxt {
+        width: 90%;
+    }
+    
+    .contactustaxt h1 {
+        font-size: 1.8rem;
+        margin-bottom: 25px;
+    }
+    
+    .contactustaxt p {
+        font-size: 1rem;
+        line-height: 1.4rem;
+    }
+    
+    .links-contact {
+        font-size: 1rem;
+    }
+    
+    .links-contact ul {
+        margin: 30px 0;
+    }
+}
+
+/* Small Mobile Styles (max-width: 480px) */
+@media (max-width: 480px) {
+    .contactus {
+        padding: 20px 0;
+    }
+    
+    .contactustaxt h1 {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+    }
+    
+    .contactustaxt p {
+        font-size: 0.9rem;
+        line-height: 1.3rem;
+    }
+    
+    .links-contact {
+        font-size: 0.9rem;
+    }
+    
+    .links-contact ul {
+        margin: 20px 0;
+        padding-left: 15px;
+    }
+    
+    .links-contact ul li {
+        margin: 8px 0;
+    }
+    
+    .links-contact i {
+        font-size: 0.9rem;
+    }
+}

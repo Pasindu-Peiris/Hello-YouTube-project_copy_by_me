@@ -81,6 +81,15 @@ const Registration = () => {
     }
   };
 
+  const [eyes, setEyes] = useState('password');
+  const [eyesPass, SeteyesPass] = useState('fa-eye')
+  const ShowPassword = () => {
+
+    eyes === 'password' ? setEyes('text') : setEyes('password');
+    eyesPass === 'fa-eye' ? SeteyesPass('fa-eye-slash') : SeteyesPass('fa-eye');
+  }
+
+
   return (
     <div>
 
@@ -142,14 +151,17 @@ const Registration = () => {
                 required
                 onChange={(e) => setEmail(e.target.value)}
               />
+              <div className="password-box-eyes">
               <input
-                type="password"
+                type={`${eyes}`}
                 id="password"
                 name="password"
                 placeholder="Enter your Password"
                 required
                 onChange={(e) => setPassword(e.target.value)}
               />
+               <i id="eyesopen" class={`fa-regular ${eyesPass}`} onClick={(e) => {ShowPassword()}}></i>
+              </div>
               <input type="submit" value="Sign Up" />
             </form>
 

@@ -26,7 +26,6 @@ const Linkupload = () => {
   const handleSubmit = async (e) => {
 
     e.preventDefault();
-    alert(link)
 
     const test = isValidYouTubeUrl(link);
 
