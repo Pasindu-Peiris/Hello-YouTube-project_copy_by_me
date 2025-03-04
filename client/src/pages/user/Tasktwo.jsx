@@ -74,7 +74,7 @@ const Tasktwo = () => {
         getAllSubTasks();
     }, []);
 
-    // Extract video IDs from the links
+
     const videoIds = tasksub.map(link => {
         try {
             const url = new URL(link.videoLink);
@@ -96,7 +96,7 @@ const Tasktwo = () => {
         };
     }, []);
 
-    // YouTube player options
+    
     const opts = {
         height: '100%',
         width: '100%',
@@ -114,12 +114,12 @@ const Tasktwo = () => {
         }
     };
 
-    // Handle player ready event
+    
     const onReady = (event) => {
         playerRef.current = event.target;
         setIsNextDisabled(true);
 
-        // Force play and prevent pause
+        
         event.target.playVideo();
 
         if (timeoutRef.current) clearTimeout(timeoutRef.current);
@@ -136,9 +136,9 @@ const Tasktwo = () => {
         }, 10000);
     };
 
-    // Block all player interactions
+  
     const onStateChange = (event) => {
-        // YouTube player states
+       
         const PLAYER_STATES = {
             ENDED: 0,
             PLAYING: 1,
