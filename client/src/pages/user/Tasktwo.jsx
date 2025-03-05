@@ -172,6 +172,17 @@ const Tasktwo = () => {
                     color: "#fff",
                 }
             });
+
+            const now = new Date().getTime(); // Current time in milliseconds
+            const expirationTime = now + 24 * 60 * 60 * 1000; // 1 day in milliseconds
+
+            localStorage.setItem("videoTask",
+                JSON.stringify({
+                    value: 0,
+                    expiresAt: expirationTime,
+                }))
+
+
             setTimeout(() => {
                 navigate("/user-dashboard");
             }, 2000)
@@ -259,7 +270,7 @@ const Tasktwo = () => {
 
                         setTimeout(() => {
                             navigate("/user-dashboard");
-                        }, 3000)
+                        }, 2000)
                     }}
                     className="buttoncompletetasksubtaskone"
                 >

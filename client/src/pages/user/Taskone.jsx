@@ -4,6 +4,7 @@ import "../../assets/pagecss/Taskone.css";
 import { useNavigate } from "react-router-dom";
 import { Toaster, toast } from "react-hot-toast";
 import axios from "axios";
+import Timecounter from "./Timecounter";
 
 
 const Taskone = () => {
@@ -89,13 +90,23 @@ const Taskone = () => {
     // Handle form submission
     const handleUpload = async (taskSubID) => {
         if (!linkClicks[taskSubID]) {
-            toast.error("Please visit the channel link first!");
+            toast.error("Please visit the channel link first!", {
+                style:{
+                    background: "#171617",
+                    color: "#fff",
+                }
+            });
             return;
         }
 
         const file = selectedFiles[taskSubID];
         if (!file) {
-            toast.error("Please select a file!");
+            toast.error("Please select a file!", {
+                style:{
+                    background: "#171617",
+                    color: "#fff",
+                }
+            });
             return;
         }
 
@@ -109,7 +120,12 @@ const Taskone = () => {
                 formData
             );
 
-            toast.success(res.data.message);
+            toast.success(res.data.message, {
+                style:{
+                    background: "#171617",
+                    color: "#fff",
+                }
+            });
             await updateCompletedSub(taskSubID);
 
             setTimeout(() => {
@@ -126,6 +142,8 @@ const Taskone = () => {
     //get all task for user
     const [tasksub, setTasksub] = useState([]);
 
+    const [timeDisplay, setTimeDisplay] = useState(false);
+
     const getAllSubTasks = async () => {
 
         const userID = localStorage.getItem("user");
@@ -139,23 +157,33 @@ const Taskone = () => {
             setTasksub(first20Tasks);
 
             if(JSON.parse(counttaskSub).value === 0){
-                toast((t) => (
-                    <span className="toast-tasktwo">
-                      <p> Your task is completed, you can now proceed to the next task after 24HR</p>
-                    </span>
-                  ),{
-                    position:"top-center",
-                    icon: '👏',
-                    style: {
-                        borderRadius: '10px',
-                        background: '#333',
-                        color: '#fff',
-                      },
-                  });
 
-                setTimeout(() => {
-                    navigate("/user-dashboard");
-                }, 5000);    
+                let endTime = localStorage.getItem('endTime');
+                if (!endTime){
+                    localStorage.setItem('endTime', Date.now() + 86400 * 1000); // 86400 seconds = 24h
+                }
+
+                
+
+                setTimeDisplay(true);
+
+                // toast((t) => (
+                //     <span className="toast-tasktwo">
+                //       <p> Your task is completed, you can now proceed to the next task after 24HR</p>
+                //     </span>
+                //   ),{
+                //     position:"top-center",
+                //     icon: '👏',
+                //     style: {
+                //         borderRadius: '10px',
+                //         background: '#333',
+                //         color: '#fff',
+                //       },
+                //   });
+
+                // setTimeout(() => {
+                //     navigate("/user-dashboard");
+                // }, 5000);    
             }
 
 
@@ -219,26 +247,16 @@ const Taskone = () => {
             <div className="backbuttontaskone">
                 <button
                     onClick={() => {
-
-                        toast.error("Your task is not complete", {
-                            duration: 3000,
-                            style: {
-                                borderRadius: "10px",
-                                height: "60px",
-                                background: "#171617",
-                                color: "#fff",
-                            },
-                        });
-                        setTimeout(() => {
-                            navigate("/user-dashboard");
-                        }, 3000)
+                        navigate("/user-dashboard");
                     }}
                     className="buttoncompletetasksubtaskone"
                 >
                     Back
                 </button>
             </div>
-            <div id="taskone">
+
+            {
+                timeDisplay === true ?  <Timecounter/> :  <div id="taskone">
 
                 <section id="taskonecontent">
                     <div className="tableintasksubtaskone">
@@ -247,7 +265,7 @@ const Taskone = () => {
                             columns={columns}
                             data={tasksub} // Use tasksub state instead of tableData
                             fixedHeader
-                            fixedHeaderScrollHeight="70vh"
+                            fixedHeaderScrollHeight="60vh"
                             className="data-table"
                             customStyles={customStyles}
                             responsive // Enable responsive behavior
@@ -265,9 +283,15 @@ const Taskone = () => {
                         />
                     </div>
                 </section>
+    
+            </div> 
 
-                <Toaster position="top-center" reverseOrder={false} />
-            </div>
+            }
+
+            
+           
+
+            <Toaster position="top-center" reverseOrder={false} />
         </div>
     );
 };

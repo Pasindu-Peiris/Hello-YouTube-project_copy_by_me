@@ -17,6 +17,7 @@ import Contactus from "./pages/Contactus";
 import Privacypolicy from "./pages/Privacypolicy";
 import Termsandconditions from "./pages/Termsandconditions";
 import Aboutus from "./pages/Aboutus";
+import Timecounter from "./pages/user/Timecounter";
 
 function App() {
   return (
@@ -33,6 +34,8 @@ function App() {
         <Route path="/about-us" element={<Aboutus/>}/>
         <Route path="/privacy-policy" element={<Privacypolicy/>}/>
         <Route path="/Terms-and-conditions" element={<Termsandconditions/>}/>
+
+        <Route path="/time" element={<Timecounter/>}/>
 
         <Route path="/admin-login-url-only-client" element={<Adminlogin/>} />
 
@@ -51,7 +54,7 @@ function App() {
           <Route path="/addurl" element={<Addurl />} />
         </Route>
 
-        {/* 404 පිටුව */}
+        
         <Route path="*" element={<Notfound />} />
       </Routes>
     </BrowserRouter>
