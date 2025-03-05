@@ -90,7 +90,7 @@ const UserDashboardClient = () => {
       </div>
 
       <div className="fotter_UserDashboardClient">
-        <p>Copyright © 2024 Developed BY eSupport Technologies.</p>
+        <p>Copyright © 2024 Developed by eSupport Technologies.</p>
       </div>
 
       <Toaster position="top-center" reverseOrder={false} />
