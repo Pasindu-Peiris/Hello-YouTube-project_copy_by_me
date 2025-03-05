@@ -5,6 +5,7 @@ import videoRouter from "./videoRouter.mjs";
 import completedVideoRouter from "./completedVideoRouter.mjs";
 import completedSubRouter from "./completedSubRouter.mjs";
 import subtaskRoutes from "./subtaskRoutes.mjs";
+import contactUs from "./contactus.mjs";
 
 const rootRouter = Router();
 
@@ -20,5 +21,6 @@ rootRouter.use("/videos",videoRouter);
 rootRouter.use("/completed-videos", completedVideoRouter);
 rootRouter.use("/completed-sub",completedSubRouter);
 rootRouter.use("/subtasks", subtaskRoutes);
+rootRouter.use("/contact", contactUs);
 
 export default rootRouter;
