@@ -10,6 +10,9 @@
 
 .contactustaxt {
     width: 85%;
+    display:flex;
+    align-items: start;
+    justify-content: space-between;
     height: auto;
     font-family: "Fredoka", serif;
 }
@@ -21,16 +24,20 @@
     margin: 0 0 40px 0;
 }
 
+.text-form-new{
+    margin:90px 0;
+}
+
 .contactustaxt p {
     font-size: 1.2rem;
     line-height: 1.6rem;
-    font-family: "Poppins", serif;
+    font-family: "Fredoka", serif;
 }
 
 .links-contact {
     font-size: 1.2rem;
     line-height: 1.6rem;
-    font-family: "Poppins", serif;
+    font-family: "Fredoka", serif;
 
 }
 
@@ -45,90 +52,173 @@
     gap: 10px;
 }
 
-/* Tablet Styles (769px - 1024px) */
+.contact-form-new form {
+    display: block;
+    width: 100%;
+    max-width: 440px;
+    margin: 20px 0px;
+}
+
+.contact-form-new form h1 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: 12px 0px;
+}
+
+.contact-form-new form input,
+.contact-form-new form textarea {
+    width: 100%;
+    padding: 16px;
+    margin: 12px 0px;
+    border: none;
+    outline: none;
+    font-size: 1.2rem;
+    border-radius: 6px;
+    background-color: rgb(237, 237, 237);
+   
+}
+
+.contact-form-new form textarea{
+    height: 150px;
+}
+
+.contact-form-new form input[type="submit"] {
+    background-color: #FF3B3B;
+    color: #ffffff;
+    cursor: pointer;
+    font-weight: 500;
+    font-family: "Fredoka", serif;
+}
+
+.contact-form-new form ::placeholder {
+    padding: 4px;
+    font-size: 1.2rem;
+    color: #2d2d2d;
+}
+
+.fogotlogin {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin: 12px 0px;
+}
+
+.fogotlogin a {
+    color: #FF3B3B;
+    text-decoration: none;
+}
+
+/* Tablet Landscape (769px - 1024px) */
 @media (min-width: 769px) and (max-width: 1024px) {
+    .contactustaxt {
+        flex-direction: column;
+        align-items: center;
+        width: 90%;
+    }
+
+    .contactustaxt h1 {
+        font-size: 2rem;
+    }
+
+    .contact-form-new form {
+        max-width: 100%;
+    }
+
+    .text-form-new {
+        margin: 10px 0;
+    }
+
+    .contactustaxt p {
+        font-size: 1.1rem;
+    }
+}
+
+/* Tablet Portrait and Below (768px and below) */
+@media (max-width: 768px) {
     .contactus {
         padding: 40px 0;
     }
-    
+
     .contactustaxt {
-        width: 85%;
+        flex-direction: column;
+        align-items: center;
+        width: 90%;
     }
-    
+
+    .contact-form-new, .text-form-new {
+        width: 100%;
+        max-width: 500px;
+    }
+
+    .text-form-new {
+        margin: 10px 0;
+    }
+
     .contactustaxt h1 {
         font-size: 2rem;
         margin-bottom: 30px;
+      
     }
-    
-    .contactustaxt p {
-        font-size: 1.1rem;
-        line-height: 1.5rem;
-    }
-    
-    .links-contact {
-        font-size: 1.1rem;
+
+    .links-contact ul {
+        justify-content: center;
     }
 }
 
-/* Mobile Styles (max-width: 768px) */
-@media (max-width: 768px) {
+/* Mobile Devices (480px and below) */
+@media (max-width: 480px) {
     .contactus {
         padding: 30px 0;
     }
-    
+
     .contactustaxt {
-        width: 90%;
+        width: 95%;
     }
-    
+
     .contactustaxt h1 {
         font-size: 1.8rem;
-        margin-bottom: 25px;
+        margin-bottom: 20px;
     }
-    
+
+    .contact-form-new form input,
+    .contact-form-new form textarea {
+        padding: 12px;
+        font-size: 1rem;
+    }
+
+    .contact-form-new form ::placeholder {
+        font-size: 1rem;
+    }
+
     .contactustaxt p {
         font-size: 1rem;
-        line-height: 1.4rem;
+        line-height: 1.4;
     }
-    
-    .links-contact {
+
+    .links-contact ul li {
         font-size: 1rem;
     }
-    
-    .links-contact ul {
-        margin: 30px 0;
+
+    .text-form-new {
+        margin: 10px 0;
+    }
+
+    .contact-form-new form input[type="submit"] {
+        padding: 12px;
     }
 }
 
-/* Small Mobile Styles (max-width: 480px) */
-@media (max-width: 480px) {
-    .contactus {
-        padding: 20px 0;
-    }
-    
+/* Small Mobile Devices (360px and below) */
+@media (max-width: 360px) {
     .contactustaxt h1 {
-        font-size: 1.5rem;
-        margin-bottom: 20px;
+        font-size: 1.6rem;
     }
-    
+
     .contactustaxt p {
         font-size: 0.9rem;
-        line-height: 1.3rem;
     }
-    
-    .links-contact {
-        font-size: 0.9rem;
-    }
-    
-    .links-contact ul {
-        margin: 20px 0;
-        padding-left: 15px;
-    }
-    
+
     .links-contact ul li {
-        margin: 8px 0;
-    }
-    
-    .links-contact i {
         font-size: 0.9rem;
     }
 }
