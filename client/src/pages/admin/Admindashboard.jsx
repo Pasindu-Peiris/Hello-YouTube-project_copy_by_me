@@ -40,6 +40,7 @@ const Admindashboard = () => {
   const [activeCSS1, setActiveCSS1] = useState("");
   const [activeCSS2, setActiveCSS2] = useState("");
   const [activeCSS3, setActiveCSS3] = useState("");
+  const [activeCSS4, setActiveCSS4] = useState("");
  
 
   const changeAcPageActive = () => {
@@ -51,6 +52,8 @@ const Admindashboard = () => {
       setActiveCSS2("active");
     } else if (currentPage.includes("/admin-users")) {
       setActiveCSS3("active");
+    }else if(currentPage.includes("/admin-contact-us")){
+      setActiveCSS4("active");
     }
   };
 
@@ -113,6 +116,15 @@ const Admindashboard = () => {
               >
             <i class="fa fa-users" aria-hidden="true"></i>
               <span>Users</span>
+            </li>
+
+            <li className={activeCSS4}
+              onClick={(e) => {
+                onChangePage("/admin-contact-us");
+              }}
+              >
+           <i class="fa-solid fa-message"></i>
+              <span>Message</span>
             </li>
           </ul>
         </div>
