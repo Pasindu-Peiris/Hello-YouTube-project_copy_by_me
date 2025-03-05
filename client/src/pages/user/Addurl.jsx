@@ -33,7 +33,7 @@ const Addurl = () => {
             width: "50px",
         },
         {
-            name: "Channel Link",
+            name: "Video Link",
             selector: (row) => row.videoLink,
             cell: (row) => (
                 <button
