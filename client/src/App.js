@@ -18,6 +18,7 @@ import Privacypolicy from "./pages/Privacypolicy";
 import Termsandconditions from "./pages/Termsandconditions";
 import Aboutus from "./pages/Aboutus";
 import Timecounter from "./pages/user/Timecounter";
+import AdminContactus from "./pages/admin/AdminContactus";
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
           <Route path="/admin-video-task" element={<AdminSubTasks />} />
           <Route path="/admin-users" element={<AdminUser />} />
           <Route path="/admin-sub-task" element={<AdminVideoTasks />} />
+          <Route path="/admin-contact-us" element={<AdminContactus/>}/>
         </Route>
 
 
