@@ -133,7 +133,7 @@ const Tasktwo = () => {
             setTimeout(() => {
                 handleNextVideo();
             }, 2000);
-        }, 10000);
+        }, 60000);
     };
 
   
