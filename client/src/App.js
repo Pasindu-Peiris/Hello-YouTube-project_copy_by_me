@@ -40,7 +40,6 @@ function App() {
 
         <Route path="/admin-login-url-only-client" element={<Adminlogin/>} />
 
-
         <Route element={<ProtectedRouters allowedRoles={['admin']} />}>
           <Route path="/admin-video-task" element={<AdminSubTasks />} />
           <Route path="/admin-users" element={<AdminUser />} />
