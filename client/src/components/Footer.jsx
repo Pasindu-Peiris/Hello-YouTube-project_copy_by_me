@@ -33,8 +33,8 @@ const Footer = () => {
                         <div class="links">
                             <ul>
                                 <h3>Contact Us</h3>
-                                <li><i class="fa-solid fa-phone"></i> +94 099 3443</li>
-                                <li><i class="fa-solid fa-envelope"></i> helloyt@gmail.com</li>
+                                <li><i class="fa-solid fa-phone"></i> 0701058266</li>
+                                <li><i class="fa-solid fa-envelope"></i> neoneyeart@gmail.com</li>
                             </ul>
                         </div>
                     </div>
