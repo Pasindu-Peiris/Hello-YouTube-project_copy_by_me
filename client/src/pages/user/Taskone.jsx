@@ -5,9 +5,57 @@ import { useNavigate } from "react-router-dom";
 import { Toaster, toast } from "react-hot-toast";
 import axios from "axios";
 import Timecounter from "./Timecounter";
+import Joyride, { STATUS } from 'react-joyride';
 
 
 const Taskone = () => {
+
+    // Joyride state
+    const [{ run, steps }, setState] = useState({
+        run: !localStorage.getItem('tourShown_Taskone'),
+        steps: [
+            {
+                content: <h2 className='text-xl-openbox'> Let's begin Tour 🛩️ </h2>,
+                locale: { skip: 'Skip tutorial' },
+                placement: 'center',
+                target: "body"
+            },
+            {
+                content: <h2 className='text-xl-openbox'>Click on the URL and visit the Youtube channel link.</h2>,
+                locale: { skip: 'Skip Tutorial' },
+                placement: 'bottom',
+                target: "#channlelinkclick",
+                title: "1 Step"
+            },
+            {
+                content: <h2 className='text-xl-openbox'>Take a screenshot of the channel subscription and upload it. </h2>,
+                locale: { skip: 'Skip Tutorial' },
+                placement: 'bottom',
+                target: "#channlelinkclick1",
+                title: "2 Step"
+            },
+            {
+                content: <h2 className='text-xl-openbox'>Click the Submit button to complete the task </h2>,
+                locale: { skip: 'Skip tutorial' },
+                placement: 'bottom',
+                target: "#channlelinkclick2",
+                title: "3 Step"
+            }
+        ]
+    });
+
+    // Joyride callback handler
+    const handleJoyrideCallback = (data) => {
+        const { status } = data;
+        if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
+            localStorage.setItem('tourShown_Taskone', 'true');
+            setState(prev => ({
+                ...prev,
+                run: false
+            }));
+        }
+    };
+
 
     const navigate = useNavigate();
     const apiUrl = process.env.REACT_APP_API_URL;
@@ -18,14 +66,14 @@ const Taskone = () => {
 
     const customStyles = {
         headCells: {
-          style: {
-            backgroundColor: "#25242b",
-            color: "white",
-            fontWeight: "bold",
-            fontSize: "14px",
-          },
+            style: {
+                backgroundColor: "#25242b",
+                color: "white",
+                fontWeight: "bold",
+                fontSize: "14px",
+            },
         },
-      };
+    };
 
     // Columns definition
     const columns = [
@@ -40,6 +88,8 @@ const Taskone = () => {
                 <button
                     onClick={() => navigateYoutube(row.channelLink, row.taskSubID)}
                     className="buttoncompletetasksubtaskonechannle buttoncompletetasksubtaskone"
+                    id="channlelinkclick"
+                    style={{ padding: "8px" }}
                 >
                     Channel URL
                 </button>
@@ -60,12 +110,16 @@ const Taskone = () => {
                             type="file"
                             onChange={(e) => handleFileChange(e, row.taskSubID)}
                             accept="image/*"
+                            style={{ padding: "8px 0px" }}
+                            id="channlelinkclick1"
                         />
                         <input
                             type="submit"
                             value="Submit"
-                            disabled={!selectedFiles[row.taskSubID]}
+                            // disabled={!selectedFiles[row.taskSubID]}
                             className="buttoncompletetasksubtaskone"
+                            style={{ padding: "8px" }}
+                            id="channlelinkclick2"
                         />
                     </form>
                 </div>
@@ -89,9 +143,11 @@ const Taskone = () => {
 
     // Handle form submission
     const handleUpload = async (taskSubID) => {
-        if (!linkClicks[taskSubID]) {
-            toast.error("Please visit the channel link first!", {
-                style:{
+
+        const file = selectedFiles[taskSubID];
+        if (!file) {
+            toast.error("Please select a file!", {
+                style: {
                     background: "#171617",
                     color: "#fff",
                 }
@@ -99,16 +155,17 @@ const Taskone = () => {
             return;
         }
 
-        const file = selectedFiles[taskSubID];
-        if (!file) {
-            toast.error("Please select a file!", {
-                style:{
+        if (!linkClicks[taskSubID]) {
+            toast.error("Please visit the channel link first!", {
+                style: {
                     background: "#171617",
                     color: "#fff",
                 }
             });
             return;
         }
+
+
 
         const formData = new FormData();
         formData.append("proofLink", file);
@@ -121,7 +178,7 @@ const Taskone = () => {
             );
 
             toast.success(res.data.message, {
-                style:{
+                style: {
                     background: "#171617",
                     color: "#fff",
                 }
@@ -129,7 +186,7 @@ const Taskone = () => {
             await updateCompletedSub(taskSubID);
 
             setTimeout(() => {
-               window.location.reload();
+                window.location.reload();
             }, 2000);
 
         } catch (err) {
@@ -156,14 +213,13 @@ const Taskone = () => {
 
             setTasksub(first20Tasks);
 
-            if(JSON.parse(counttaskSub).value === 0){
+            if (JSON.parse(counttaskSub).value === 0) {
 
                 let endTime = localStorage.getItem('endTime');
-                if (!endTime){
+                if (!endTime) {
                     localStorage.setItem('endTime', Date.now() + 86400 * 1000); // 86400 seconds = 24h
                 }
 
-                
 
                 setTimeDisplay(true);
 
@@ -222,10 +278,10 @@ const Taskone = () => {
         let newCount = JSON.parse(counttaskSubGet).value - 1;
 
         localStorage.setItem("subTask",
-          JSON.stringify({
-            value:newCount,
-            expiresAt: expirationTime,
-          }))
+            JSON.stringify({
+                value: newCount,
+                expiresAt: expirationTime,
+            }))
 
     }
 
@@ -256,40 +312,59 @@ const Taskone = () => {
             </div>
 
             {
-                timeDisplay === true ?  <Timecounter/> :  <div id="taskone">
+                timeDisplay === true ? <Timecounter /> : <div id="taskone">
 
-                <section id="taskonecontent">
-                    <div className="tableintasksubtaskone">
-                        <DataTable
-                            title="Subscribe task"
-                            columns={columns}
-                            data={tasksub} // Use tasksub state instead of tableData
-                            fixedHeader
-                            fixedHeaderScrollHeight="60vh"
-                            className="data-table"
-                            customStyles={customStyles}
-                            responsive // Enable responsive behavior
-                            conditionalRowStyles={[
-                                {
-                                    when: (row) => row.channelLink && row.channelLink.length > 20,
-                                    style: {
-                                        backgroundColor: "#fffdfd",
-                                        border: "1px solidrgba(28, 26, 26, 0.26)",
-                                        color: "black",
-                                        fontSize: "16px",
+                    <section id="taskonecontent">
+                        <div className="tableintasksubtaskone">
+                            <DataTable
+                                title="Subscribe task"
+                                columns={columns}
+                                data={tasksub} // Use tasksub state instead of tableData
+                                fixedHeader
+                                fixedHeaderScrollHeight="60vh"
+                                className="data-table"
+                                customStyles={customStyles}
+                                responsive // Enable responsive behavior
+                                conditionalRowStyles={[
+                                    {
+                                        when: (row) => row.channelLink && row.channelLink.length > 20,
+                                        style: {
+                                            backgroundColor: "#fffdfd",
+                                            border: "1px solidrgba(28, 26, 26, 0.26)",
+                                            color: "black",
+                                            fontSize: "16px",
+                                        },
                                     },
-                                },
-                            ]}
-                        />
-                    </div>
-                </section>
-    
-            </div> 
+                                ]}
+                            />
+                        </div>
+                    </section>
+
+                </div>
 
             }
 
-            
-           
+
+            <Joyride
+                continuous
+                callback={handleJoyrideCallback}
+                run={run}
+                steps={steps}
+                hideCloseButton
+                scrollToFirstStep
+                showSkipButton
+                showProgress
+                styles={{
+                    options: {
+                        arrowColor: '#e3ffeb',
+                        backgroundColor: '#e3ffeb',
+                        primaryColor: '#000',
+                        textColor: '#171818',
+                        zIndex: 1000,
+                    },
+                }}
+            />
+
 
             <Toaster position="top-center" reverseOrder={false} />
         </div>

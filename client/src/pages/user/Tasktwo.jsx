@@ -17,6 +17,22 @@ const Tasktwo = () => {
     const [tasksub, setTasksub] = useState([]);
     const userID = localStorage.getItem("user");
 
+    const displayMessageClick = () => {
+        toast((t) => (
+            <span className="toast-tasktwo">
+               <p>One video must be watched in one minute. You must watch 5 videos to complete the task.</p>
+            </span>
+        ), {
+            position: "top-center",
+            duration: 4000,
+            style: {
+                borderRadius: '10px',
+                background: '#181717',
+                color: '#fff',
+            },
+        });
+    }
+
     const getAllSubTasks = async () => {
 
 
@@ -31,6 +47,7 @@ const Tasktwo = () => {
             setTasksub(first20Tasks);
 
             console.log(tasksub)
+            displayMessageClick()
 
 
             if (JSON.parse(counttaskVideo).value === 0) {
@@ -276,6 +293,8 @@ const Tasktwo = () => {
                 >
                     Back
                 </button>
+
+               
 
                 <button
                     onClick={handleNextVideo}
