@@ -89,6 +89,11 @@
     align-items: center;
 }
 
+.text-xl-openbox{
+    font-weight: 500;
+    font-family: "Fredoka", serif;
+}
+
 /* Media Queries for Responsive Design */
 
 /* For tablets and smaller desktops */

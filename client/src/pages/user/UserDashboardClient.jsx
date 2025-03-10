@@ -75,13 +75,13 @@ const UserDashboardClient = () => {
         </div>
 
         <div
-          className="UserDashboardClient_herosection2"
+          className="UserDashboardClient_herosection2 " id="duwe2_blue"
           onClick={() => navigate("/addurl")}
           style={{ cursor: "pointer" }} // Ensures the section looks clickable
         >
           <div>
             <h2>
-              <span>Add Video URL</span> 
+              <span>Add Video URL <br></br> For Task 2</span> 
             </h2>
             {/*<p>Subscription Details</p>*/}
           </div>
