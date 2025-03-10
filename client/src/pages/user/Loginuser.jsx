@@ -111,6 +111,17 @@ const Loginuser = () => {
 
       localStorage.setItem("lastCallDate", today);
 
+      let firstLoginUser = JSON.parse(localStorage.getItem("firstLoginUser"));
+
+      if (firstLoginUser === null || firstLoginUser === undefined) {
+        localStorage.setItem(
+          "firstLoginUser",
+          JSON.stringify({
+            value: false
+          })
+        );
+      }
+
       const now = new Date().getTime(); // Current time in milliseconds
       const expirationTime = now + 24 * 60 * 60 * 1000; // 1 day in milliseconds
 
