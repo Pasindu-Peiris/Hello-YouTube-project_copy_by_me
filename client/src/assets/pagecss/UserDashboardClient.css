@@ -4,6 +4,9 @@
     font-family: "Fredoka", serif;
     display: flex;
     flex-direction: column;
+    background-image: url(../images/udb.jpg);
+    background-size: cover;
+    background-position: center;
 }
 
 .UserDashboardClient-h1 h1 {
